@@ -17,4 +17,3 @@ Users can create profiles and design virtual bookshelves by adding books with cu
 <p align="center">
   <img src="frontend/assets/images/logo/bookwormie-logo.png" alt="Bookwormie3D Logo" width="200"/>
 </p>
-

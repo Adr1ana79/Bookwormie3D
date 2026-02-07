@@ -1,0 +1,89 @@
+.view--shelf {
+    position: relative;
+    min-height: 100vh;
+
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+
+}
+
+.view--shelf > * {
+    position: relative;
+    z-index: 1;
+}
+
+
+.content-header__shelf {
+    position: fixed;
+    top: 0;
+    left: 26rem;
+    right: 0;
+
+    padding-top: 2.6rem;
+
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+
+    background: var(--beige-100);
+    z-index: 10;
+}
+
+.content-header__top {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    gap: 6rem;
+}
+
+.local_navigation {
+    display: inline-flex;
+    align-items: center;
+    gap: 1.25rem;
+
+    color: var(--aqua-400);
+    font-family: "Sofia Sans";
+    font-size: 1.25rem;
+    font-style: normal;
+    font-weight: 800;
+    line-height: 150%; /* 1.875rem */
+    letter-spacing: -0.01375rem;
+}
+
+.local_navigation a {
+    color: var(--aqua-400);
+
+    text-decoration-line: none;
+}
+
+.local_navigation a:hover {
+    color: var(--aqua-100);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+}
+
+.local_navigation a:active {
+    color: var(--coral-200);
+    text-shadow: none;
+    transform: scale(0.96);
+}
+
+.local_navigation strong {
+    font-weight: 800;
+    color: var(--font-black);
+}
+
+
+.shelf-frame {
+    position: fixed;
+    left: 19rem;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+
+    object-fit: fill;
+    pointer-events: none;
+    z-index: 0;
+}

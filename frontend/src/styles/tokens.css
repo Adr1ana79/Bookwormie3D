@@ -1,0 +1,129 @@
+@font-face {
+    font-family: "Sofia Sans";
+    src: url("../../assets/fonts/Sofia_Sans/SofiaSans-VariableFont_wght.ttf")
+    format("truetype");
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: swap;
+} /* Sofia Sans */
+@font-face {
+    font-family: "Sofia Sans Italic";
+    src: url("../../assets/fonts/Sofia_Sans/SofiaSans-Italic-VariableFont_wght.ttf")
+    format("truetype");
+    font-weight: 100 900;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Sofia Sans Condensed";
+    src: url("../../assets/fonts/Sofia_Sans_Condensed/SofiaSansCondensed-Italic-VariableFont_wght.ttf")
+    format("truetype");
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: swap;
+} /* Sofia Sans Condensed */
+@font-face {
+    font-family: "Sofia Sans Condensed Italic";
+    src: url("../../assets/fonts/Sofia_Sans_Condensed/SofiaSansCondensed-VariableFont_wght.ttf")
+    format("truetype");
+    font-weight: 100 900;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Sofia Sans Semi Condensed";
+    src: url("../../assets/fonts/Sofia_Sans_Semi_Condensed/SofiaSansSemiCondensed-VariableFont_wght.ttf")
+    format("truetype");
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: swap;
+} /* Sofia Sans Semi Condensed */
+@font-face {
+    font-family: "Sofia Sans Semi Condensed Italic";
+    src: url("../../assets/fonts/Sofia_Sans_Semi_Condensed/SofiaSansSemiCondensed-Italic-VariableFont_wght.ttf")
+    format("truetype");
+    font-weight: 100 900;
+    font-style: italic;
+    font-display: swap;
+}
+
+body {
+    font-family: "Sofia Sans", sans-serif;
+
+    height: 100%;
+    margin: 0;
+
+    background: var(--beige-100);
+}
+
+
+:root {
+    /* --- COLORS --- */
+    /* Font colors */
+    --font-black: #010603;
+    --font-lighter-black: #4A4E4C;
+    --font-brown: #342C2C;
+    --font-grey: #4F4D49;
+    --font-red: #6E0808;
+    --font-yellow: #935100;
+
+    /* Design colors */
+    --white-100: white; /* start background */
+    --white-200: #FFFDF8; /* login/signup background */
+    --white-300: #FBFFFC;
+
+    --beige-100: #FFFBF3; /* background in app */
+    --beige-200: #F5ECDB; /* navigation logo background */
+    --beige-300: #F1E7D4;
+    --filter-blur-beige: #FFFBF3 · 60%;
+
+    --mint-100: #EAF3EE;
+    --mint-200: #E7F3EC;
+    --mint-300: #CEE6D9;
+    --mint-500: #73A891;
+
+    --aqua-100: #02948A;
+    --aqua-200: #035852;
+    --aqua-300: #034B46;
+    --aqua-400: #2C534D;
+
+    --green-200: #5B8773;
+    --green-300: #447660;
+    --green-400: #08432C;
+
+    --peach-100: #F7D5B9;
+    --peach-300: #EA996C;
+
+    --coral-100: #EE9488;
+    --coral-200: #FA7266;
+    --coral-300: #C23B30;
+
+    --red-100: #985B59;
+    --red-200: #813532;
+    --grey-100: #989898;
+
+    --DP-yellow: #C3914F;
+
+    /* --- FONTS --- */
+    --font-primary: "Sofia Sans Semi Condensed", system-ui, sans-serif;
+    --font-secondary: "Sofia Sans", system-ui, sans-serif;
+
+    --font-weight-thin: 100;
+    --font-weight-extra-light: 200;
+    --font-weight-light: 300;
+    --font-weight-regular: 400;
+    --font-weight-medium: 500;
+    --font-weight-semi-bold: 600;
+    --font-weight-bold: 700;
+    --font-weight-extra-bold: 800;
+    --font-weight-black: 900;
+
+    /* --- SIZES --- */
+    --logo-size: clamp(180px, 40vw, 320px);
+
+    --sidebar-collapsed-width: 72px;
+    --sidebar-expanded-width: 260px;
+}
+

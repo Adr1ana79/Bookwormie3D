@@ -1,0 +1,241 @@
+.view-shelves {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    overflow: hidden;
+}
+
+.header-background {
+    top: 0;
+    right: 0;
+    position: fixed;
+    width: 100%;
+    height: 10rem;
+
+    z-index: 9;
+
+    background: var(--beige-100);
+}
+
+.shelves-page-content {
+    margin-top: 10rem;
+
+    z-index: 8;
+
+    flex: 1;
+    overflow-y: auto;
+}
+
+
+.shelves-page-content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.shelves-page-content::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.shelves-page-content::-webkit-scrollbar-thumb {
+    background-color: rgba(80, 150, 100, 0.3);
+    border-radius: 8px;
+}
+
+.shelves-section {
+    display: flex;
+    width: 48.375rem;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 1rem;
+
+    padding-bottom: 2rem;
+}
+
+.shelves-section__last {
+    padding-bottom: 10rem;
+}
+
+.shelves-grid {
+    list-style-type: none;
+
+    margin-left: -1rem;
+
+    display: flex;
+    width: 48.375rem;
+    height: auto;
+    align-items: flex-start;
+    align-content: flex-start;
+
+    gap: 2.6rem 3.5rem;
+    flex-shrink: 0;
+    flex-wrap: wrap;
+}
+
+.shelf-card {
+    display: flex;
+    width: 6.875rem;
+    height: 7.5625rem;
+    flex-direction: column;
+    align-items: center;
+    gap: -0.2rem;
+    flex-shrink: 0;
+}
+
+.shelf-card:hover {
+    transform: scale(1.02);
+}
+
+.shelf-card:active {
+    transform: scale(0.98);
+}
+
+.shelf-card p{
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    align-self: stretch;
+
+    color: var(--green-400);
+    text-align: center;
+    text-overflow: ellipsis;
+    font-family: "Sofia Sans";
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 150%; /* 1.5rem */
+    letter-spacing: -0.011rem;
+}
+
+.shelf-card img {
+    border-radius: 0.375rem;
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+}
+
+
+/* --- EDIT STATE --- */
+
+/* ADD mode wins */
+.is-adding-section .edit-only {
+    display: none !important;
+}
+
+/* EDIT mode hides add UI */
+.is-editing-sections .add-only {
+    display: none !important;
+}
+
+
+.is-adding-section .new-section-input {
+    display: block;
+}
+
+.is-adding-section .edit-controls {
+    display: none;
+}
+
+.is-editing-sections .section-edit-controls {
+    display: inline-flex;
+}
+
+.is-editing-sections .add-shelf-placeholder {
+    display: block;
+}
+
+
+.is-editing-sections .search-bar,
+.is-adding-section .search-bar {
+    opacity: 0.6;
+    filter: saturate(70%);
+    box-shadow: none;
+    pointer-events: none;
+}
+
+.is-editing-sections .search-bar::after {
+    content: "Finish editing to search";
+    position: absolute;
+    right: 1rem;
+    font-size: 0.75rem;
+    opacity: 0.6;
+}
+
+
+.section-header__edit {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    gap: 3rem;
+}
+
+.add-shelf-button {
+    border: none;
+    background: none;
+}
+
+.add-shelf-button:hover {
+    transform: scale(1.05);
+}
+
+.add-shelf-button:active {
+    transform: scale(0.95);
+}
+
+.section__title-input {
+    border: none;
+    outline: none;
+    box-shadow: none;
+
+    background-color: transparent;
+
+    width: 32rem;
+    height: 3rem;
+
+    display: flex;
+    align-items: center;
+
+    background-image: url("../../assets/images/design-elements/section-label-edit.svg");
+    background-repeat: no-repeat;
+    background-position: left center;
+}
+
+ .section__title-placeholder {
+    display: flex;
+
+    padding-left:2rem;
+    padding-bottom: 0.5rem;
+
+    border: none;
+    background: none;
+
+    color: var(--white-100);
+    font-family: "Sofia Sans";
+    font-size: 1.25rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 150%; /* 1.875rem */
+    letter-spacing: -0.01375rem;
+}
+
+.section__title-placeholder::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.section__title-placeholder:focus-within {
+    filter: brightness(1.05);
+}
+
+.section__title-placeholder:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+
+.is-adding-section .icon-edit {
+    background-image: url("../../assets/images/icons/save-icon.svg");
+}
+
+.is-adding-section .icon-delete {
+    background-image: url("../../assets/images/icons/cancel-icon.svg");
+}
+

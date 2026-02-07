@@ -1,4 +1,4 @@
-<p align="center"> <img src="frontend/assets/images/logo/bookwormie-logo.png" alt="Bookwormie3D Logo" width="48" /> </p>
+<img src="frontend/assets/images/logo/bookwormie-logo.png" alt="Bookwormie3D Logo" width="48" align="left" />
 
 # Bookwormie3D
 

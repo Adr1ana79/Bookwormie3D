@@ -6,29 +6,12 @@
 
     height: 100%;
 
+    margin-top: 5rem;
+
     overflow-y: auto;
     display: flex;
-    gap: 3rem;
+    gap: 3.3rem;
 }
-
-.settings-section .section__title {
-    color: var(--white-100);
-    font-family: "Sofia Sans";
-    font-size: 1.3rem;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 150%; /* 1.875rem */
-    letter-spacing: -0.01375rem;
-}
-
-.settings-section .section__title-bookmark {
-    height: 3rem;
-
-    top: 50%;
-    left: 0;
-    transform: translateX(-27%) translateY(-10%);
-}
-
 
 .settings-section {
     display: flex;
@@ -40,11 +23,11 @@
 
     /*overflow-x: hidden;*/
     /*overflow-y: hidden;*/
-    gap: 3rem;
+    gap: 2rem;
 }
 
-
 .color-modes {
+
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -162,6 +145,7 @@
 }
 
 .settings-section__article p {
+    max-width: 60rem;
     color: var(--font-black);
     font-family: "Sofia Sans";
     font-size: 1.25rem;
@@ -170,6 +154,7 @@
     line-height: 150%; /* 1.875rem */
     letter-spacing: -0.01375rem;
 
-    margin-bottom: 0.1em;
+    margin-top: 0;
+    margin-bottom: 0.6em;
 }
 

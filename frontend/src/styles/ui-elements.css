@@ -59,43 +59,34 @@
 
 .section-header {
     position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    display: block;
 
-    gap: 1rem;
-    flex: 1;
-
-    height: 3.25rem;
+    width: fit-content;
+    line-height: 0;
 }
 
-.section__title {
-    position: relative;
-    z-index: 2;
+.section-header--ribbon {
+    height: auto;
+    width: auto;
 
-    width: 32rem;
+    display: block;
+}
 
-    padding: 0.5rem 2.5rem 0.75rem 1.25rem;
-
+.section-header--title {
     color: var(--white-100);
     font-family: "Sofia Sans";
-    font-size: 1.3rem;
+    font-size: var(--section-title-size);
+    font-style: normal;
     font-weight: 700;
-    line-height: 1;
-    letter-spacing: -0.0165rem;
-}
-
-.section__title-bookmark {
-    width: 33rem;
-    height: auto;
+    line-height: 150%; /* 2.0625rem */
+    letter-spacing: -0.01513rem;
 
     position: absolute;
-    top: 50%;
-    left: 0;
-    transform: translateY(-46%);
+    left: 1.25rem;
+    top:42%;
+    transform: translateY(-50%);
 
-    z-index: 1;
-    pointer-events: none;
+    white-space: nowrap;
 }
 
 

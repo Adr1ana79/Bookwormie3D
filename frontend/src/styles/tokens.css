@@ -58,7 +58,6 @@ body {
     background: var(--beige-100);
 }
 
-
 :root {
     /* --- COLORS --- */
     /* Font colors */
@@ -125,5 +124,7 @@ body {
 
     --sidebar-collapsed-width: 72px;
     --sidebar-expanded-width: 260px;
+
+    --section-title-size: 1.375rem;
 }
 

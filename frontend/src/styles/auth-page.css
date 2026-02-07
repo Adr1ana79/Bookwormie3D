@@ -342,7 +342,13 @@
 }
 
 .view--signup-additional .form-group {
-    gap: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+
+    border: none;        /* маха default fieldset рамката */
+    padding: 0;          /* маха default padding */
+    margin: 0;
 }
 
 .view--signup-additional .form-field--default {

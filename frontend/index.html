@@ -19,525 +19,523 @@
     <link rel="stylesheet" href="src/styles/settings.css">
 
     <!-- JS -->
-    <script type="module" src="src/pages/app.js"></script>
+<!--    <script type="module" src="src/pages/app.js"></script>-->
 
 </head>
 
 <body>
 
-    <div id="auth-wrapper">
-        <section id="view-start" class="view hidden" aria-label="Welcome screen">
-            <div class="start-screen">
-                <img class="start-screen__logo"
-                     src="assets/images/logo/bookwormie-logo.png"
-                     alt="Bookwormie logo">
+<!--    <div id="auth-wrapper">-->
+<!--        <section id="view-start" class="view" aria-label="Welcome screen">-->
+<!--            <div class="start-screen">-->
+<!--                <img class="start-screen__logo"-->
+<!--                     src="assets/images/logo/bookwormie-logo.png"-->
+<!--                     alt="Bookwormie logo">-->
 
-                <h1 class="start-screen__title">
-                    Welcome to<br>
-                    <strong>Bookwormie 3.D</strong>
-                </h1>
-            </div>
-        </section>
+<!--                <h1 class="start-screen__title">-->
+<!--                    Welcome to<br>-->
+<!--                    <strong>Bookwormie 3.D</strong>-->
+<!--                </h1>-->
+<!--            </div>-->
+<!--        </section>-->
 
-        <section id="view-loading" class="view hidden" aria-label="Logo animation">
-            <div class="start-screen__loader">
-                <img src="assets/animation/loader.gif"
-                     alt="Loading"
-                     class="loader-img">
-            </div>
-        </section>
+<!--        <section id="view-loading" class="view hidden" aria-label="Logo animation">-->
+<!--            <div class="start-screen__loader">-->
+<!--                <img src="assets/animation/loader.gif"-->
+<!--                     alt="Loading"-->
+<!--                     class="loader-img">-->
+<!--            </div>-->
+<!--        </section>-->
 
 
         <!-- AUTH PAGES -->
-        <section id="view-auth"
-                 class="view auth-screen auth-screen--login hidden"
-                 aria-label="Authentication mode selection">
-
-            <header class="auth-header">
-                <img src="assets/images/logo/navigation-logo.png"
-                     alt="Bookwormie logo"
-                     class="navigation-logo">
-            </header>
-
-            <div class="auth-selector">
-                <div class="auth-selector__background">
-                    <div class="bg bg--login"></div>
-                    <div class="bg bg--signup"></div>
-                </div>
-
-
-                <div class="auth-selector__options">
-                    <button class="auth-option is-active"
-                            data-mode="login"
-                            aria-pressed="true">
-                        Log In
-                    </button>
-
-                    <button class="auth-option"
-                            data-mode="signup"
-                            aria-pressed="false">
-                        Sign Up
-                    </button>
-                </div>
-            </div>
-        </section>
-
-        <section id="view-login" class="view view--login hidden" aria-label="Log in">
-            <!-- Header / branding -->
-            <header class="auth-header">
-                <img src="assets/images/logo/navigation-logo.png"
-                     alt="Bookwormie logo"
-                     class="navigation-logo">
-            </header>
-
-            <!-- Main content -->
-            <main class="auth-main">
-                <form id="login-form" class="auth-form" novalidate>
-
-                    <!-- Email -->
-                    <div class="form-group">
-                        <label for="login-email" class="form-field__label">
-                            Email address
-                        </label>
-
-                        <div class="form-field form-field--large form-field--default">
-                            <div class="form-field__control">
-                                <input id="login-email"
-                                       type="text"
-                                       name="email"
-                                       maxlength="50"
-                                       class="form-field__input"
-                                       placeholder="Enter email address"
-                                       aria-describedby="login-email-error"
-                                       required>
-                            </div>
-                        </div>
-
-                        <div id="login-email-error"
-                             class="form-field__help form-field__help--error hidden">
-
-                            <span class="form-field__help-icon"></span>
-                            <span class="form-field__help-text">
-                            Error message here
-                        </span>
-                        </div>
-                    </div>
-
-                    <!-- Password -->
-                    <div class="form-group">
-                        <label for="login-password" class="form-field__label">
-                            Password
-                        </label>
-
-                        <div class="form-field form-field--large form-field--default">
-                            <div class="form-field__control">
-                                <input id="login-password"
-                                       type="password"
-                                       name="password"
-                                       maxlength="50"
-                                       class="form-field__input"
-                                       placeholder="Enter password"
-                                       aria-describedby="login-password-error"
-                                       required>
-
-                                <button type="button"
-                                        class="password-toggle default"
-                                        aria-label="Show password"
-                                        aria-pressed="false">
-                                </button>
-                            </div>
-                        </div>
-
-                        <div id="login-password-error"
-                             class="form-field__help form-field__help--error hidden">
-
-                            <span class="form-field__help-icon"></span>
-                            <span class="form-field__help-text">
-                            Error message here
-                        </span>
-                        </div>
-                    </div>
-
-                    <!-- Actions -->
-                    <div class="button-group button-group--two">
-                        <button type="button"
-                                class="button secondary-button button-label button-label--secondary">
-                            Sign Up
-                        </button>
-
-                        <button type="submit"
-                                class="button primary-button button-label button-label--primary">
-                            Continue
-                        </button>
-                    </div>
-                </form>
-            </main>
-
-            <footer class="auth-footer auth-footer--login">
-                <a class="terms-title" href="#terms-and-conditions">Terms and conditions</a>
-                <p class="copyright-title">
-                    © 2026 Bookwormie
-                </p>
-            </footer>
-        </section>
-
-        <section id="view-signup" class="view view--signup hidden" aria-label="Sign up">
-
-            <!-- Header -->
-            <header class="auth-header">
-                <img src="assets/images/logo/navigation-logo.png"
-                     alt="Bookwormie logo"
-                     class="navigation-logo">
-            </header>
-
-            <!-- Main -->
-            <main class="auth-main">
-                <form id="signup-form" class="auth-form" novalidate>
-
-                    <!-- Username -->
-                    <fieldset class="form-group-of-two">
-                        <div class="form-group">
-                            <label for="signup-username" class="form-field__label">
-                                Username
-                            </label>
-
-                            <div class="form-field form-field--large form-field--default">
-                                <input id="signup-username"
-                                       type="text"
-                                       name="username"
-                                       maxlength="50"
-                                       class="form-field__input"
-                                       placeholder="Enter username"
-                                       aria-describedby="signup-username-error name-specifier"
-                                       required>
-                            </div>
-                            <div id="signup-username-error"
-                                 class="form-field__help form-field__help--error"
-                                 hidden>
-
-                                <span class="form-field__help-icon" hidden></span>
-                                <span class="form-field__help-text" hidden>Error message here</span>
-                            </div>
-                        </div>
-
-                        <p id="name-specifier" class="input-specifier">
-                            Allowed characters: letters, numbers, hyphen (-) and apostrophe (')
-                        </p>
-                    </fieldset>
-
-                    <!-- Email -->
-                    <div class="form-group">
-                        <label for="signup-email" class="form-field__label">
-                            Email address
-                        </label>
-
-                        <div class="form-field form-field--large form-field--default">
-                            <input id="signup-email"
-                                   type="email"
-                                   name="email"
-                                   maxlength="100"
-                                   class="form-field__input"
-                                   placeholder="Enter email address"
-                                   aria-describedby="signup-email-error"
-                                   required>
-                        </div>
-
-                        <div id="signup-email-error"
-                             class="form-field__help form-field__help--error"
-                             hidden>
-
-                            <span class="form-field__help-icon" hidden></span>
-                            <span class="form-field__help-text" hidden>Error message here</span>
-                        </div>
-                    </div>
-
-                    <!-- Password -->
-                    <fieldset class="form-group-of-two">
-
-                        <div class="form-group">
-                            <label for="signup-password" class="form-field__label">
-                                Password
-                            </label>
-
-                            <div class="form-field form-field--large form-field--default">
-                                <input id="signup-password"
-                                       type="password"
-                                       name="password"
-                                       maxlength="100"
-                                       class="form-field__input"
-                                       placeholder="Enter password"
-                                       aria-describedby="password-specifier signup-password-error"
-                                       required>
-
-                                <button type="button"
-                                        class="password-toggle"
-                                        aria-label="Show password"
-                                        aria-pressed="false">
-
-                                    <img src="assets/images/icons/eye-open.svg"
-                                         alt=""
-                                         aria-hidden="true">
-                                </button>
-                            </div>
-
-                            <div id="signup-password-error"
-                                 class="form-field__help form-field__help--error"
-                                 hidden>
-
-                                <span class="form-field__help-icon" hidden></span>
-                                <span class="form-field__help-text" hidden>Error message here</span>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="signup-confirm-password"
-                                   class="form-field__label" hidden>
-                                Confirm password
-                            </label>
-
-                            <div class="form-field form-field--large form-field--default">
-                                <input id="signup-confirm-password"
-                                       type="password"
-                                       name="confirm-password"
-                                       maxlength="100"
-                                       class="form-field__input"
-                                       placeholder="Confirm password"
-                                       aria-describedby="signup-confirm-password-error"
-                                       required>
-
-                                <button type="button"
-                                        class="password-toggle"
-                                        aria-label="Show password"
-                                        aria-pressed="false">
-
-                                    <img src="assets/images/icons/eye-open.svg"
-                                         alt=""
-                                         aria-hidden="true">
-                                </button>
-                            </div>
-
-                            <div id="signup-confirm-password-error"
-                                 class="form-field__help form-field__help--error"
-                                 hidden>
-
-                                <span class="form-field__help-icon" hidden></span>
-                                <span class="form-field__help-text" hidden>Error message here</span>
-                            </div>
-                        </div>
-
-                        <p id="password-specifier" class="input-specifier">
-                            Minimum 8 characters
-                        </p>
-                    </fieldset>
-
-                    <!-- Terms -->
-                    <div class="checkbox-group">
-                        <input type="checkbox"
-                               id="accept-terms"
-                               name="accept-terms"
-                               required>
-
-                        <label for="accept-terms">
-                            I agree to the
-                            <a href="#terms-and-conditions" class="links-in-text">
-                                general terms and conditions and policies
-                            </a> <br>
-                            of the application
-                        </label>
-                    </div>
-
-                    <!-- Actions -->
-                    <div class="button-group button-group--two">
-                        <button type="button"
-                                class="button secondary-button button-label button-label--secondary">
-                            Log in
-                        </button>
-                        <button type="submit"
-                                class="button primary-button button-label button-label--primary">
-                            Continue
-                        </button>
-                    </div>
-                </form>
-            </main>
-
-            <!-- Footer -->
-            <footer class="auth-footer">
-                <p class="copyright-title">
-                    © 2026 Bookwormie
-                </p>
-            </footer>
-        </section>
-
-        <section id="view-signup-additional"
-                 class="view view-signup-additional hidden"
-                 aria-label="Additional profile information">
-
-<!--            &lt;!&ndash; Background &ndash;&gt;-->
-<!--            <div class="signup-additional-bg" aria-hidden="true"></div>-->
-
-            <!-- Header -->
-            <header class="auth-header">
-                <img src="assets/images/logo/navigation-logo.png"
-                     alt="Bookwormie logo"
-                     class="navigation-logo">
-            </header>
-
-            <!-- Main -->
-            <main class="auth-main">
-                <header class="auth-intro">
-                    <h1 class="auth-title">By wish…</h1>
-                    <p class="auth-subtitle">You can do it later</p>
-                </header>
-
-                <form id="signup-additional-form" class="auth-form" novalidate>
-                    <!-- Social networks -->
-                    <fieldset class="form-group">
-
-                        <legend class="form-legend">Social network profiles</legend>
-
-                        <div class="social-networks">
-                            <div class="social-networks__item">
-                                <img class="social-networks__item-icon"
-                                     src="assets/images/icons/social-networks/instagram.svg"
-                                     alt="Instagram">
-                                <label class="social-networks__item-label">Instagram</label>
-                            </div>
-
-                            <div class="form-field form-field--default form-field--large">
-                                <input type="text"
-                                       name="instagram"
-                                       maxlength="50"
-                                       placeholder="Enter Instagram username"
-                                       class="form-field__input">
-                            </div>
-                        </div>
-
-                        <div class="social-networks">
-                            <div class="social-networks__item">
-                                <img class="social-networks__item-icon"
-                                     src="assets/images/icons/social-networks/goodreads.svg"
-                                     alt="Goodreads">
-                                <label class="social-networks__item-label">Goodreads</label>
-                            </div>
-
-                            <div class="form-field form-field--default form-field--large">
-                                <input type="text"
-                                       name="Goodreads"
-                                       maxlength="50"
-                                       placeholder="Enter Goodreads username"
-                                       class="form-field__input">
-                            </div>
-                        </div>
-
-                        <div class="social-networks">
-                            <div class="social-networks__item">
-                                <img class="social-networks__item-icon"
-                                     src="assets/images/icons/social-networks/facebook.svg"
-                                     alt="Facebook">
-                                <label class="social-networks__item-label">Facebook</label>
-                            </div>
-
-                            <div class="form-field form-field--default form-field--large">
-                                <input type="text"
-                                       name="Facebook"
-                                       maxlength="50"
-                                       placeholder="Enter Facebook username"
-                                       class="form-field__input">
-                            </div>
-                        </div>
-
-                        <div class="social-networks">
-                            <div class="social-networks__item">
-                                <img class="social-networks__item-icon"
-                                     src="assets/images/icons/social-networks/linkedin.svg"
-                                     alt="LinkedIn">
-                                <label class="social-networks__item-label">LinkedIn</label>
-                            </div>
-
-                            <div class="form-field form-field--default form-field--large">
-                                <input type="text"
-                                       name="LinkedIn"
-                                       maxlength="50"
-                                       placeholder="Enter Facebook username"
-                                       class="form-field__input">
-                            </div>
-                        </div>
-
-                        <div class="social-networks">
-                            <div class="social-networks__item">
-                                <img class="social-networks__item-icon"
-                                     src="assets/images/icons/social-networks/pinterest.svg"
-                                     alt="Pinterest">
-                                <label class="social-networks__item-label">Pinterest</label>
-                            </div>
-
-                            <div class="form-field form-field--default form-field--large">
-                                <input type="text"
-                                       name="Pinterest"
-                                       maxlength="50"
-                                       placeholder="Enter Pinterest username"
-                                       class="form-field__input">
-                            </div>
-                        </div>
-                    </fieldset>
-
-                    <!-- Genres -->
-                    <fieldset class="form-group">
-                        <legend class="form-legend">Favourite genres</legend>
-
-                        <ul class="genres-grid">
-                            <li><button type="button" class="genre-option">Science fiction</button></li>
-                            <li><button type="button" class="genre-option">Fantasy</button></li>
-                            <li><button type="button" class="genre-option">Romance </button></li>
-                            <li><button type="button" class="genre-option">Thriller </button></li>
-                            <li><button type="button" class="genre-option">Mystery </button></li>
-                            <li><button type="button" class="genre-option">Crime</button></li>
-                            <li><button type="button" class="genre-option">Historical fiction</button></li>
-                            <li><button type="button" class="genre-option">Adventure</button></li>
-                            <li><button type="button" class="genre-option">Graphic Novels</button></li>
-                            <li><button type="button" class="genre-option">Horror</button></li>
-                            <li><button type="button" class="genre-option">Dystopia</button></li>
-                            <li><button type="button" class="genre-option">Satire</button></li>
-                            <li><button type="button" class="genre-option">Drama</button></li>
-                            <li><button type="button" class="genre-option">(Auto)Biographies</button></li>
-                            <li><button type="button" class="genre-option">History</button></li>
-                            <li><button type="button" class="genre-option">Philosophy</button></li>
-                            <li><button type="button" class="genre-option">Psychology</button></li>
-                            <li><button type="button" class="genre-option">Sociology</button></li>
-                            <li><button type="button" class="genre-option">Business and economics</button></li>
-                            <li><button type="button" class="genre-option">Science and technology</button></li>
-                            <li><button type="button" class="genre-option">Journalism</button></li>
-                            <li><button type="button" class="genre-option">Sociology</button></li>
-                            <li><button type="button" class="genre-option">Education</button></li>
-                            <li><button type="button" class="genre-option">Art and culture</button></li>
-                            <li><button type="button" class="genre-option">Religion and spirituality</button></li>
-                        </ul>
-                    </fieldset>
-                </form>
-
-                <!-- Actions -->
-                <div class="button-group--two">
-                    <button type="button"
-                            class="button secondary-button button-label button-label--secondary">
-                        Return
-                    </button>
-
-                    <button type="button"
-                            class="button primary-button button-label button-label--primary">
-                        Create profile
-                    </button>
-                </div>
-            </main>
-
-            <!-- Footer -->
-            <footer class="auth-footer">
-                <a class="terms-title" href="#terms-and-conditions">Terms and conditions</a>
-                <p class="copyright-title">
-                    © 2026 Bookwormie
-                </p>
-            </footer>
-        </section>
-    </div>
+<!--        <section id="view-auth"-->
+<!--                 class="view auth-screen auth-screen&#45;&#45;login"-->
+<!--                 aria-label="Authentication mode selection">-->
+
+<!--            <header class="auth-header">-->
+<!--                <img src="assets/images/logo/navigation-logo.png"-->
+<!--                     alt="Bookwormie logo"-->
+<!--                     class="navigation-logo">-->
+<!--            </header>-->
+
+<!--            <div class="auth-selector">-->
+<!--                <div class="auth-selector__background">-->
+<!--                    <div class="bg bg&#45;&#45;login"></div>-->
+<!--                    <div class="bg bg&#45;&#45;signup"></div>-->
+<!--                </div>-->
+
+
+<!--                <div class="auth-selector__options">-->
+<!--                    <button class="auth-option is-active"-->
+<!--                            data-mode="login"-->
+<!--                            aria-pressed="true">-->
+<!--                        Log In-->
+<!--                    </button>-->
+
+<!--                    <button class="auth-option"-->
+<!--                            data-mode="signup"-->
+<!--                            aria-pressed="false">-->
+<!--                        Sign Up-->
+<!--                    </button>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </section>-->
+
+<!--        <section id="view-login" class="view view&#45;&#45;login" aria-label="Log in">-->
+<!--            &lt;!&ndash; Header / branding &ndash;&gt;-->
+<!--            <header class="auth-header">-->
+<!--                <img src="assets/images/logo/navigation-logo.png"-->
+<!--                     alt="Bookwormie logo"-->
+<!--                     class="navigation-logo">-->
+<!--            </header>-->
+
+<!--            &lt;!&ndash; Main content &ndash;&gt;-->
+<!--            <main class="auth-main">-->
+<!--                <form id="login-form" class="auth-form" novalidate>-->
+
+<!--                    &lt;!&ndash; Email &ndash;&gt;-->
+<!--                    <div class="form-group">-->
+<!--                        <label for="login-email" class="form-field__label">-->
+<!--                            Email address-->
+<!--                        </label>-->
+
+<!--                        <div class="form-field form-field&#45;&#45;large form-field&#45;&#45;default">-->
+<!--                            <div class="form-field__control">-->
+<!--                                <input id="login-email"-->
+<!--                                       type="text"-->
+<!--                                       name="email"-->
+<!--                                       maxlength="50"-->
+<!--                                       class="form-field__input"-->
+<!--                                       placeholder="Enter email address"-->
+<!--                                       aria-describedby="login-email-error"-->
+<!--                                       required>-->
+<!--                            </div>-->
+<!--                        </div>-->
+
+<!--                        <div id="login-email-error"-->
+<!--                             class="form-field__help form-field__help&#45;&#45;error hidden">-->
+
+<!--                            <span class="form-field__help-icon"></span>-->
+<!--                            <span class="form-field__help-text">-->
+<!--                            Error message here-->
+<!--                        </span>-->
+<!--                        </div>-->
+<!--                    </div>-->
+
+<!--                    &lt;!&ndash; Password &ndash;&gt;-->
+<!--                    <div class="form-group">-->
+<!--                        <label for="login-password" class="form-field__label">-->
+<!--                            Password-->
+<!--                        </label>-->
+
+<!--                        <div class="form-field form-field&#45;&#45;large form-field&#45;&#45;default">-->
+<!--                            <div class="form-field__control">-->
+<!--                                <input id="login-password"-->
+<!--                                       type="password"-->
+<!--                                       name="password"-->
+<!--                                       maxlength="50"-->
+<!--                                       class="form-field__input"-->
+<!--                                       placeholder="Enter password"-->
+<!--                                       aria-describedby="login-password-error"-->
+<!--                                       required>-->
+
+<!--                                <button type="button"-->
+<!--                                        class="password-toggle default"-->
+<!--                                        aria-label="Show password"-->
+<!--                                        aria-pressed="false">-->
+<!--                                </button>-->
+<!--                            </div>-->
+<!--                        </div>-->
+
+<!--                        <div id="login-password-error"-->
+<!--                             class="form-field__help form-field__help&#45;&#45;error hidden">-->
+
+<!--                            <span class="form-field__help-icon"></span>-->
+<!--                            <span class="form-field__help-text">-->
+<!--                            Error message here-->
+<!--                        </span>-->
+<!--                        </div>-->
+<!--                    </div>-->
+
+<!--                    &lt;!&ndash; Actions &ndash;&gt;-->
+<!--                    <div class="button-group button-group&#45;&#45;two">-->
+<!--                        <button type="button"-->
+<!--                                class="button secondary-button button-label button-label&#45;&#45;secondary">-->
+<!--                            Sign Up-->
+<!--                        </button>-->
+
+<!--                        <button type="submit"-->
+<!--                                class="button primary-button button-label button-label&#45;&#45;primary">-->
+<!--                            Continue-->
+<!--                        </button>-->
+<!--                    </div>-->
+<!--                </form>-->
+<!--            </main>-->
+
+<!--            <footer class="auth-footer auth-footer&#45;&#45;login">-->
+<!--                <a class="terms-title" href="#terms-and-conditions">Terms and conditions</a>-->
+<!--                <p class="copyright-title">-->
+<!--                    © 2026 Bookwormie-->
+<!--                </p>-->
+<!--            </footer>-->
+<!--        </section>-->
+
+<!--        <section id="view-signup" class="view view&#45;&#45;signup is-visible" aria-label="Sign up">-->
+
+<!--            &lt;!&ndash; Header &ndash;&gt;-->
+<!--            <header class="auth-header">-->
+<!--                <img src="assets/images/logo/navigation-logo.png"-->
+<!--                     alt="Bookwormie logo"-->
+<!--                     class="navigation-logo">-->
+<!--            </header>-->
+
+<!--            &lt;!&ndash; Main &ndash;&gt;-->
+<!--            <main class="auth-main">-->
+<!--                <form id="signup-form" class="auth-form" novalidate>-->
+
+<!--                    &lt;!&ndash; Username &ndash;&gt;-->
+<!--                    <fieldset class="form-group-of-two">-->
+<!--                        <div class="form-group">-->
+<!--                            <label for="signup-username" class="form-field__label">-->
+<!--                                Username-->
+<!--                            </label>-->
+
+<!--                            <div class="form-field form-field&#45;&#45;large form-field&#45;&#45;default">-->
+<!--                                <input id="signup-username"-->
+<!--                                       type="text"-->
+<!--                                       name="username"-->
+<!--                                       maxlength="50"-->
+<!--                                       class="form-field__input"-->
+<!--                                       placeholder="Enter username"-->
+<!--                                       aria-describedby="signup-username-error name-specifier"-->
+<!--                                       required>-->
+<!--                            </div>-->
+<!--                            <div id="signup-username-error"-->
+<!--                                 class="form-field__help form-field__help&#45;&#45;error"-->
+<!--                                 hidden>-->
+
+<!--                                <span class="form-field__help-icon" hidden></span>-->
+<!--                                <span class="form-field__help-text" hidden>Error message here</span>-->
+<!--                            </div>-->
+<!--                        </div>-->
+
+<!--                        <p id="name-specifier" class="input-specifier">-->
+<!--                            Allowed characters: letters, numbers, hyphen (-) and apostrophe (')-->
+<!--                        </p>-->
+<!--                    </fieldset>-->
+
+<!--                    &lt;!&ndash; Email &ndash;&gt;-->
+<!--                    <div class="form-group">-->
+<!--                        <label for="signup-email" class="form-field__label">-->
+<!--                            Email address-->
+<!--                        </label>-->
+
+<!--                        <div class="form-field form-field&#45;&#45;large form-field&#45;&#45;default">-->
+<!--                            <input id="signup-email"-->
+<!--                                   type="email"-->
+<!--                                   name="email"-->
+<!--                                   maxlength="100"-->
+<!--                                   class="form-field__input"-->
+<!--                                   placeholder="Enter email address"-->
+<!--                                   aria-describedby="signup-email-error"-->
+<!--                                   required>-->
+<!--                        </div>-->
+
+<!--                        <div id="signup-email-error"-->
+<!--                             class="form-field__help form-field__help&#45;&#45;error"-->
+<!--                             hidden>-->
+
+<!--                            <span class="form-field__help-icon" hidden></span>-->
+<!--                            <span class="form-field__help-text" hidden>Error message here</span>-->
+<!--                        </div>-->
+<!--                    </div>-->
+
+<!--                    &lt;!&ndash; Password &ndash;&gt;-->
+<!--                    <fieldset class="form-group-of-two">-->
+
+<!--                        <div class="form-group">-->
+<!--                            <label for="signup-password" class="form-field__label">-->
+<!--                                Password-->
+<!--                            </label>-->
+
+<!--                            <div class="form-field form-field&#45;&#45;large form-field&#45;&#45;default">-->
+<!--                                <input id="signup-password"-->
+<!--                                       type="password"-->
+<!--                                       name="password"-->
+<!--                                       maxlength="100"-->
+<!--                                       class="form-field__input"-->
+<!--                                       placeholder="Enter password"-->
+<!--                                       aria-describedby="password-specifier signup-password-error"-->
+<!--                                       required>-->
+
+<!--                                <button type="button"-->
+<!--                                        class="password-toggle"-->
+<!--                                        aria-label="Show password"-->
+<!--                                        aria-pressed="false">-->
+
+<!--                                    <img src="assets/images/icons/eye-open.svg"-->
+<!--                                         alt=""-->
+<!--                                         aria-hidden="true">-->
+<!--                                </button>-->
+<!--                            </div>-->
+
+<!--                            <div id="signup-password-error"-->
+<!--                                 class="form-field__help form-field__help&#45;&#45;error"-->
+<!--                                 hidden>-->
+
+<!--                                <span class="form-field__help-icon" hidden></span>-->
+<!--                                <span class="form-field__help-text" hidden>Error message here</span>-->
+<!--                            </div>-->
+<!--                        </div>-->
+
+<!--                        <div class="form-group">-->
+<!--                            <label for="signup-confirm-password"-->
+<!--                                   class="form-field__label" hidden>-->
+<!--                                Confirm password-->
+<!--                            </label>-->
+
+<!--                            <div class="form-field form-field&#45;&#45;large form-field&#45;&#45;default">-->
+<!--                                <input id="signup-confirm-password"-->
+<!--                                       type="password"-->
+<!--                                       name="confirm-password"-->
+<!--                                       maxlength="100"-->
+<!--                                       class="form-field__input"-->
+<!--                                       placeholder="Confirm password"-->
+<!--                                       aria-describedby="signup-confirm-password-error"-->
+<!--                                       required>-->
+
+<!--                                <button type="button"-->
+<!--                                        class="password-toggle"-->
+<!--                                        aria-label="Show password"-->
+<!--                                        aria-pressed="false">-->
+
+<!--                                    <img src="assets/images/icons/eye-open.svg"-->
+<!--                                         alt=""-->
+<!--                                         aria-hidden="true">-->
+<!--                                </button>-->
+<!--                            </div>-->
+
+<!--                            <div id="signup-confirm-password-error"-->
+<!--                                 class="form-field__help form-field__help&#45;&#45;error"-->
+<!--                                 hidden>-->
+
+<!--                                <span class="form-field__help-icon" hidden></span>-->
+<!--                                <span class="form-field__help-text" hidden>Error message here</span>-->
+<!--                            </div>-->
+<!--                        </div>-->
+
+<!--                        <p id="password-specifier" class="input-specifier">-->
+<!--                            Minimum 8 characters-->
+<!--                        </p>-->
+<!--                    </fieldset>-->
+
+<!--                    &lt;!&ndash; Terms &ndash;&gt;-->
+<!--                    <div class="checkbox-group">-->
+<!--                        <input type="checkbox"-->
+<!--                               id="accept-terms"-->
+<!--                               name="accept-terms"-->
+<!--                               required>-->
+
+<!--                        <label for="accept-terms">-->
+<!--                            I agree to the-->
+<!--                            <a href="#terms-and-conditions" class="links-in-text">-->
+<!--                                general terms and conditions and policies-->
+<!--                            </a> <br>-->
+<!--                            of the application-->
+<!--                        </label>-->
+<!--                    </div>-->
+
+<!--                    &lt;!&ndash; Actions &ndash;&gt;-->
+<!--                    <div class="button-group button-group&#45;&#45;two">-->
+<!--                        <button type="button"-->
+<!--                                class="button secondary-button button-label button-label&#45;&#45;secondary">-->
+<!--                            Log in-->
+<!--                        </button>-->
+<!--                        <button type="submit"-->
+<!--                                class="button primary-button button-label button-label&#45;&#45;primary">-->
+<!--                            Continue-->
+<!--                        </button>-->
+<!--                    </div>-->
+<!--                </form>-->
+<!--            </main>-->
+
+<!--            &lt;!&ndash; Footer &ndash;&gt;-->
+<!--            <footer class="auth-footer">-->
+<!--                <p class="copyright-title">-->
+<!--                    © 2026 Bookwormie-->
+<!--                </p>-->
+<!--            </footer>-->
+<!--        </section>-->
+
+<!--        <section id="view-signup-additional"-->
+<!--                 class="view view&#45;&#45;signup-additional is-visible"-->
+<!--                 aria-label="Additional profile information">-->
+
+<!--            &lt;!&ndash; Header &ndash;&gt;-->
+<!--            <header class="auth-header">-->
+<!--                <img src="assets/images/logo/navigation-logo.png"-->
+<!--                     alt="Bookwormie logo"-->
+<!--                     class="navigation-logo">-->
+<!--            </header>-->
+
+<!--            &lt;!&ndash; Main &ndash;&gt;-->
+<!--            <main class="auth-main">-->
+<!--                <header class="auth-intro">-->
+<!--                    <h1 class="auth-title">By wish…</h1>-->
+<!--                    <p class="auth-subtitle">You can do it later</p>-->
+<!--                </header>-->
+
+<!--                <form id="signup-additional-form" class="auth-form" novalidate>-->
+<!--                    &lt;!&ndash; Social networks &ndash;&gt;-->
+
+<!--                    <fieldset class="form-group">-->
+
+<!--                        <legend class="form-legend">Social network profiles</legend>-->
+
+<!--                        <div class="social-networks">-->
+<!--                            <div class="social-networks__item">-->
+<!--                                <img class="social-networks__item-icon"-->
+<!--                                     src="assets/images/icons/social-networks/instagram.svg"-->
+<!--                                     alt="Instagram">-->
+<!--                                <label class="social-networks__item-label">Instagram</label>-->
+<!--                            </div>-->
+
+<!--                            <div class="form-field form-field&#45;&#45;default form-field&#45;&#45;large">-->
+<!--                                <input type="text"-->
+<!--                                       name="instagram"-->
+<!--                                       maxlength="50"-->
+<!--                                       placeholder="Enter Instagram username"-->
+<!--                                       class="form-field__input">-->
+<!--                            </div>-->
+<!--                        </div>-->
+
+<!--                        <div class="social-networks">-->
+<!--                            <div class="social-networks__item">-->
+<!--                                <img class="social-networks__item-icon"-->
+<!--                                     src="assets/images/icons/social-networks/goodreads.svg"-->
+<!--                                     alt="Goodreads">-->
+<!--                                <label class="social-networks__item-label">Goodreads</label>-->
+<!--                            </div>-->
+
+<!--                            <div class="form-field form-field&#45;&#45;default form-field&#45;&#45;large">-->
+<!--                                <input type="text"-->
+<!--                                       name="Goodreads"-->
+<!--                                       maxlength="50"-->
+<!--                                       placeholder="Enter Goodreads username"-->
+<!--                                       class="form-field__input">-->
+<!--                            </div>-->
+<!--                        </div>-->
+
+<!--                        <div class="social-networks">-->
+<!--                            <div class="social-networks__item">-->
+<!--                                <img class="social-networks__item-icon"-->
+<!--                                     src="assets/images/icons/social-networks/facebook.svg"-->
+<!--                                     alt="Facebook">-->
+<!--                                <label class="social-networks__item-label">Facebook</label>-->
+<!--                            </div>-->
+
+<!--                            <div class="form-field form-field&#45;&#45;default form-field&#45;&#45;large">-->
+<!--                                <input type="text"-->
+<!--                                       name="Facebook"-->
+<!--                                       maxlength="50"-->
+<!--                                       placeholder="Enter Facebook username"-->
+<!--                                       class="form-field__input">-->
+<!--                            </div>-->
+<!--                        </div>-->
+
+<!--                        <div class="social-networks">-->
+<!--                            <div class="social-networks__item">-->
+<!--                                <img class="social-networks__item-icon"-->
+<!--                                     src="assets/images/icons/social-networks/linkedin.svg"-->
+<!--                                     alt="LinkedIn">-->
+<!--                                <label class="social-networks__item-label">LinkedIn</label>-->
+<!--                            </div>-->
+
+<!--                            <div class="form-field form-field&#45;&#45;default form-field&#45;&#45;large">-->
+<!--                                <input type="text"-->
+<!--                                       name="LinkedIn"-->
+<!--                                       maxlength="50"-->
+<!--                                       placeholder="Enter Facebook username"-->
+<!--                                       class="form-field__input">-->
+<!--                            </div>-->
+<!--                        </div>-->
+
+<!--                        <div class="social-networks">-->
+<!--                            <div class="social-networks__item">-->
+<!--                                <img class="social-networks__item-icon"-->
+<!--                                     src="assets/images/icons/social-networks/pinterest.svg"-->
+<!--                                     alt="Pinterest">-->
+<!--                                <label class="social-networks__item-label">Pinterest</label>-->
+<!--                            </div>-->
+
+<!--                            <div class="form-field form-field&#45;&#45;default form-field&#45;&#45;large">-->
+<!--                                <input type="text"-->
+<!--                                       name="Pinterest"-->
+<!--                                       maxlength="50"-->
+<!--                                       placeholder="Enter Pinterest username"-->
+<!--                                       class="form-field__input">-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </fieldset>-->
+
+<!--                    &lt;!&ndash; Genres &ndash;&gt;-->
+<!--                    <fieldset class="form-group">-->
+<!--                        <legend class="form-legend">Favourite genres</legend>-->
+
+<!--                        <ul class="genres-grid">-->
+<!--                            <li><button type="button" class="genre-option">Science fiction</button></li>-->
+<!--                            <li><button type="button" class="genre-option">Fantasy</button></li>-->
+<!--                            <li><button type="button" class="genre-option">Romance </button></li>-->
+<!--                            <li><button type="button" class="genre-option">Thriller </button></li>-->
+<!--                            <li><button type="button" class="genre-option">Mystery </button></li>-->
+<!--                            <li><button type="button" class="genre-option">Crime</button></li>-->
+<!--                            <li><button type="button" class="genre-option">Historical fiction</button></li>-->
+<!--                            <li><button type="button" class="genre-option">Adventure</button></li>-->
+<!--                            <li><button type="button" class="genre-option">Graphic Novels</button></li>-->
+<!--                            <li><button type="button" class="genre-option">Horror</button></li>-->
+<!--                            <li><button type="button" class="genre-option">Dystopia</button></li>-->
+<!--                            <li><button type="button" class="genre-option">Satire</button></li>-->
+<!--                            <li><button type="button" class="genre-option">Drama</button></li>-->
+<!--                            <li><button type="button" class="genre-option">(Auto)Biographies</button></li>-->
+<!--                            <li><button type="button" class="genre-option">History</button></li>-->
+<!--                            <li><button type="button" class="genre-option">Philosophy</button></li>-->
+<!--                            <li><button type="button" class="genre-option">Psychology</button></li>-->
+<!--                            <li><button type="button" class="genre-option">Sociology</button></li>-->
+<!--                            <li><button type="button" class="genre-option">Business and economics</button></li>-->
+<!--                            <li><button type="button" class="genre-option">Science and technology</button></li>-->
+<!--                            <li><button type="button" class="genre-option">Journalism</button></li>-->
+<!--                            <li><button type="button" class="genre-option">Sociology</button></li>-->
+<!--                            <li><button type="button" class="genre-option">Education</button></li>-->
+<!--                            <li><button type="button" class="genre-option">Art and culture</button></li>-->
+<!--                            <li><button type="button" class="genre-option">Religion and spirituality</button></li>-->
+<!--                        </ul>-->
+<!--                    </fieldset>-->
+<!--                </form>-->
+
+<!--                &lt;!&ndash; Actions &ndash;&gt;-->
+<!--                <div class="button-group&#45;&#45;two">-->
+<!--                    <button type="button"-->
+<!--                            class="button secondary-button button-label button-label&#45;&#45;secondary">-->
+<!--                        Return-->
+<!--                    </button>-->
+
+<!--                    <button type="button"-->
+<!--                            class="button primary-button button-label button-label&#45;&#45;primary">-->
+<!--                        Create profile-->
+<!--                    </button>-->
+<!--                </div>-->
+<!--            </main>-->
+
+<!--            &lt;!&ndash; Footer &ndash;&gt;-->
+<!--            <footer class="auth-footer">-->
+<!--                <a class="terms-title" href="#terms-and-conditions">Terms and conditions</a>-->
+<!--                <p class="copyright-title">-->
+<!--                    © 2026 Bookwormie-->
+<!--                </p>-->
+<!--            </footer>-->
+<!--        </section>-->
+<!--    </div>-->
 
 
     <!-- APP PAGES -->
@@ -608,10 +606,10 @@
 <!--                    <section class="shelves-section shelves-section&#45;&#45;default">-->
 
 <!--                        <div class="section-header">-->
-<!--                            <img class="section__title-bookmark"-->
+<!--                            <img class="section-header&#45;&#45;ribbonk"-->
 <!--                                 src="assets/images/design-elements/section-label.svg"-->
 <!--                                 alt="">-->
-<!--                            <h2 class="section__title">My bookshelves</h2>-->
+<!--                            <span class="section-header&#45;&#45;title">My bookshelves</span>-->
 <!--                        </div>-->
 
 <!--                        <ul class="shelves-grid">-->
@@ -690,11 +688,11 @@
 <!--                            <div class="section-header">-->
 
 <!--                                &lt;!&ndash; view mode &ndash;&gt;-->
-<!--                                <img class="section__title-bookmark view-only"-->
+<!--                                <img class="section-header&#45;&#45;ribbon view-only"-->
 <!--                                     src="assets/images/design-elements/section-label-secondary.svg"-->
 <!--                                     alt="">-->
 
-<!--                                <h2 class="section__title view-only">Section</h2>-->
+<!--                                <span class="section-header&#45;&#45;title view-only">Section</span>-->
 
 <!--                                &lt;!&ndash; edit mode &ndash;&gt;-->
 <!--                                <div class="section__title-input">-->
@@ -770,11 +768,11 @@
 <!--                            <div class="section-header">-->
 
 <!--                                &lt;!&ndash; view mode &ndash;&gt;-->
-<!--                                <img class="section__title-bookmark view-only"-->
+<!--                                <img class="section-header&#45;&#45;ribbon view-only"-->
 <!--                                     src="assets/images/design-elements/section-label-secondary.svg"-->
 <!--                                     alt="">-->
 
-<!--                                <h2 class="section__title view-only">Section</h2>-->
+<!--                                <span class="section-header&#45;&#45;title view-only">Section</span>-->
 
 <!--                                &lt;!&ndash; edit mode &ndash;&gt;-->
 <!--                                <div class="section__title-input">-->
@@ -829,214 +827,223 @@
 <!--                </div>-->
 <!--            </section>-->
 
-<!--&lt;!&ndash;            <section id="view-shelf" class="view view&#45;&#45;shelf" aria-label="Shelf view">&ndash;&gt;-->
+<!--            <section id="view-shelf" class="view view&#45;&#45;shelf" aria-label="Shelf view">-->
 
-<!--&lt;!&ndash;                &lt;!&ndash; Top bar &ndash;&gt;&ndash;&gt;-->
-<!--&lt;!&ndash;                <header class="content-header__shelf">&ndash;&gt;-->
-<!--&lt;!&ndash;                    <header class="content-header__top">&ndash;&gt;-->
-<!--&lt;!&ndash;                        <div class="search-bar">&ndash;&gt;-->
-<!--&lt;!&ndash;                            <img src="assets/images/icons/search-icon.svg" alt="">&ndash;&gt;-->
-<!--&lt;!&ndash;                            <input type="search" placeholder="Search by title or author" class="search-bar__input">&ndash;&gt;-->
-<!--&lt;!&ndash;                        </div>&ndash;&gt;-->
+<!--                &lt;!&ndash; Top bar &ndash;&gt;-->
+<!--                <header class="content-header__shelf">-->
+<!--                    <header class="content-header__top">-->
+<!--                        <div class="search-bar">-->
+<!--                            <img src="assets/images/icons/search-icon.svg" alt="">-->
+<!--                            <input type="search" placeholder="Search by title or author" class="search-bar__input">-->
+<!--                        </div>-->
 
-<!--&lt;!&ndash;                        <div class="icon-button-group">&ndash;&gt;-->
-<!--&lt;!&ndash;                            <button type="button" class="icon-button icon-edit green-icon-button large-icon-button"&ndash;&gt;-->
-<!--&lt;!&ndash;                                    aria-label="Edit shelf"></button>&ndash;&gt;-->
-<!--&lt;!&ndash;                            <button type="button" class="icon-button icon-add green-icon-button large-icon-button"&ndash;&gt;-->
-<!--&lt;!&ndash;                                    aria-label="Add book"></button>&ndash;&gt;-->
-<!--&lt;!&ndash;                        </div>&ndash;&gt;-->
-<!--&lt;!&ndash;                    </header>&ndash;&gt;-->
+<!--                        <div class="icon-button-group">-->
+<!--                            <button type="button" class="icon-button icon-edit green-icon-button large-icon-button"-->
+<!--                                    aria-label="Edit shelf"></button>-->
+<!--                            <button type="button" class="icon-button icon-add green-icon-button large-icon-button"-->
+<!--                                    aria-label="Add book"></button>-->
+<!--                        </div>-->
+<!--                    </header>-->
 
-<!--&lt;!&ndash;                    <nav class="local_navigation">&ndash;&gt;-->
-<!--&lt;!&ndash;                        <a href="#section-id">Section name</a>&ndash;&gt;-->
-<!--&lt;!&ndash;                        <span aria-hidden="true">→</span>&ndash;&gt;-->
-<!--&lt;!&ndash;                        <strong>Shelf name</strong>&ndash;&gt;-->
-<!--&lt;!&ndash;                    </nav>&ndash;&gt;-->
-<!--&lt;!&ndash;                </header>&ndash;&gt;-->
+<!--                    <nav class="local_navigation">-->
+<!--                        <a href="#section-id">Section name</a>-->
+<!--                        <span aria-hidden="true">→</span>-->
+<!--                        <strong>Shelf name</strong>-->
+<!--                    </nav>-->
+<!--                </header>-->
 
-<!--&lt;!&ndash;                &lt;!&ndash; Shelf frame (decorative) &ndash;&gt;&ndash;&gt;-->
-<!--&lt;!&ndash;                <img class="shelf-frame" src="assets/images/background-elements/shelf-frame.png" alt="">&ndash;&gt;-->
+<!--                &lt;!&ndash; Shelf frame (decorative) &ndash;&gt;-->
+<!--                <img class="shelf-frame" src="assets/images/background-elements/shelf-frame.png" alt="">-->
 
-<!--&lt;!&ndash;                &lt;!&ndash; Shelf scene / 3D stage &ndash;&gt;&ndash;&gt;-->
-<!--&lt;!&ndash;                <div class="shelf-stage" role="img" aria-label="Bookshelf with books">&ndash;&gt;-->
-<!--&lt;!&ndash;                    &lt;!&ndash; books / bookends / decorations &ndash;&gt;&ndash;&gt;-->
-<!--&lt;!&ndash;                </div>&ndash;&gt;-->
+<!--                &lt;!&ndash; Shelf scene / 3D stage &ndash;&gt;-->
+<!--                <div class="shelf-stage" role="img" aria-label="Bookshelf with books">-->
+<!--                    &lt;!&ndash; books / bookends / decorations &ndash;&gt;-->
+<!--                </div>-->
 
-<!--&lt;!&ndash;            </section>&ndash;&gt;-->
+<!--            </section>-->
 
-<!--&lt;!&ndash;            <section id="view-profile"&ndash;&gt;-->
-<!--&lt;!&ndash;                     class="view view&#45;&#45;profile"&ndash;&gt;-->
-<!--&lt;!&ndash;                     aria-label="User profile">&ndash;&gt;-->
+<!--            <section id="view-profile"-->
+<!--                     class="view view&#45;&#45;profile"-->
+<!--                     aria-label="User profile">-->
 
-<!--&lt;!&ndash;                &lt;!&ndash; Profile header &ndash;&gt;&ndash;&gt;-->
-<!--&lt;!&ndash;                <header class="profile-header">&ndash;&gt;-->
+<!--                &lt;!&ndash; Profile header &ndash;&gt;-->
+<!--                <header class="profile-header">-->
 
-<!--&lt;!&ndash;                    <img class="profile-picture"&ndash;&gt;-->
-<!--&lt;!&ndash;                         src="assets/images/design-elements/profile-picture-default.png"&ndash;&gt;-->
-<!--&lt;!&ndash;                         alt="User profile picture">&ndash;&gt;-->
+<!--                    <img class="profile-picture"-->
+<!--                         src="assets/images/design-elements/profile-picture-default.png"-->
+<!--                         alt="User profile picture">-->
 
-<!--&lt;!&ndash;                    <div class="profile-info">&ndash;&gt;-->
-<!--&lt;!&ndash;                        <h1 class="profile-name">User Name</h1>&ndash;&gt;-->
-<!--&lt;!&ndash;                        <p class="profile-email">&ndash;&gt;-->
-<!--&lt;!&ndash;                            user-email-address@gmail.com&ndash;&gt;-->
-<!--&lt;!&ndash;                        </p>&ndash;&gt;-->
-<!--&lt;!&ndash;                    </div>&ndash;&gt;-->
-<!--&lt;!&ndash;                </header>&ndash;&gt;-->
+<!--                    <div class="profile-info">-->
+<!--                        <h1 class="profile-name">User Name</h1>-->
+<!--                        <p class="profile-email">-->
+<!--                            user-email-address@gmail.com-->
+<!--                        </p>-->
+<!--                    </div>-->
+<!--                </header>-->
 
-<!--&lt;!&ndash;                <button type="button"&ndash;&gt;-->
-<!--&lt;!&ndash;                        class="static icon-button icon-edit green-icon-button large-icon-button"&ndash;&gt;-->
-<!--&lt;!&ndash;                        aria-label="Edit profile">&ndash;&gt;-->
-<!--&lt;!&ndash;                </button>&ndash;&gt;-->
+<!--                <button type="button"-->
+<!--                        class="static icon-button icon-edit green-icon-button large-icon-button"-->
+<!--                        aria-label="Edit profile">-->
+<!--                </button>-->
 
-<!--&lt;!&ndash;                &lt;!&ndash; Profile details &ndash;&gt;&ndash;&gt;-->
-<!--&lt;!&ndash;                <main class="profile-content">&ndash;&gt;-->
+<!--                &lt;!&ndash; Profile details &ndash;&gt;-->
+<!--                <main class="profile-content">-->
 
-<!--&lt;!&ndash;                    &lt;!&ndash; Social media &ndash;&gt;&ndash;&gt;-->
-<!--&lt;!&ndash;                    <section class="profile-section">&ndash;&gt;-->
-<!--&lt;!&ndash;                        <div class="section-header">&ndash;&gt;-->
-<!--&lt;!&ndash;                            <img class="section__title-bookmark" src="assets/images/design-elements/section-label-profile.svg" alt="">&ndash;&gt;-->
-<!--&lt;!&ndash;                            <h2 class="section__title">Social medias</h2>&ndash;&gt;-->
-<!--&lt;!&ndash;                        </div>&ndash;&gt;-->
+<!--                    &lt;!&ndash; Social media &ndash;&gt;-->
+<!--                    <section class="profile-section">-->
+<!--                        <div class="section-header">-->
+<!--                            <img class="section-header&#45;&#45;ribbon"-->
+<!--                                 src="assets/images/design-elements/section-label-profile.svg"-->
+<!--                                 alt="">-->
+<!--                            <span class="section-header&#45;&#45;title">Social medias</span>-->
+<!--                        </div>-->
 
-<!--&lt;!&ndash;                        <ul class="profile-social-networks">&ndash;&gt;-->
-<!--&lt;!&ndash;                            <li class="social-network__item">&ndash;&gt;-->
-<!--&lt;!&ndash;                                <img src="assets/images/icons/social-networks/instagram.svg"&ndash;&gt;-->
-<!--&lt;!&ndash;                                     alt="Instagram">&ndash;&gt;-->
-<!--&lt;!&ndash;                                <span>@username</span>&ndash;&gt;-->
-<!--&lt;!&ndash;                            </li>&ndash;&gt;-->
+<!--                        <ul class="profile-social-networks">-->
+<!--                            <li class="social-network__item">-->
+<!--                                <img src="assets/images/icons/social-networks/instagram.svg"-->
+<!--                                     alt="Instagram">-->
+<!--                                <span>@username</span>-->
+<!--                            </li>-->
 
-<!--&lt;!&ndash;                            <li class="social-network__item">&ndash;&gt;-->
-<!--&lt;!&ndash;                                <img src="assets/images/icons/social-networks/goodreads.svg"&ndash;&gt;-->
-<!--&lt;!&ndash;                                     alt="Goodreads">&ndash;&gt;-->
-<!--&lt;!&ndash;                                <span>Username</span>&ndash;&gt;-->
-<!--&lt;!&ndash;                            </li>&ndash;&gt;-->
-<!--&lt;!&ndash;                        </ul>&ndash;&gt;-->
-<!--&lt;!&ndash;                    </section>&ndash;&gt;-->
+<!--                            <li class="social-network__item">-->
+<!--                                <img src="assets/images/icons/social-networks/goodreads.svg"-->
+<!--                                     alt="Goodreads">-->
+<!--                                <span>Username</span>-->
+<!--                            </li>-->
+<!--                        </ul>-->
+<!--                    </section>-->
 
-<!--&lt;!&ndash;                    &lt;!&ndash; Favourite genres &ndash;&gt;&ndash;&gt;-->
-<!--&lt;!&ndash;                    <section class="profile-section">&ndash;&gt;-->
-<!--&lt;!&ndash;                        <div class="section-header">&ndash;&gt;-->
-<!--&lt;!&ndash;                            <img class="section__title-bookmark" src="assets/images/design-elements/section-label-profile.svg" alt="">&ndash;&gt;-->
-<!--&lt;!&ndash;                            <h2 class="section__title">Genres</h2>&ndash;&gt;-->
-<!--&lt;!&ndash;                        </div>&ndash;&gt;-->
+<!--                    &lt;!&ndash; Favourite genres &ndash;&gt;-->
+<!--                    <section class="profile-section">-->
+<!--                        <div class="section-header">-->
+<!--                            <img class="section-header&#45;&#45;ribbon"-->
+<!--                                 src="assets/images/design-elements/section-label-profile.svg"-->
+<!--                                 alt="">-->
+<!--                            <span class="section-header&#45;&#45;title">Genres</span>-->
+<!--                        </div>-->
 
-<!--&lt;!&ndash;                        <ul class="favourite-genres">&ndash;&gt;-->
-<!--&lt;!&ndash;                            <li class="favourite-genres__item">History</li>&ndash;&gt;-->
-<!--&lt;!&ndash;                            <li class="favourite-genres__item">Romance</li>&ndash;&gt;-->
-<!--&lt;!&ndash;                            <li class="favourite-genres__item">Art and culture</li>&ndash;&gt;-->
-<!--&lt;!&ndash;                        </ul>&ndash;&gt;-->
-<!--&lt;!&ndash;                    </section>&ndash;&gt;-->
-<!--&lt;!&ndash;                </main>&ndash;&gt;-->
-<!--&lt;!&ndash;            </section>&ndash;&gt;-->
+<!--                        <ul class="favourite-genres">-->
+<!--                            <li class="favourite-genres__item">History</li>-->
+<!--                            <li class="favourite-genres__item">Romance</li>-->
+<!--                            <li class="favourite-genres__item">Art and culture</li>-->
+<!--                        </ul>-->
+<!--                    </section>-->
+<!--                </main>-->
+<!--            </section>-->
 
-<!--&lt;!&ndash;            <section id="view-settings"&ndash;&gt;-->
-<!--&lt;!&ndash;                     class="view view&#45;&#45;settings"&ndash;&gt;-->
-<!--&lt;!&ndash;                     aria-label="Settings">&ndash;&gt;-->
+<!--            <section id="view-settings"-->
+<!--                     class="view view&#45;&#45;settings"-->
+<!--                     aria-label="Settings">-->
 
-<!--&lt;!&ndash;                &lt;!&ndash; Color modes &ndash;&gt;&ndash;&gt;-->
-<!--&lt;!&ndash;                <section class="settings-section">&ndash;&gt;-->
-<!--&lt;!&ndash;                    <div class="section-header">&ndash;&gt;-->
-<!--&lt;!&ndash;                        <img class="section__title-bookmark" src="assets/images/design-elements/section-label-settings-coral.svg" alt="">&ndash;&gt;-->
-<!--&lt;!&ndash;                        <h2 class="section__title">Color mode</h2>&ndash;&gt;-->
-<!--&lt;!&ndash;                    </div>&ndash;&gt;-->
+<!--                &lt;!&ndash; Color modes &ndash;&gt;-->
+<!--                <section class="settings-section">-->
+<!--                    <div class="section-header">-->
+<!--                        <img class="section-header&#45;&#45;ribbon"-->
+<!--                             src="assets/images/design-elements/section-label-settings-coral.svg"-->
+<!--                             alt="">-->
+<!--                        <span class="section-header&#45;&#45;title">Color mode</span>-->
+<!--                    </div>-->
 
-<!--&lt;!&ndash;                    <div class="color-modes">&ndash;&gt;-->
-<!--&lt;!&ndash;                        <label class="color-modes__item">&ndash;&gt;-->
-<!--&lt;!&ndash;                            <input type="radio"&ndash;&gt;-->
-<!--&lt;!&ndash;                                   name="color-mode"&ndash;&gt;-->
-<!--&lt;!&ndash;                                   value="dark"&ndash;&gt;-->
-<!--&lt;!&ndash;                                   checked>&ndash;&gt;-->
+<!--                    <div class="color-modes">-->
+<!--                        <label class="color-modes__item">-->
+<!--                            <input type="radio"-->
+<!--                                   name="color-mode"-->
+<!--                                   value="dark"-->
+<!--                                   checked>-->
 
-<!--&lt;!&ndash;                            <span class="custom-radio coral"></span>&ndash;&gt;-->
+<!--                            <span class="custom-radio coral"></span>-->
 
-<!--&lt;!&ndash;                            <div class="mode-card">&ndash;&gt;-->
-<!--&lt;!&ndash;                                <img src="assets/images/design-elements/light-mode-thumbnail.png"&ndash;&gt;-->
-<!--&lt;!&ndash;                                     alt="">&ndash;&gt;-->
-<!--&lt;!&ndash;                                <span class="mode-label mode-label-black">Light</span>&ndash;&gt;-->
-<!--&lt;!&ndash;                            </div>&ndash;&gt;-->
-<!--&lt;!&ndash;                        </label>&ndash;&gt;-->
+<!--                            <div class="mode-card">-->
+<!--                                <img src="assets/images/design-elements/light-mode-thumbnail.png"-->
+<!--                                     alt="">-->
+<!--                                <span class="mode-label mode-label-black">Light</span>-->
+<!--                            </div>-->
+<!--                        </label>-->
 
-<!--&lt;!&ndash;                        <label class="color-modes__item">&ndash;&gt;-->
-<!--&lt;!&ndash;                            <input type="radio"&ndash;&gt;-->
-<!--&lt;!&ndash;                                   name="color-mode"&ndash;&gt;-->
-<!--&lt;!&ndash;                                   value="dark"&ndash;&gt;-->
-<!--&lt;!&ndash;                                   checked>&ndash;&gt;-->
+<!--                        <label class="color-modes__item">-->
+<!--                            <input type="radio"-->
+<!--                                   name="color-mode"-->
+<!--                                   value="dark"-->
+<!--                                   checked>-->
 
-<!--&lt;!&ndash;                            <span class="custom-radio coral"></span>&ndash;&gt;-->
+<!--                            <span class="custom-radio coral"></span>-->
 
-<!--&lt;!&ndash;                            <div class="mode-card">&ndash;&gt;-->
-<!--&lt;!&ndash;                                <img src="assets/images/design-elements/dark-mode-thumbnail.png"&ndash;&gt;-->
-<!--&lt;!&ndash;                                     alt="">&ndash;&gt;-->
-<!--&lt;!&ndash;                                <span class="mode-label mode-label-white">Dark</span>&ndash;&gt;-->
-<!--&lt;!&ndash;                            </div>&ndash;&gt;-->
-<!--&lt;!&ndash;                        </label>&ndash;&gt;-->
+<!--                            <div class="mode-card">-->
+<!--                                <img src="assets/images/design-elements/dark-mode-thumbnail.png"-->
+<!--                                     alt="">-->
+<!--                                <span class="mode-label mode-label-white">Dark</span>-->
+<!--                            </div>-->
+<!--                        </label>-->
 
-<!--&lt;!&ndash;                        <div class="mode-card">&ndash;&gt;-->
-<!--&lt;!&ndash;                            <img src="assets/images/design-elements/white-and-black.png"&ndash;&gt;-->
-<!--&lt;!&ndash;                                 alt="">&ndash;&gt;-->
-<!--&lt;!&ndash;                            <span>In development</span>&ndash;&gt;-->
-<!--&lt;!&ndash;                        </div>&ndash;&gt;-->
-<!--&lt;!&ndash;                    </div>&ndash;&gt;-->
-<!--&lt;!&ndash;                </section>&ndash;&gt;-->
+<!--                        <div class="mode-card">-->
+<!--                            <img src="assets/images/design-elements/white-and-black.png"-->
+<!--                                 alt="">-->
+<!--                            <span>In development</span>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </section>-->
 
-<!--&lt;!&ndash;                &lt;!&ndash; Profile &ndash;&gt;&ndash;&gt;-->
-<!--&lt;!&ndash;                <section class="settings-section">&ndash;&gt;-->
-<!--&lt;!&ndash;                    <div class="section-header">&ndash;&gt;-->
-<!--&lt;!&ndash;                        <img class="section__title-bookmark green-settings" src="assets/images/design-elements/section-label-settings-green.svg" alt="">&ndash;&gt;-->
-<!--&lt;!&ndash;                        <h2 class="section__title">Profile</h2>&ndash;&gt;-->
-<!--&lt;!&ndash;                    </div>&ndash;&gt;-->
+<!--                &lt;!&ndash; Profile &ndash;&gt;-->
+<!--                <section class="settings-section">-->
+<!--                    <div class="section-header">-->
+<!--                        <img class="section-header&#45;&#45;ribbon"-->
+<!--                             src="assets/images/design-elements/section-label-settings-green.svg"-->
+<!--                             alt="">-->
+<!--                        <span class="section-header&#45;&#45;title">Profile</span>-->
+<!--                    </div>-->
 
-<!--&lt;!&ndash;                    <div class="profile-actions">&ndash;&gt;-->
-<!--&lt;!&ndash;                        <div class="checkbox-group">&ndash;&gt;-->
-<!--&lt;!&ndash;                            <input type="checkbox"&ndash;&gt;-->
-<!--&lt;!&ndash;                                   id="email-notifications"&ndash;&gt;-->
-<!--&lt;!&ndash;                                   name="email-notifications">&ndash;&gt;-->
+<!--                    <div class="profile-actions">-->
+<!--                        <div class="checkbox-group">-->
+<!--                            <input type="checkbox"-->
+<!--                                   id="email-notifications"-->
+<!--                                   name="email-notifications">-->
 
-<!--&lt;!&ndash;                            <label for="email-notifications">&ndash;&gt;-->
-<!--&lt;!&ndash;                                Email notifications for updates&ndash;&gt;-->
-<!--&lt;!&ndash;                            </label>&ndash;&gt;-->
-<!--&lt;!&ndash;                        </div>&ndash;&gt;-->
+<!--                            <label for="email-notifications">-->
+<!--                                Email notifications for updates-->
+<!--                            </label>-->
+<!--                        </div>-->
 
-<!--&lt;!&ndash;                        <div class="button-group button-group&#45;&#45;two">&ndash;&gt;-->
-<!--&lt;!&ndash;                            <button type="button"&ndash;&gt;-->
-<!--&lt;!&ndash;                                    class="button primary-button button-label button-label&#45;&#45;primary">&ndash;&gt;-->
-<!--&lt;!&ndash;                                Log out&ndash;&gt;-->
-<!--&lt;!&ndash;                            </button>&ndash;&gt;-->
+<!--                        <div class="button-group button-group&#45;&#45;two">-->
+<!--                            <button type="button"-->
+<!--                                    class="button primary-button button-label button-label&#45;&#45;primary">-->
+<!--                                Log out-->
+<!--                            </button>-->
 
-<!--&lt;!&ndash;                            <button type="button"&ndash;&gt;-->
-<!--&lt;!&ndash;                                    class="button secondary-button button-label button-label&#45;&#45;permanent"&ndash;&gt;-->
-<!--&lt;!&ndash;                                    data-open-confirmation>&ndash;&gt;-->
-<!--&lt;!&ndash;                                Delete profile&ndash;&gt;-->
-<!--&lt;!&ndash;                            </button>&ndash;&gt;-->
-<!--&lt;!&ndash;                        </div>&ndash;&gt;-->
-<!--&lt;!&ndash;                    </div>&ndash;&gt;-->
-<!--&lt;!&ndash;                </section>&ndash;&gt;-->
+<!--                            <button type="button"-->
+<!--                                    class="button secondary-button button-label button-label&#45;&#45;permanent"-->
+<!--                                    data-open-confirmation>-->
+<!--                                Delete profile-->
+<!--                            </button>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </section>-->
 
-<!--&lt;!&ndash;                &lt;!&ndash; Legal &ndash;&gt;&ndash;&gt;-->
-<!--&lt;!&ndash;                <section id="terms-and-conditions"&ndash;&gt;-->
-<!--&lt;!&ndash;                         class="settings-section settings-section&#45;&#45;legal">&ndash;&gt;-->
+<!--                &lt;!&ndash; Legal &ndash;&gt;-->
+<!--                <section id="terms-and-conditions"-->
+<!--                         class="settings-section settings-section&#45;&#45;legal">-->
+<!--                    <div class="section-header">-->
+<!--                        <img class="section-header&#45;&#45;ribbon"-->
+<!--                             src="assets/images/design-elements/section-label-settings-aqua.svg"-->
+<!--                             alt="">-->
+<!--                        <span class="section-header&#45;&#45;title">Terms and conditions</span>-->
+<!--                    </div>-->
 
-<!--&lt;!&ndash;                    <div class="section-header">&ndash;&gt;-->
-<!--&lt;!&ndash;                        <img class="section__title-bookmark aqua-settings" src="assets/images/design-elements/section-label-settings-aqua.svg" alt="">&ndash;&gt;-->
-<!--&lt;!&ndash;                        <h2 class="section__title">Terms and conditions</h2>&ndash;&gt;-->
-<!--&lt;!&ndash;                    </div>&ndash;&gt;-->
-
-<!--&lt;!&ndash;                    <div class="settings-section__article">&ndash;&gt;-->
-<!--&lt;!&ndash;                        <p>&ndash;&gt;-->
-<!--&lt;!&ndash;                            This application was developed for educational purposes as part of a thesis.&ndash;&gt;-->
-<!--&lt;!&ndash;                            No real personal data of users is collected, stored, or processed within the scope of the project.&ndash;&gt;-->
-<!--&lt;!&ndash;                        </p>&ndash;&gt;-->
-<!--&lt;!&ndash;                        <p>&ndash;&gt;-->
-<!--&lt;!&ndash;                            In a real-world implementation, the system would comply with GDPR&ndash;&gt;-->
-<!--&lt;!&ndash;                            and industry best practices for information security.&ndash;&gt;-->
-<!--&lt;!&ndash;                        </p>&ndash;&gt;-->
-<!--&lt;!&ndash;                        <p>&ndash;&gt;-->
-<!--&lt;!&ndash;                            The application is intended solely for demonstration purposes&ndash;&gt;-->
-<!--&lt;!&ndash;                            and does not constitute a commercial product.&ndash;&gt;-->
-<!--&lt;!&ndash;                        </p>&ndash;&gt;-->
-<!--&lt;!&ndash;                    </div>&ndash;&gt;-->
-<!--&lt;!&ndash;                </section>&ndash;&gt;-->
-<!--&lt;!&ndash;            </section>&ndash;&gt;-->
+<!--                    <div class="settings-section__article">-->
+<!--                        <p>-->
+<!--                            This application was developed for educational purposes as part of a thesis.-->
+<!--                            No real personal data of users is collected, stored, or processed within the scope of the project.-->
+<!--                        </p>-->
+<!--                        <p>-->
+<!--                            In a real-world implementation, the system would comply with GDPR-->
+<!--                            and industry best practices for information security.-->
+<!--                        </p>-->
+<!--                        <p>-->
+<!--                            The application is intended solely for demonstration purposes-->
+<!--                            and does not constitute a commercial product.-->
+<!--                        </p>-->
+<!--                    </div>-->
+<!--                </section>-->
+<!--            </section>-->
 <!--        </main>-->
 <!--    </div>-->
 

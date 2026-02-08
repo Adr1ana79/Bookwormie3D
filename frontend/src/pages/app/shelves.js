@@ -1,11 +1,18 @@
 export function initShelves() {
+    const shelvesView = document.getElementById('view-shelves');
+    const shelfView = document.getElementById('view-shelf');
 
-    document
-    .querySelectorAll('.shelf-card')
-    .forEach(card => {
+    if (!shelvesView || !shelfView) return;
+
+    const shelfCards = shelvesView.querySelectorAll('.shelf-card');
+
+    shelfCards.forEach(card => {
         card.addEventListener('click', () => {
-            showView('view-shelf');
+            // крием shelves
+            shelvesView.classList.add('hidden');
+
+            // показваме single shelf
+            shelfView.classList.remove('hidden');
         });
     });
-
 }

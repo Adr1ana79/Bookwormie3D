@@ -1,14 +1,32 @@
-import { showView, showApp } from '../viewManager.js';
+import { switchView } from '../viewManager.js';
+import { enterApp } from '../app/appFlow.js';
 
 export function initSignupAdditional() {
-    const buttons = document.querySelectorAll('#view-signup-additional .button');
+    const additionalView =
+        document.getElementById('view-signup-additional');
+    if (!additionalView) return;
 
-    buttons[0].addEventListener('click', () => {
-        showView('view-signup');
+    const buttons =
+        additionalView.querySelectorAll('.button-group--two .button');
+
+    const returnButton = buttons[0];
+    const createProfileButton = buttons[1];
+
+    const signupView = document.getElementById('view-signup');
+
+    // secondary → back to signup
+    returnButton.addEventListener('click', () => {
+        if (!signupView) return;
+        switchView(additionalView, signupView);
     });
 
-    buttons[1].addEventListener('click', () => {
-        showApp();
-        showView('view-shelves');
+    // primary → app (fake success)
+    createProfileButton.addEventListener('click', () => {
+        // ТУК по-късно:
+        // - save profile data
+        // - call API
+        // - show app layout
+
+        enterApp();
     });
 }

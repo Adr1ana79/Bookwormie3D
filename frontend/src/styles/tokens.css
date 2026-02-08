@@ -128,3 +128,22 @@ body {
     --section-title-size: 1.375rem;
 }
 
+[data-theme="dark"] {
+    /* Ще се доразвива */
+
+    /* Dark surfaces (заместват white + beige) */
+    --bg-primary: #0F1512;
+    --bg-secondary: #151D19;
+    --bg-tertiary: #1C2621;
+
+    /* Text става светъл */
+    --text-primary: #F5ECDB;
+    --text-secondary: #CFC7BA;
+
+    /* Може да оставиш акцентите същите,
+       или леко да ги изсветлиш */
+    --aqua-100: #4DB6AE;
+    --mint-500: #73A891;
+    --coral-200: #FA7266;
+}
+

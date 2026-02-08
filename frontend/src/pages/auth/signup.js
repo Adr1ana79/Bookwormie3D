@@ -1,22 +1,28 @@
-import { fadeOutView, fadeInView } from '../viewManager.js';
+import { switchView } from '../viewManager.js';
 
 export function initSignup() {
-    const view = document.getElementById('view-signup');
-    if (!view) return;
+    const signupView = document.getElementById('view-signup');
+    if (!signupView) return;
 
-    const [btnLogin, btnContinue] =
-        view.querySelectorAll('.button-group .button');
+    const buttons = signupView.querySelectorAll('.button-group .button');
+    const loginButton = buttons[0];
+    const continueButton = buttons[1];
+
+    const loginView = document.getElementById('view-login');
+    const signupAdditionalView =
+        document.getElementById('view-signup-additional');
 
     // secondary → login
-    btnLogin.addEventListener('click', () => {
-        fadeOutView(view, () => {
-            fadeInView(document.getElementById('view-login'));
-        });
+    loginButton.addEventListener('click', () => {
+        if (!loginView) return;
+        switchView(signupView, loginView);
     });
 
-    // primary → signup-additional (ще го добавим по-късно)
-    btnContinue.addEventListener('click', e => {
-        e.preventDefault();
-        console.log('Signup → additional (later)');
+    // primary → signup additional
+    continueButton.addEventListener('click', event => {
+        event.preventDefault(); 
+        if (!signupAdditionalView) return;
+        switchView(signupView, signupAdditionalView);
     });
 }
+

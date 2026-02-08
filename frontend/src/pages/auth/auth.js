@@ -1,76 +1,60 @@
-import { fadeOutView, fadeInView } from '../viewManager.js';
+import { switchView } from '../viewManager.js';
 
 export function initAuth() {
     const authView = document.getElementById('view-auth');
     if (!authView) return;
 
-    const options = document.querySelectorAll('.auth-option');
-    const background = document.querySelector('.auth-selector__background');
+    const options = authView.querySelectorAll('.auth-option');
 
     let currentMode = 'login';
 
     function setMode(mode) {
+        if (currentMode === mode) return;
+
         currentMode = mode;
 
-        authView.classList.toggle('auth-screen--login', mode === 'login');
-        authView.classList.toggle('auth-screen--signup', mode === 'signup');
-
-        background.classList.toggle(
-            'auth-selector__background--login',
+        authView.classList.toggle(
+            'auth-screen--login',
             mode === 'login'
         );
-        background.classList.toggle(
-            'auth-selector__background--signup',
+        authView.classList.toggle(
+            'auth-screen--signup',
             mode === 'signup'
         );
 
-        options.forEach(btn => {
-            const isActive = btn.dataset.mode === mode;
-            btn.classList.toggle('is-active', isActive);
-            btn.setAttribute('aria-pressed', isActive);
+        options.forEach(button => {
+            const isActive = button.dataset.mode === mode;
+            button.classList.toggle('is-active', isActive);
+            button.setAttribute('aria-pressed', String(isActive));
         });
     }
 
-    function navigateToMode(mode) {
-        fadeOutView(authView, () => {
-            fadeInView(
-                document.getElementById(
-                    mode === 'login' ? 'view-login' : 'view-signup'
-                )
+    options.forEach(button => {
+        const mode = button.dataset.mode;
+
+        // hover / focus → preview
+        button.addEventListener('mouseenter', () => {
+            setMode(mode);
+        });
+
+        button.addEventListener('focus', () => {
+            setMode(mode);
+        });
+
+        // click → избор + навигация
+        button.addEventListener('click', () => {
+            setMode(mode);
+
+            const targetView = document.getElementById(
+                mode === 'login' ? 'view-login' : 'view-signup'
             );
+
+            if (targetView) {
+                switchView(authView, targetView);
+            }
         });
-    }
-
-    options.forEach(btn => {
-        btn.addEventListener('mouseenter', () =>
-            setMode(btn.dataset.mode)
-        );
-
-        btn.addEventListener('focus', () =>
-            setMode(btn.dataset.mode)
-        );
-
-        btn.addEventListener('click', () =>
-            navigateToMode(btn.dataset.mode)
-        );
     });
 
-    setMode('login');
+    // initial state
+    setMode(currentMode);
 }
-
-
-/*
-import { initStart } from './start.js';
-import { initLogin } from './login.js';
-import { initSignup } from './signup.js';
-import { initSignupAdditional } from './signupAdditional.js';
-import { initAuth } from './auth.js';
-
-export function initAuthFlow() {
-    initStart();
-    initAuth();
-    initLogin();
-    initSignup();
-    initSignupAdditional();
-}
- */

@@ -1,30 +1,32 @@
-import { FADE_DURATION } from "../config.js";
+const FADE_DURATION = 600;
 
-export function showView(viewId) {
-    sessionStorage.setItem("currentView", viewId);
-
-    document.querySelectorAll(".view").forEach(v => {
-        v.classList.remove("is-visible");
-    });
-
-    const view = document.getElementById(viewId);
+export function fadeInView(view) {
     if (!view) return;
 
-    view.classList.add("is-visible");
+    requestAnimationFrame(() => {
+        view.classList.add('is-visible');
+    });
 }
 
 export function fadeOutView(view, callback) {
-    view.classList.remove("is-visible");
-    view.classList.add("is-fading-out");
+    if (!view) return;
+
+    view.classList.add('is-fading-out');
 
     setTimeout(() => {
-        view.classList.remove("is-fading-out");
-        if (callback) callback();
+        view.classList.remove('is-fading-out');
+        view.classList.remove('is-visible');
+
+        if (typeof callback === 'function') {
+            callback();
+        }
     }, FADE_DURATION);
 }
 
-export function fadeInView(view) {
-    requestAnimationFrame(() => {
-        view.classList.add("is-visible");
+export function switchView(fromView, toView) {
+    if (fromView === toView) return;
+
+    fadeOutView(fromView, () => {
+        fadeInView(toView);
     });
 }

@@ -1,36 +1,27 @@
 export function initSidebarNav() {
     const sidebar = document.getElementById('sidebar');
-    if (!sidebar) return;
 
-    const items = sidebar.querySelectorAll('.sidebar__item');
-    const appViews = document.querySelectorAll(
-        '#view-shelves, #view-profile, #view-settings'
-    );
+    sidebar.addEventListener('click', (e) => {
+        const btn = e.target.closest('button[data-view]');
+        if (!btn) return;
 
-    items.forEach(item => {
-        item.addEventListener('click', event => {
-            event.preventDefault();
-
-            const link = item.querySelector('a');
-            if (!link) return;
-
-            const targetId = link.getAttribute('href')?.replace('#', '');
-            if (!targetId) return;
-
-            const targetView = document.getElementById(targetId);
-            if (!targetView) return;
-
-            items.forEach(i =>
-                i.classList.remove('sidebar__item--active')
-            );
-
-            item.classList.add('sidebar__item--active');
-
-            appViews.forEach(view =>
-                view.classList.add('hidden')
-            );
-
-            targetView.classList.remove('hidden');
-        });
+        document.dispatchEvent(
+            new CustomEvent('app:navigate', {
+                detail: btn.dataset.view
+            })
+        );
     });
 }
+
+// ui-elements/navbar.js
+export function setActiveNav(viewKey) {
+    document
+        .querySelectorAll('.sidebar__item')
+        .forEach(li => li.classList.remove('sidebar__item--active'));
+
+    document
+        .querySelector(`[data-view="${viewKey}"]`)
+        ?.closest('.sidebar__item')
+        ?.classList.add('sidebar__item--active');
+}
+

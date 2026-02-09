@@ -1,16 +1,19 @@
 import { initSidebarNav, setActiveNav } from '../../ui-elements/navbar.js';
-import { switchView } from '../viewManager.js';
 
 let currentView = null;
+let appMain = null;
+let views = null;
 
 export function initAppFlow() {
     initSidebarNav();
 
     const authWrapper = document.getElementById('auth-wrapper');
     const appLayout = document.querySelector('.app-layout');
+    appMain = document.getElementById('app-main');
 
-    const views = {
+    views = {
         shelves: document.getElementById('view-shelves'),
+        shelf: document.getElementById('view-shelf'),
         profile: document.getElementById('view-profile'),
         settings: document.getElementById('view-settings'),
     };
@@ -20,7 +23,8 @@ export function initAppFlow() {
         authWrapper.classList.add('hidden');
         appLayout.classList.remove('hidden');
 
-        showView(views.shelves, 'shelves');
+        showView('shelves');
+        setActiveNav('shelves');
     });
 
     // 🚪 logout
@@ -31,32 +35,44 @@ export function initAppFlow() {
         currentView = null;
     });
 
-    // 🧭 sidebar nav
+    // 🧭 sidebar navigation
     document.addEventListener('app:navigate', (e) => {
         const viewKey = e.detail;
-        const nextView = views[viewKey];
+        showView(viewKey);
+        setActiveNav(viewKey);
+    });
 
-        if (nextView) {
-            showView(nextView, viewKey);
-        }
+    // 📚 shelves → shelf
+    document.addEventListener('app:open-shelf', () => {
+        showView('shelf');
     });
 }
 
-function showView(nextView, viewKey) {
-    if (!nextView) return;
-
-    nextView.classList.remove('hidden');
-
-    if (!currentView) {
-        nextView.classList.add('is-visible');
-    } else {
-        switchView(currentView, nextView);
-    }
-
-    setActiveNav(viewKey);
-
-    currentView = nextView;
+function resetViewState(view) {
+    view.classList.remove(
+        'hidden',
+        'is-visible',
+        'is-fading-out'
+    );
 }
+
+function showView(viewKey) {
+    const nextView = views[viewKey];
+    if (!nextView || !appMain) return;
+    if (currentView === viewKey) return;
+
+    // махаме стария екран
+    appMain.innerHTML = '';
+
+    // 🔑 ТУК я викаш
+    resetViewState(nextView);
+
+    // добавяме новия
+    appMain.appendChild(nextView);
+
+    currentView = viewKey;
+}
+
 
 
 export function enterApp() {

@@ -47,7 +47,11 @@
     right: 0;
 
     flex: 1;
-    /*overflow: hidden;*/
+
+    position: relative;
+
+    overflow-y: auto;
+    overflow-x: hidden;
 
     display: flex;
     flex-direction: column;

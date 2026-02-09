@@ -1,21 +1,16 @@
+// pages/app/shelf.js
 export function initShelf() {
     const shelfView = document.getElementById('view-shelf');
-    const shelvesView = document.getElementById('view-shelves');
+    if (!shelfView) return;
 
-    if (!shelfView || !shelvesView) return;
-
-    const backLink =
-        shelfView.querySelector('.local_navigation a');
-
+    const backLink = shelfView.querySelector('.local_navigation a');
     if (!backLink) return;
 
-    backLink.addEventListener('click', event => {
+    backLink.addEventListener('click', (event) => {
         event.preventDefault();
 
-        // крием single shelf
-        shelfView.classList.add('hidden');
-
-        // показваме shelves
-        shelvesView.classList.remove('hidden');
+        document.dispatchEvent(
+            new CustomEvent('app:back-to-shelves')
+        );
     });
 }

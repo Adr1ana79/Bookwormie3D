@@ -365,7 +365,8 @@
 
         <section id="view-signup-additional"
                  class="view view--signup-additional"
-                 aria-label="Additional profile information">
+                 aria-label="Additional profile information"
+                 data-mode="signup">
 
             <!-- Header -->
             <header class="auth-header">
@@ -520,6 +521,24 @@
                         Create profile
                     </button>
                 </div>
+
+                <div class="button-group--three edit-actions" hidden>
+                    <button type="button"
+                            class="button secondary-button button-label button-label--secondary edit-cancel">
+                        Cancel
+                    </button>
+
+                    <button type="button"
+                            class="button neutral-button button-label button-label--permanent edit-clean">
+                        Clean
+                    </button>
+
+                    <button type="button"
+                            class="button primary-button button-label button-label--primary edit-save">
+                        Save
+                    </button>
+                </div>
+
             </main>
 
             <!-- Footer -->
@@ -573,7 +592,10 @@
         </aside>
 
         <div id="app-main" class="app-main">
-            <section  id="view-shelves" class="view-shelves is-editing hidden" aria-label="Shelves">
+            <section  id="view-shelves"
+                      class="view-shelves is-editing hidden"
+                      data-mode="view"
+                      aria-label="Shelves">
                 <!-- Top bar -->
                 <header class="content-header">
                     <div class="search-bar">
@@ -818,7 +840,10 @@
                 </div>
             </section>
 
-            <section id="view-shelf" class="view--shelf hidden" aria-label="Shelf view">
+            <section id="view-shelf"
+                     class="view--shelf hidden"
+                     data-mode="view"
+                     aria-label="Shelf view">
 
                 <!-- Top bar -->
                 <header class="content-header__shelf">
@@ -855,17 +880,42 @@
 
             <section id="view-profile"
                      class="view--profile hidden"
+                     data-mode="view"
                      aria-label="User profile">
 
                 <!-- Profile header -->
                 <header class="profile-header">
 
-                    <img class="profile-picture"
-                         src="assets/images/design-elements/profile-picture-default.png"
-                         alt="User profile picture">
+                    <div class="profile-picture-container">
+                        <img class="profile-picture"
+                             src="assets/images/design-elements/profile-picture-default.png"
+                             alt="User profile picture">
+
+                        <button class="icon-button icon-edit green-icon-button small-icon-button edit-secondary"></button>
+                    </div>
 
                     <div class="profile-info">
-                        <h1 class="profile-name">User Name</h1>
+                        <div class="profile-name-container" data-name-mode="view">
+                            <h1 class="profile-name">User Name</h1>
+
+                            <label>
+                            <input type="text"
+                                   class="profile-name-input"
+                                   value="User Name"
+                                   maxlength="30">
+                            </label>
+
+                            <button type="button" class="icon-button icon-edit green-icon-button small-icon-button edit-secondary"></button>
+                            <div class="icon-button-group edit-tertiary">
+                                <button type="button"
+                                        class="icon-button icon-save dark-green-icon-button small-icon-button">
+                                </button>
+
+                                <button type="button"
+                                        class="icon-button icon-cancel red-icon-button small-icon-button">
+                                </button>
+                            </div>
+                        </div>
                         <p class="profile-email">
                             user-email-address@gmail.com
                         </p>
@@ -873,52 +923,74 @@
                 </header>
 
                 <button type="button"
-                        class="static icon-button icon-edit green-icon-button large-icon-button"
+                        class="static icon-button icon-edit green-icon-button large-icon-button profile-main-edit-button"
+                        id="main-edit-button"
                         aria-label="Edit profile">
                 </button>
 
+                <div class="static icon-button-group--submenu-button hidden">
+                    <img src="assets/images/icons/edit-icon.svg" alt="" class="submenu-icon">
+
+                    <button type="button"
+                            class="icon-button icon-save dark-green-icon-button small-icon-button">
+                    </button>
+
+                    <button type="button"
+                            class="icon-button icon-cancel red-icon-button small-icon-button">
+                    </button>
+                </div>
+
+
                 <!-- Profile details -->
-                <main class="profile-content">
+                <main class="profile-content-container">
+                    <div class="profile-content">
+                        <!-- Social media -->
+                        <section class="profile-section">
+                            <div class="section-header">
+                                <img class="section-header--ribbon"
+                                     src="assets/images/design-elements/section-label-profile.svg"
+                                     alt="">
+                                <span class="section-header--title">Social medias</span>
+                            </div>
 
-                    <!-- Social media -->
-                    <section class="profile-section">
-                        <div class="section-header">
-                            <img class="section-header--ribbon"
-                                 src="assets/images/design-elements/section-label-profile.svg"
-                                 alt="">
-                            <span class="section-header--title">Social medias</span>
-                        </div>
+                            <ul class="profile-social-networks">
+                                <li class="social-network__item">
+                                    <img src="assets/images/icons/social-networks/instagram.svg"
+                                         alt="Instagram">
+                                    <span>@username</span>
+                                </li>
 
-                        <ul class="profile-social-networks">
-                            <li class="social-network__item">
-                                <img src="assets/images/icons/social-networks/instagram.svg"
-                                     alt="Instagram">
-                                <span>@username</span>
-                            </li>
+                                <li class="social-network__item">
+                                    <img src="assets/images/icons/social-networks/goodreads.svg"
+                                         alt="Goodreads">
+                                    <span>Username</span>
+                                </li>
+                            </ul>
+                        </section>
 
-                            <li class="social-network__item">
-                                <img src="assets/images/icons/social-networks/goodreads.svg"
-                                     alt="Goodreads">
-                                <span>Username</span>
-                            </li>
-                        </ul>
-                    </section>
+                        <!-- Favourite genres -->
+                        <section class="profile-section">
+                            <div class="section-header">
+                                <img class="section-header--ribbon"
+                                     src="assets/images/design-elements/section-label-profile.svg"
+                                     alt="">
+                                <span class="section-header--title">Genres</span>
+                            </div>
 
-                    <!-- Favourite genres -->
-                    <section class="profile-section">
-                        <div class="section-header">
-                            <img class="section-header--ribbon"
-                                 src="assets/images/design-elements/section-label-profile.svg"
-                                 alt="">
-                            <span class="section-header--title">Genres</span>
-                        </div>
+                            <ul class="favourite-genres">
+                                <li class="favourite-genres__item">History</li>
+                                <li class="favourite-genres__item">Romance</li>
+                                <li class="favourite-genres__item">Art and culture</li>
+                            </ul>
+                        </section>
+                    </div>
 
-                        <ul class="favourite-genres">
-                            <li class="favourite-genres__item">History</li>
-                            <li class="favourite-genres__item">Romance</li>
-                            <li class="favourite-genres__item">Art and culture</li>
-                        </ul>
-                    </section>
+                    <button type="button"
+                            class="icon-button icon-edit green-icon-button small-icon-button edit-secondary"
+                            aria-label="Edit profile socials and genres"
+                            id=" edit-additional-button">
+
+                    </button>
                 </main>
             </section>
 
@@ -939,7 +1011,7 @@
                         <label class="color-modes__item">
                             <input type="radio"
                                    name="color-mode"
-                                   value="dark"
+                                   value="light"
                                    checked>
 
                             <span class="custom-radio coral"></span>
@@ -954,8 +1026,7 @@
                         <label class="color-modes__item">
                             <input type="radio"
                                    name="color-mode"
-                                   value="dark"
-                                   checked>
+                                   value="dark">
 
                             <span class="custom-radio coral"></span>
 
@@ -995,12 +1066,12 @@
                         </div>
 
                         <div class="button-group button-group--two">
-                            <button type="button"
+                            <button type="button" id="logout-btn"
                                     class="button primary-button button-label button-label--primary">
                                 Log out
                             </button>
 
-                            <button type="button"
+                            <button type="button" id="delete-account-btn"
                                     class="button secondary-button button-label button-label--permanent"
                                     data-open-confirmation>
                                 Delete profile
@@ -1079,6 +1150,38 @@
     </div>
 
     <!-- MODALS -->
+    <section class="modal modal--confirmation"
+             role="dialog"
+             aria-modal="true"
+             aria-labelledby="confirmation-title"
+             aria-describedby="confirmation-description"
+             hidden>
+
+        <div class="modal__overlay"></div>
+
+        <div class="modal__content">
+            <h2 id="confirmation-title">Are you sure?</h2>
+
+            <p id="confirmation-description">
+                This action is irreversible. All related data will be permanently deleted.
+            </p>
+
+            <div class="button-group button-group--two">
+                <button type="button"
+                        class="button primary-button button-label button-label--primary"
+                        data-close>
+                    Cancel
+                </button>
+
+                <button type="button"
+                        class="button secondary-button button-label button-label--permanent"
+                        data-confirm>
+                    Delete
+                </button>
+            </div>
+        </div>
+    </section>
+
     <section id="add-shelf-modal"
              class="modal"
              role="dialog"
@@ -1270,38 +1373,78 @@
         </div>
     </section>
 
-    <section class="modal modal--confirmation"
+    <section id="edit-profile-picture-modal"
+             class="modal modal--edit-profile-picture"
              role="dialog"
              aria-modal="true"
-             aria-labelledby="confirmation-title"
-             aria-describedby="confirmation-description"
+             aria-labelledby="edit-profile-picture"
              hidden>
 
         <div class="modal__overlay"></div>
 
         <div class="modal__content">
-            <h2 id="confirmation-title">Are you sure?</h2>
+            <div class="avatar-selection">
+                <label class="avatar-option is-selected">
+                    <input type="radio" name="avatar" value="preset-1" checked>
+                    <img src="assets/images/profile-personalisation/default-picture.svg" alt="Avatar 1">
+                </label>
 
-            <p id="confirmation-description">
-                This action is irreversible. All related data will be permanently deleted.
-            </p>
+                <label class="avatar-option">
+                    <input type="radio" name="avatar" value="preset-2">
+                    <img src="assets/images/profile-personalisation/coral-picture.svg" alt="Avatar 1">
+                </label>
+
+                <label class="avatar-option">
+                    <input type="radio" name="avatar" value="preset-3">
+                    <img src="assets/images/profile-personalisation/aqua-picture.svg" alt="Avatar 2">
+                </label>
+
+                <label class="avatar-option">
+                    <input type="radio" name="avatar" value="preset-4">
+                    <img src="assets/images/profile-personalisation/yellow-picture.svg" alt="Avatar 2">
+
+                </label>
+
+                <label class="avatar-option">
+                    <input type="radio" name="avatar" value="preset-5">
+                    <img src="assets/images/profile-personalisation/green-picture.svg" alt="Avatar 2">
+                </label>
+            </div>
+
+            <div class="upload-section">
+                <div class="avatar-option current-avatar-preview">
+                    <img src="assets/images/profile-personalisation/image-holder.svg" id="preview-img" alt="Preview">
+                </div>
+
+                <div class="upload-controls">
+                    <div class="upload-actions">
+                        <label for="file-upload" class="button-upload">
+                            <i class="icon-upload"></i> Upload photo
+                        </label>
+                        <input id="file-upload" type="file" accept="image/jpeg, image/png" hidden>
+
+                        <button type="button" class="icon-button icon-delete small-icon-button red-icon-button"></button>
+                    </div>
+
+                    <p class="upload-hint">Supports: JPG, PNG, up to 2MB</p>
+                </div>
+            </div>
 
             <div class="button-group button-group--two">
                 <button type="button"
                         class="button primary-button button-label button-label--primary"
                         data-close>
-                    Cancel
+                    Save
                 </button>
 
                 <button type="button"
-                        class="button secondary-button button-label button-label--permanent"
+                        class="button secondary-button button-label button-label--secondary"
                         data-confirm>
-                    Delete
+                    Cancel
                 </button>
             </div>
         </div>
     </section>
-
 
     <!-- JS -->
     <script type="module" src="./src/app.js"></script>

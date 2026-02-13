@@ -33,9 +33,29 @@
     gap: 1rem;
 }
 
-.view--profile img {
+.profile-picture-container {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+
+    gap: 0;
+}
+
+.profile-picture {
     width: 14rem;
-    height: auto;
+    height: 14rem;
+
+    object-fit: cover;
+    border-radius: 100%;
+    filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.25));
+}
+
+.profile-name-container {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+
+    gap: 1rem;
 }
 
 .profile-info {
@@ -71,6 +91,14 @@
     letter-spacing: -0.01925rem;
 }
 
+.profile-content-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+
+    gap: 0;
+}
 
 .profile-content {
     display: flex;
@@ -164,4 +192,48 @@
     background: var(--beige-300);
     box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.25);
 }
+
+
+
+/* По default */
+.profile-name-input,
+.edit-tertiary {
+    display: none;
+}
+
+/* Когато name е в edit mode */
+.profile-name-container[data-name-mode="edit"] .profile-name {
+    display: none;
+}
+
+.profile-name-container[data-name-mode="edit"] .profile-name-input {
+    display: block;
+    width: 18rem;
+    padding-top: 1rem;
+
+    font-size: 2rem;
+    font-weight: 500;
+    color: var(--aqua-200);
+    border: none;
+    background: none;
+
+    align-self: center;
+
+    border-bottom: 3px solid var(--green-100);
+    background: transparent;
+    outline: none;
+}
+
+.profile-name-container[data-name-mode="edit"] .edit-secondary {
+    display: none !important;;
+}
+
+.profile-name-container .edit-tertiary {
+    display: none;
+}
+
+.profile-name-container[data-name-mode="edit"] .edit-tertiary {
+    display: flex;
+}
+
 

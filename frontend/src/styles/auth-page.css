@@ -459,3 +459,16 @@
     background: var(--mint-200);
 }
 
+
+.view--signup-additional[data-mode="edit"] .auth-header,
+.view--signup-additional[data-mode="edit"] .auth-intro,
+.view--signup-additional[data-mode="edit"] .auth-footer,
+.view--signup-additional[data-mode="edit"] .button-group--two {
+    display: none;
+}
+
+.view--signup-additional[data-mode="edit"] .edit-actions {
+    display: flex;
+}
+
+

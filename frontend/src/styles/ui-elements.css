@@ -32,16 +32,6 @@
     display: none;
 }
 
-/*.app-layout {*/
-/*    top: 0;*/
-/*    right: 0;*/
-
-/*    !*height: 100%;*!*/
-/*    display: flex;*/
-
-/*    background: var(--beige-100);*/
-/*}*/
-
 .app-main {
     top: 0;
     right: 0;
@@ -73,6 +63,49 @@
     gap: 6rem;
 
     background: var(--beige-100);
+}
+
+/* --- EDIT MODE --- */
+
+.view--profile[data-mode="view"] .icon-button-group--submenu-button {
+    display: none;
+}
+
+.view--profile[data-mode="view"] .profile-main-edit-button {
+    display: inline-flex;
+}
+
+.view--profile[data-mode="view"] .icon-edit:not(.profile-main-edit-button) {
+    display: none;
+}
+
+/* В edit mode */
+.view--profile[data-mode="edit"] .profile-main-edit-button {
+    display: none;
+}
+
+.view--profile[data-mode="edit"] .icon-button-group--submenu-button {
+    display: flex;
+    width: 2.3rem;
+    height: auto;
+    padding: 0.65rem 0.5rem 0.65rem 0.5rem;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.7rem;
+
+    position: absolute;
+
+    border-radius: 0.6875rem;
+    background: var(--mint-300);
+}
+
+.view--profile[data-mode="edit"] .icon-edit:not(.profile-main-edit-button) {
+    display: inline-flex;
+}
+
+.submenu-icon {
+    width: 2rem !important;
+    height: 2rem !important;
 }
 
 
@@ -615,37 +648,6 @@ button[data-view="settings"] .sidebar__icon {
     align-items: center;
     gap: 0.7rem;
 }
-
-.icon-button-group--submenu-first-button {
-    display: flex;
-    width: 8.5rem;
-    height: 2.5rem;
-    padding: 0.4rem 0.8rem;
-    justify-content: flex-end;
-    align-items: center;
-    gap: 0.625rem;
-
-    position: absolute;
-
-    border-radius: 0.6875rem;
-    background: var(--mint-300);
-}
-
-.icon-button-group--submenu-second-button {
-    display: flex;
-    width: 2.5rem;
-    height: auto;
-    padding: 0.65rem 0.5rem 0.65rem 0.5rem;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.7rem;
-
-    position: absolute;
-
-    border-radius: 0.6875rem;
-    background: var(--mint-300);
-}
-
 
 .icon-button {
     display: flex;

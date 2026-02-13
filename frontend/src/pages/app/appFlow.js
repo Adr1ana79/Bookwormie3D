@@ -78,3 +78,28 @@ function showView(viewKey) {
 export function enterApp() {
     document.dispatchEvent(new Event('auth:login-success'));
 }
+
+
+export function goToAuth() {
+    const authWrapper = document.getElementById("auth-wrapper");
+    const appLayout = document.querySelector(".app-layout");
+    const authView = document.getElementById("view-auth");
+
+    if (!authWrapper || !appLayout || !authView) return;
+
+    // Показваме auth layout
+    authWrapper.classList.remove("hidden");
+
+    // Скриваме app layout
+    appLayout.classList.add("hidden");
+
+    // Нулираме всички view-та
+    document.querySelectorAll(".view").forEach(view => {
+        view.classList.remove("is-visible");
+    });
+
+    // Активираме auth screen (login/signup избор)
+    authView.classList.add("is-visible");
+}
+
+

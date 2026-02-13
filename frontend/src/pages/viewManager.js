@@ -1,4 +1,4 @@
-const FADE_DURATION = 600;
+const FADE_DURATION = 500;
 
 export function fadeInView(view) {
     if (!view) return;
@@ -24,4 +24,14 @@ export function switchView(fromView, toView) {
     fadeOutView(fromView, () => {
         fadeInView(toView);
     });
+}
+
+export function showAuthLayout() {
+    document.getElementById("auth-wrapper").classList.remove("hidden");
+    document.querySelector(".app-layout").classList.add("hidden");
+}
+
+export function showAppLayout() {
+    document.getElementById("auth-wrapper").classList.add("hidden");
+    document.querySelector(".app-layout").classList.remove("hidden");
 }

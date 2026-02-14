@@ -29,6 +29,8 @@ export function initProfile() {
 function initProfileNameEdit(profileSection) {
 
     const container = profileSection.querySelector(".profile-name-container");
+    if (!container) return;
+
     const nameDisplay = container.querySelector(".profile-name");
     const nameInput = container.querySelector(".profile-name-input");
 
@@ -36,11 +38,11 @@ function initProfileNameEdit(profileSection) {
     const saveBtn = container.querySelector(".icon-save");
     const cancelBtn = container.querySelector(".icon-cancel");
 
+    if (!editBtn || !saveBtn || !cancelBtn || !nameInput || !nameDisplay) return;
+
     let originalValue = nameDisplay.textContent.trim();
 
-    // Enter name edit
     editBtn.addEventListener("click", () => {
-
         if (profileSection.dataset.mode !== "edit") return;
 
         originalValue = nameDisplay.textContent.trim();
@@ -52,13 +54,10 @@ function initProfileNameEdit(profileSection) {
         nameInput.select();
     });
 
-    // Save
     saveBtn.addEventListener("click", (e) => {
-
-        e.stopPropagation(); // допълнителна защита
+        e.stopPropagation();
 
         const newValue = nameInput.value.trim();
-
         if (newValue.length > 0) {
             nameDisplay.textContent = newValue;
         }
@@ -66,37 +65,29 @@ function initProfileNameEdit(profileSection) {
         container.dataset.nameMode = "view";
     });
 
-    // Cancel
     cancelBtn.addEventListener("click", () => {
-
         nameInput.value = originalValue;
         container.dataset.nameMode = "view";
     });
 
     nameInput.addEventListener("keydown", (e) => {
-
-        if (e.key === "Enter") {
-            saveBtn.click();
-        }
-
-        if (e.key === "Escape") {
-            cancelBtn.click();
-        }
+        if (e.key === "Enter") saveBtn.click();
+        if (e.key === "Escape") cancelBtn.click();
     });
-
 
     const editAdditionalBtn = document.getElementById("edit-additional-button");
 
-    editAdditionalBtn.addEventListener("click", () => {
+    if (editAdditionalBtn) {
+        editAdditionalBtn.addEventListener("click", () => {
 
-        const profileView = document.getElementById("view-profile");
-        const additionalView = document.getElementById("view-signup-additional");
+            const profileView = document.getElementById("view-profile");
+            const additionalView = document.getElementById("view-signup-additional");
 
-        showAuthLayout(); // сменяме layout-а
+            showAuthLayout();
+            switchView(profileView, additionalView);
 
-        switchView(profileView, additionalView);
-
-        additionalView.dataset.mode = "edit";
-    });
-
+            additionalView.dataset.mode = "edit";
+        });
+    }
 }
+

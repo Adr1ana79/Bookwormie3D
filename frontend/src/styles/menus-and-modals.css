@@ -192,8 +192,10 @@
 .modal {
     position: fixed;
     inset: 0;
-    z-index: 9999;
+     z-index: 9999;
+}
 
+ .modal:not([hidden]) {
     display: flex;
     justify-content: center;
     align-items: center;

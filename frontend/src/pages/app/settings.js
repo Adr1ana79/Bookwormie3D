@@ -42,17 +42,14 @@ export function initSettings() {
         if (e.target.closest("#logout-btn")) {
             openConfirmModal({
                 title: "Log out?",
-                description:
-                    "You will need to log in again to access your account.",
+                description: "\"You will be signed out of your account. You can log back in at any time.",
                 confirmText: "Log out",
-
                 onConfirm: () => {
-                    localStorage.removeItem("currentUser");
+                    console.log("Going to auth");
                     goToAuth();
                 }
             });
         }
-
 
         if (e.target.closest("#delete-account-btn")) {
             openConfirmModal({
@@ -62,15 +59,18 @@ export function initSettings() {
                 confirmText: "Delete",
 
                 onConfirm: () => {
+                    console.log("Delete confirm triggered");
+
                     const user = JSON.parse(localStorage.getItem("currentUser"));
-                    if (!user) return;
+                    console.log("User:", user);
 
-                    const users = JSON.parse(localStorage.getItem("users")) || [];
-                    const updatedUsers = users.filter(u => u.id !== user.id);
+                    if (user) {
+                        const users = JSON.parse(localStorage.getItem("users")) || [];
+                        const updatedUsers = users.filter(u => u.id !== user.id);
+                        localStorage.setItem("users", JSON.stringify(updatedUsers));
+                    }
 
-                    localStorage.setItem("users", JSON.stringify(updatedUsers));
                     localStorage.removeItem("currentUser");
-
                     goToAuth();
                 }
 

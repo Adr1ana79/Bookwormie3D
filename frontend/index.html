@@ -891,7 +891,7 @@
 
         <div id="app-main" class="app-main">
             <section  id="view-shelves"
-                      class="view-shelves is-editing hidden"
+                      class="view-shelves"
                       data-mode="view"
                       aria-label="Shelves">
                 <!-- Top bar -->
@@ -902,8 +902,22 @@
                     </div>
 
                     <div class="icon-button-group">
-                        <button type="button" class="icon-button icon-edit green-icon-button large-icon-button"
+                        <button type="button" class="icon-button icon-edit green-icon-button large-icon-button view-only"
                                 aria-label="Edit shelves"></button>
+
+                        <div class="icon-button-group--submenu-button edit-only">
+                            <img src="assets/images/icons/edit-icon.svg" alt="" class="submenu-icon">
+
+                            <button type="button"
+                                    class="icon-button icon-save dark-green-icon-button small-icon-button">
+                            </button>
+
+                            <button type="button"
+                                    class="icon-button icon-cancel red-icon-button small-icon-button">
+                            </button>
+                        </div>
+
+
                         <button type="button" class="icon-button icon-add green-icon-button large-icon-button"
                                 aria-label="Add shelf"></button>
                     </div>
@@ -970,14 +984,12 @@
                     </section>
 
                     <!-- ADD SECTION (появява се само при is-adding-section) -->
-                    <section class="shelves-section shelves-section--editable is-creating add-only">
+                    <section class="shelves-section shelves-section--editable add-only">
 
                         <div class="section-header__edit">
-
                             <div class="section__title-input">
                                 <input type="text"
                                        class="section__title-placeholder"
-                                       value="Section"
                                        placeholder="New section name">
                             </div>
 
@@ -987,9 +999,10 @@
                                 <button type="button"
                                         class="icon-button icon-cancel red-icon-button small-icon-button"></button>
                             </div>
-
                         </div>
+
                     </section>
+
 
                     <!-- EDITABLE SECTION -->
                     <section class="shelves-section shelves-section--editable">
@@ -998,32 +1011,35 @@
 
                             <div class="section-header">
 
-                                <!-- view mode -->
-                                <img class="section-header--ribbon view-only"
+                                <img class="section-header--ribbon"
                                      src="assets/images/design-elements/section-label-secondary.svg"
                                      alt="">
 
-                                <span class="section-header--title view-only">Section</span>
+                                <span class="section-header--title">Section</span>
 
-                                <!-- edit mode -->
-                                <div class="section__title-input">
+                                <div class="section__title-input rename-only">
                                     <input type="text"
                                            class="section__title-placeholder"
-                                           value="Section"
-                                           placeholder="New section name">
+                                           value="Section">
                                 </div>
                             </div>
 
-                            <!-- edit buttons (rename / delete section) -->
                             <div class="icon-button-group edit-only section-edit-controls">
                                 <button type="button"
                                         class="icon-button icon-edit green-icon-button small-icon-button"></button>
                                 <button type="button"
                                         class="icon-button icon-delete red-icon-button small-icon-button"></button>
                             </div>
+
+                            <div class="icon-button-group rename-only section-edit-controls">
+                                <button type="button"
+                                        class="icon-button icon-save green-icon-button small-icon-button"></button>
+                                <button type="button"
+                                        class="icon-button icon-cancel red-icon-button small-icon-button"></button>
+                            </div>
                         </div>
 
-                        <ul class="shelves-grid">
+                         <ul class="shelves-grid">
 
                             <li class="shelf-card">
                                 <img src="assets/images/shelf-thumbnails/mini-modern-shelf.png"
@@ -1078,28 +1094,31 @@
 
                             <div class="section-header">
 
-                                <!-- view mode -->
-                                <img class="section-header--ribbon view-only"
+                                <img class="section-header--ribbon"
                                      src="assets/images/design-elements/section-label-secondary.svg"
                                      alt="">
 
-                                <span class="section-header--title view-only">Section</span>
+                                <span class="section-header--title">Section</span>
 
-                                <!-- edit mode -->
-                                <div class="section__title-input">
+                                <div class="section__title-input rename-only">
                                     <input type="text"
                                            class="section__title-placeholder"
-                                           value="Section"
-                                           placeholder="New section name">
+                                           value="Section">
                                 </div>
                             </div>
 
-                            <!-- edit buttons (rename / delete section) -->
                             <div class="icon-button-group edit-only section-edit-controls">
                                 <button type="button"
                                         class="icon-button icon-edit green-icon-button small-icon-button"></button>
                                 <button type="button"
                                         class="icon-button icon-delete red-icon-button small-icon-button"></button>
+                            </div>
+
+                            <div class="icon-button-group rename-only section-edit-controls">
+                                <button type="button"
+                                        class="icon-button icon-save green-icon-button small-icon-button"></button>
+                                <button type="button"
+                                        class="icon-button icon-cancel red-icon-button small-icon-button"></button>
                             </div>
                         </div>
 

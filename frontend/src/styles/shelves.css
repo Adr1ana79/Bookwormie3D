@@ -6,6 +6,55 @@
     overflow: hidden;
 }
 
+.edit-only,
+.add-only,
+.rename-only {
+    display:none;
+}
+
+[data-mode="view"] .edit-only,
+[data-mode="view"] .add-only {
+    display:none;
+}
+
+[data-mode="edit"] .view-only,
+[data-mode="edit"] .add-only {
+    display: none;
+}
+
+[data-mode="edit"] .edit-only {
+    display: flex;
+}
+
+[data-mode="add"] .edit-only {
+    display: none;
+}
+
+[data-mode="add"] .view-only,
+[data-mode="add"] .add-only {
+    display: flex;
+}
+
+.section__title-input.rename-only {
+    display: none;
+}
+
+.is-renaming .section__title-input.rename-only {
+    display: flex;
+}
+
+.is-renaming .section-header--ribbon,
+.is-renaming .section-header--title,
+.is-renaming .section-edit-controls {
+    display: none;
+}
+
+
+.is-renaming .rename-only {
+    display: flex;
+}
+
+
 .header-background {
     top: 0;
     right: 0;

@@ -1,15 +1,293 @@
 export function initShelves() {
-    const shelvesView = document.getElementById('view-shelves');
+
+    const shelvesView = document.getElementById("view-shelves");
     if (!shelvesView) return;
 
-    shelvesView.addEventListener('click', (e) => {
-        const card = e.target.closest('.shelf-card');
-        if (!card) return;
+    const container = shelvesView.querySelector(".shelves-page-content");
 
-        document.dispatchEvent(
-            new CustomEvent('app:open-shelf', {
-                detail: { shelfId: card.dataset.id }
-            })
-        );
+    const editBtn = shelvesView.querySelector(".icon-edit.large-icon-button");
+    const addBtn = shelvesView.querySelector(".icon-add.large-icon-button");
+    const submenu = shelvesView.querySelector(".icon-button-group--submenu-button");
+
+    let isDirty = false;
+
+    function setMode(mode) {
+        shelvesView.dataset.mode = mode;
+    }
+
+    function clearRenaming() {
+        container.querySelectorAll(".is-renaming")
+            .forEach(section => section.classList.remove("is-renaming"));
+    }
+
+    let originalState = null;
+
+    /* ------------------------------------
+       CLICK DELEGATION
+    ------------------------------------ */
+
+    shelvesView.addEventListener("click", (e) => {
+
+        /* OPEN SHELF (само във view mode) */
+        const card = e.target.closest(".shelf-card");
+        if (card && shelvesView.dataset.mode === "view") {
+            document.dispatchEvent(
+                new CustomEvent("app:open-shelf", {
+                    detail: { shelfId: card.dataset.id }
+                })
+            );
+            return;
+        }
+
+        /* -----------------------------
+           START RENAME
+        ----------------------------- */
+        if (e.target.closest(".section-edit-controls.edit-only .icon-edit")) {
+
+            const section = e.target.closest(".shelves-section");
+            if (!section || section.classList.contains("shelves-section--default")) return;
+
+            clearRenaming();
+            section.classList.add("is-renaming");
+
+            const input = section.querySelector(".rename-only input");
+
+            input.focus();
+            input.select();
+
+            return;
+        }
+
+        /* SAVE RENAME */
+        if (e.target.closest(".rename-only.section-edit-controls .icon-save")) {
+
+            const section = e.target.closest(".shelves-section");
+            const input = section.querySelector(".rename-only input");
+            const titleEl = section.querySelector(".section-header--title");
+
+            const value = input.value.trim() || "New Section";
+
+            titleEl.textContent = value;
+            input.value = value;
+
+            section.classList.remove("is-renaming");
+            isDirty = true;
+
+            return;
+        }
+
+        /* CANCEL RENAME */
+        if (e.target.closest(".rename-only.section-edit-controls .icon-cancel")) {
+
+            const section = e.target.closest(".shelves-section");
+            const input = section.querySelector(".rename-only input");
+            const titleEl = section.querySelector(".section-header--title");
+
+            input.value = titleEl.textContent;
+
+            section.classList.remove("is-renaming");
+
+            return;
+        }
+
+
+        /* -----------------------------
+           DELETE SECTION
+        ----------------------------- */
+        if (e.target.closest(".section-edit-controls .icon-delete")) {
+
+            const section = e.target.closest(".shelves-section");
+
+            if (!section || section.classList.contains("shelves-section--default")) return;
+
+            section.remove();
+            isDirty = true;
+
+            return;
+        }
+
+        /* GLOBAL SAVE */
+        if (e.target.closest(".icon-button-group--submenu-button .icon-save")) {
+
+            clearRenaming();
+
+            setMode("view");
+            isDirty = false;
+
+            return;
+        }
+
+        /* GLOBAL CANCEL */
+        if (e.target.closest(".icon-button-group--submenu-button .icon-cancel")) {
+
+            container.innerHTML = originalState;
+
+            setMode("view");
+            isDirty = false;
+
+            return;
+        }
+
+
+        /* -----------------------------
+           SAVE NEW SECTION (ADD MODE)
+        ----------------------------- */
+        if (e.target.closest(".shelves-section.add-only .icon-save")) {
+
+            const addSection = shelvesView.querySelector(".shelves-section.add-only");
+            const input = addSection.querySelector("input");
+
+            const title = input.value.trim() || "New Section";
+
+            createNewSection(title);
+
+            input.value = "";
+            setMode("view");
+            return;
+        }
+
+        /* CANCEL ADD */
+        if (e.target.closest(".shelves-section.add-only .icon-cancel")) {
+
+            const addSection = shelvesView.querySelector(".shelves-section.add-only");
+            const input = addSection.querySelector("input");
+
+            input.value = "";
+            setMode("view");
+            return;
+        }
+
     });
+
+    shelvesView.addEventListener("keydown", (e) => {
+
+        if (e.target.closest(".shelves-section.add-only input")) {
+
+            if (e.key === "Enter") {
+                shelvesView.querySelector(".shelves-section.add-only .icon-save").click();
+            }
+
+            if (e.key === "Escape") {
+                shelvesView.querySelector(".shelves-section.add-only .icon-cancel").click();
+            }
+        }
+    });
+
+
+    /* ------------------------------------
+       KEYBOARD (RENAME)
+    ------------------------------------ */
+
+    shelvesView.addEventListener("keydown", (e) => {
+
+        if (!e.target.matches(".rename-only input")) return;
+
+        const section = e.target.closest(".shelves-section");
+
+        if (e.key === "Enter") {
+            section.querySelector(".rename-only .icon-save").click();
+        }
+
+        if (e.key === "Escape") {
+            section.querySelector(".rename-only .icon-cancel").click();
+        }
+    });
+
+    /* ------------------------------------
+       GLOBAL EDIT BUTTON
+    ------------------------------------ */
+
+    editBtn.addEventListener("click", () => {
+        // let originalState = null;
+
+        editBtn.addEventListener("click", () => {
+            if (shelvesView.dataset.mode !== "view") return;
+
+            originalState = container.innerHTML;
+
+            setMode("edit");
+            submenu.classList.remove("hidden");
+        });
+    });
+
+    /* ------------------------------------
+       ADD MODE
+    ------------------------------------ */
+
+    addBtn.addEventListener("click", () => {
+
+        if (isDirty) return;
+
+        setMode("add");
+
+        const defaultSection = container.querySelector(".shelves-section--default");
+        const addSection = container.querySelector(".shelves-section.add-only");
+
+        container.insertBefore(addSection, defaultSection.nextElementSibling);
+
+        const input = addSection.querySelector("input");
+
+        input.value = "New Section";
+        input.focus();
+        input.select();
+    });
+
+    /* ------------------------------------
+       CREATE NEW SECTION
+    ------------------------------------ */
+
+    function createNewSection(title) {
+
+        const defaultSection = container.querySelector(".shelves-section--default");
+
+        const section = document.createElement("section");
+        section.className = "shelves-section shelves-section--editable";
+
+        section.innerHTML = `
+            <div class="section-header__edit">
+
+                <div class="section-header">
+                    <img class="section-header--ribbon"
+                         src="assets/images/design-elements/section-label-secondary.svg"
+                         alt="">
+
+                    <span class="section-header--title">${title}</span>
+
+                    <div class="section__title-input rename-only">
+                        <input type="text"
+                               class="section__title-placeholder"
+                               value="${title}">
+                    </div>
+                </div>
+
+                <div class="icon-button-group edit-only section-edit-controls">
+                    <button type="button"
+                            class="icon-button icon-edit green-icon-button small-icon-button"></button>
+
+                    <button type="button"
+                            class="icon-button icon-delete red-icon-button small-icon-button"></button>
+                </div>
+
+                <div class="icon-button-group rename-only section-edit-controls">
+                    <button type="button"
+                            class="icon-button icon-save green-icon-button small-icon-button"></button>
+
+                    <button type="button"
+                            class="icon-button icon-cancel red-icon-button small-icon-button"></button>
+                </div>
+            </div>
+
+            <ul class="shelves-grid">
+                <li class="shelf-card edit-only add-shelf-placeholder">
+                    <button type="button"
+                            class="add-shelf-button"
+                            aria-label="Add shelf">
+                        <img src="assets/images/design-elements/add-shelf.svg" alt="">
+                    </button>
+                </li>
+            </ul>
+        `;
+
+        container.insertBefore(section, defaultSection.nextElementSibling);
+    }
 }

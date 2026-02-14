@@ -84,7 +84,7 @@
     display: none;
 }
 
-.view--profile[data-mode="edit"] .icon-button-group--submenu-button {
+[data-mode="edit"] .icon-button-group--submenu-button {
     display: flex;
     width: 2.3rem;
     height: auto;
@@ -646,6 +646,8 @@ button[data-view="settings"] .sidebar__icon {
 .icon-button-group {
     display: flex;
     align-items: center;
+    flex-direction: row;
+
     gap: 0.7rem;
 }
 

@@ -53,7 +53,13 @@ export function initAdditionalEditMode() {
     cancelBtn.addEventListener("click", () => {
 
         restoreFormData(originalData);
-        section.dataset.mode = "signup";
+
+        showAppLayout();
+
+        const profileView = document.getElementById("view-profile");
+        const additionalView = document.getElementById("view-signup-additional");
+
+        switchView(additionalView, profileView);
     });
 
     // Clean

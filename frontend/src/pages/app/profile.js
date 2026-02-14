@@ -24,6 +24,12 @@ export function initProfile() {
     initProfilePictureModal();
     initProfileNameEdit(profileSection);
     initAdditionalEditMode();
+
+    console.log("INIT PROFILE");
+
+    const editAdditionalBtn = document.getElementById("edit-additional-button");
+    console.log("BUTTON:", editAdditionalBtn);
+
 }
 
 function initProfileNameEdit(profileSection) {
@@ -75,7 +81,7 @@ function initProfileNameEdit(profileSection) {
         if (e.key === "Escape") cancelBtn.click();
     });
 
-    const editAdditionalBtn = document.getElementById("edit-additional-button");
+    const editAdditionalBtn = profileSection.querySelector("#edit-additional-button");
 
     if (editAdditionalBtn) {
         editAdditionalBtn.addEventListener("click", () => {
@@ -83,11 +89,17 @@ function initProfileNameEdit(profileSection) {
             const profileView = document.getElementById("view-profile");
             const additionalView = document.getElementById("view-signup-additional");
 
+            // Показваме auth layout (където е additional screen)
             showAuthLayout();
+
+            // Смяна на view
             switchView(profileView, additionalView);
 
+            // Активиране на edit режим
             additionalView.dataset.mode = "edit";
+            additionalView.dispatchEvent(new Event("enter-edit-mode"));
         });
     }
+
 }
 

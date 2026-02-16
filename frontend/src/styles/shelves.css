@@ -54,6 +54,15 @@
     display: flex;
 }
 
+.edit-control .icon-button-group--submenu-button {
+    position: static !important;
+    transform: none !important;
+    align-self: flex-end;
+
+    top: auto !important;
+    left: auto !important;
+}
+
 
 .header-background {
     top: 0;

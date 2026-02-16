@@ -54,11 +54,11 @@
     z-index: 10;
 
     position: fixed;
-    margin-top: 2.6rem;
+    margin-top: 3.6rem;
 
     display: flex;
     flex-direction: row;
-    align-items: center;
+    align-items: flex-start;
 
     gap: 6rem;
 
@@ -82,6 +82,11 @@
 /* В edit mode */
 .view--profile[data-mode="edit"] .profile-main-edit-button {
     display: none;
+}
+
+[data-mode="edit"] .icon-button-group {
+    justify-content: flex-start;
+    align-items: flex-start;
 }
 
 [data-mode="edit"] .icon-button-group--submenu-button {

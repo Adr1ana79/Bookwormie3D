@@ -7,6 +7,8 @@ export function initShelfContextMenu({
 
     const menu = document.querySelector(".shelves-context-menu");
     if (!menu) return;
+    const submenu = document.querySelector(".context-submenu");
+
 
     let activeShelf = null;
 
@@ -28,31 +30,29 @@ export function initShelfContextMenu({
     /* CLICK ANYWHERE CLOSES */
     document.addEventListener("click", () => {
         menu.classList.add("hidden");
+        submenu.classList.add("hidden");
     });
+
 
     /* ACTIONS */
     menu.addEventListener("click", (e) => {
 
-        const action = e.target.closest("button");
-        if (!action || !activeShelf) return;
+        const btn = e.target.closest("button");
+        if (!btn || !activeShelf) return;
 
-        const text = action.textContent.trim();
+        const action = btn.dataset.action;
 
-        if (text === "Open") {
-            onOpen?.(activeShelf);
+        e.stopPropagation();
+
+        if (action === "open") onOpen?.(activeShelf);
+        if (action === "edit") onEdit?.(activeShelf);
+        if (action === "relocate") {
+            onRelocate?.(activeShelf, {
+                left: menu.style.left,
+                top: menu.style.top
+            });
         }
-
-        if (text === "Edit") {
-            onEdit?.(activeShelf);
-        }
-
-        if (text === "Relocate") {
-            onRelocate?.(activeShelf);
-        }
-
-        if (text === "Delete") {
-            onDelete?.(activeShelf);
-        }
+        if (action === "delete") onDelete?.(activeShelf);
 
         menu.classList.add("hidden");
     });

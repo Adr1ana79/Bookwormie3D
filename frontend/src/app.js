@@ -23,6 +23,8 @@ document.addEventListener('DOMContentLoaded', () => {
     initShelf();
     initProfile();
     initSettings();
+
+    // openShelfScreen(e.detail.shelfId);
 });
 
 

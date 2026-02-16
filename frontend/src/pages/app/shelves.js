@@ -1,5 +1,6 @@
 import { openConfirmModal } from "../../ui-elements/confirmModal.js";
 import { initShelfForm } from "../../ui-elements/shelfForm.js";
+import { initShelfContextMenu } from "../../ui-elements/shelfContextMenu.js";
 
 export function initShelves() {
 
@@ -25,6 +26,16 @@ export function initShelves() {
 
     let originalState = null;
 
+    let activeSection = null;
+
+    const shelfForm = initShelfForm({
+        onCreate: (shelfData) => {
+            if (!activeSection) return;
+            createShelfCard(activeSection, shelfData);
+        },
+        onUpdate: updateShelfCard
+    });
+
     /* ------------------------------------
        CLICK DELEGATION
     ------------------------------------ */
@@ -33,7 +44,7 @@ export function initShelves() {
 
         /* OPEN SHELF (само във view mode) */
         const card = e.target.closest(".shelf-card");
-        if (card && shelvesView.dataset.mode === "view") {
+        if (card && !card.classList.contains("add-shelf-placeholder")) {
             document.dispatchEvent(
                 new CustomEvent("app:open-shelf", {
                     detail: { shelfId: card.dataset.id }
@@ -115,26 +126,6 @@ export function initShelves() {
             return;
         }
 
-        /* ------------------------------------
-          ADD BOOKSHELF
-       ------------------------------------ */
-
-        let activeSection = null;
-
-        const shelfForm = initShelfForm((shelfData) => {
-            if (!activeSection) return;
-
-            createShelfCard(activeSection, shelfData);
-        });
-
-        if (e.target.closest(".add-shelf-button")) {
-
-            activeSection = e.target.closest(".shelves-section");
-
-            shelfForm.open();
-            return;
-        }
-
         /* GLOBAL SAVE */
         if (e.target.closest(".icon-button-group--submenu-button .icon-save")) {
 
@@ -157,6 +148,15 @@ export function initShelves() {
             return;
         }
 
+        /* -----------------------------
+           ADD SHELF
+         ----------------------------- */
+
+        if (e.target.closest(".add-shelf-button")) {
+            activeSection = e.target.closest(".shelves-section");
+            shelfForm.openCreate();
+            return;
+        }
 
         /* -----------------------------
            SAVE NEW SECTION (ADD MODE)
@@ -183,10 +183,51 @@ export function initShelves() {
 
             input.value = "";
             setMode("view");
-            return;
         }
-
     });
+
+    initShelfContextMenu({
+        onOpen: (shelf) => {
+            const shelfId = shelf.dataset.id;
+
+            document.dispatchEvent(
+                new CustomEvent("app:open-shelf", {
+                    detail: { shelfId }
+                })
+            );
+        },
+
+        onEdit: (shelf) => {
+            shelfForm.openEdit(shelf);
+        },
+
+            onRelocate: (shelf, position) => {
+                openRelocateMenu(shelf, position);
+        },
+
+        onDelete: (shelf) => {
+
+            openConfirmModal({
+                title: "Delete shelf?",
+                description: "This shelf will be permanently deleted.",
+                confirmText: "Delete",
+                onConfirm: () => {
+                    shelf.remove();
+                }
+            });
+        }
+    });
+
+    function updateShelfCard(shelfElement, data) {
+
+        const section = shelfElement.closest(".shelves-section");
+
+        const uniqueTitle = generateUniqueShelfName(section, data.title);
+
+        shelfElement.querySelector("p").textContent = uniqueTitle;
+
+        isDirty = true;
+    }
 
     shelvesView.addEventListener("keydown", (e) => {
 
@@ -227,16 +268,12 @@ export function initShelves() {
     ------------------------------------ */
 
     editBtn.addEventListener("click", () => {
-        // let originalState = null;
+        if (shelvesView.dataset.mode !== "view") return;
 
-        editBtn.addEventListener("click", () => {
-            if (shelvesView.dataset.mode !== "view") return;
+        originalState = container.innerHTML;
 
-            originalState = container.innerHTML;
-
-            setMode("edit");
-            submenu.classList.remove("hidden");
-        });
+        setMode("edit");
+        submenu.classList.remove("hidden");
     });
 
     /* ------------------------------------
@@ -318,6 +355,8 @@ export function initShelves() {
         `;
 
         container.insertBefore(section, defaultSection.nextElementSibling);
+
+        return section;
     }
 
 
@@ -328,13 +367,16 @@ export function initShelves() {
         const li = document.createElement("li");
         li.className = "shelf-card";
 
+        li.dataset.design = shelf.design;
+        li.dataset.size = shelf.size;
+
         const imagePath = `assets/images/shelf-thumbnails/${shelf.design}-${shelf.size}.png`;
         const uniqueTitle = generateUniqueShelfName(section, shelf.title);
 
         li.innerHTML = `
         <img src="${imagePath}" alt="">
         <p>${uniqueTitle}</p>
-    `;
+        `;
 
         // добавяме преди placeholder-а
         const placeholder = grid.querySelector(".add-shelf-placeholder");
@@ -363,6 +405,131 @@ export function initShelves() {
         }
 
         return newName;
+    }
+
+
+    function openRelocateMenu(shelf, position) {
+
+        const submenu = document.querySelector(".context-submenu");
+        if (!submenu) return;
+
+        submenu.style.left = position.left;
+        submenu.style.top = position.top;
+
+        submenu.classList.remove("hidden");
+
+        const sections = Array.from(
+            container.querySelectorAll(".shelves-section")
+        ).filter(sec => !sec.classList.contains("add-only"));
+
+        const currentSection = shelf.closest(".shelves-section");
+
+        submenu.addEventListener("click", (e) => {
+            e.stopPropagation();
+        });
+
+        // изчистваме старите dynamic бутони
+        submenu.innerHTML = "";
+
+        sections.forEach(section => {
+
+            const title =
+                section.querySelector(".section-header--title")?.textContent || "Section";
+
+            const btn = document.createElement("button");
+            btn.type = "button";
+            btn.setAttribute("role", "menuitem");
+            btn.textContent = title;
+
+            if (section === currentSection) {
+                btn.classList.add("active-option");
+            }
+
+            btn.addEventListener("click", () => {
+
+                if (section === currentSection) return;
+
+                const targetGrid = section.querySelector(".shelves-grid");
+                const placeholder = targetGrid.querySelector(".add-shelf-placeholder");
+
+                targetGrid.insertBefore(shelf, placeholder);
+
+                submenu.classList.add("hidden");
+            });
+
+            submenu.appendChild(btn);
+        });
+
+        // separator
+        const hr = document.createElement("hr");
+        hr.className = "shelf-context-menu__separator";
+        submenu.appendChild(hr);
+
+        // new section option
+        const addBtn = document.createElement("button");
+        addBtn.type = "button";
+        addBtn.className = "add-option";
+        addBtn.textContent = "New section";
+
+        addBtn.addEventListener("click", (e) => {
+
+            e.stopPropagation();
+
+            const wrapper = document.createElement("div");
+            wrapper.className = "relocate-input-wrapper";
+
+            const input = document.createElement("input");
+            input.type = "text";
+            input.className = "relocate-input";
+            input.placeholder = "New section name";
+
+            const submitBtn = document.createElement("button");
+            submitBtn.className = "relocate-submit";
+            submitBtn.innerHTML = "→";
+
+            wrapper.appendChild(input);
+            wrapper.appendChild(submitBtn);
+
+            addBtn.replaceWith(wrapper);
+
+            input.focus();
+
+            function createSection() {
+
+                const name = input.value.trim();
+                if (!name) return;
+
+                const newSection = createNewSection(name);
+
+                const targetGrid = newSection.querySelector(".shelves-grid");
+                const placeholder = targetGrid.querySelector(".add-shelf-placeholder");
+
+                targetGrid.insertBefore(shelf, placeholder);
+
+                newSection.scrollIntoView({
+                    behavior: "smooth",
+                    block: "start"
+                });
+
+                submenu.classList.add("hidden");
+            }
+
+            submitBtn.addEventListener("click", createSection);
+
+            input.addEventListener("keydown", (e) => {
+                if (e.key === "Enter") createSection();
+                if (e.key === "Escape") submenu.classList.add("hidden");
+            });
+        });
+
+
+        submenu.appendChild(addBtn);
+
+        // позициониране
+        submenu.style.left = menu.style.left;
+        submenu.style.top = menu.style.top;
+
+        submenu.classList.remove("hidden");
     }
 
 }

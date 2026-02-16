@@ -63,8 +63,9 @@
 
 
 .shelves-context-menu {
-    position: relative;
+    position: absolute;
 
+    z-index: 100;
     display: inline-flex;
     padding: 0.8125rem 1rem;
     flex-direction: column;
@@ -124,6 +125,9 @@
 
 
 .context-submenu {
+    position: absolute;
+    z-index: 9999;
+
     display: inline-flex;
     padding: 0.75rem 1rem;
     flex-direction: column;
@@ -185,6 +189,47 @@
 
 .context-submenu .add-option {
     color: var(--green-200);
+}
+
+
+.relocate-input-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.relocate-input {
+    color: var(--aqua-300);
+    font-family: "Sofia Sans";
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 400;
+
+    flex: 1;
+    padding: 6px 8px;
+    border-radius: 6px;
+    background-color: var(--white-100);
+    border: 3px solid var(--mint-100);
+}
+
+.relocate-input:focus {
+    outline: none;
+    border-color: var(--peach-100);
+}
+
+.relocate-submit {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+    background: var(--white-300);
+    color: white;
+    cursor: pointer;
 }
 
 

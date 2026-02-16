@@ -5,6 +5,8 @@ export function openConfirmModal({
                                      onConfirm
                                  }) {
     const modal = document.querySelector(".modal--confirmation");
+    const previouslyFocused = document.activeElement;
+
     if (!modal) {
         console.error("Confirmation modal not found");
         return;
@@ -25,6 +27,8 @@ export function openConfirmModal({
         confirmBtn.onclick = null;
         cancelBtn.onclick = null;
         overlay.onclick = null;
+
+        previouslyFocused?.focus();
     };
 
     confirmBtn.onclick = () => {

@@ -1,3 +1,5 @@
+import { openConfirmModal } from "../../ui-elements/confirmModal.js";
+
 export function initShelves() {
 
     const shelvesView = document.getElementById("view-shelves");
@@ -97,14 +99,21 @@ export function initShelves() {
         if (e.target.closest(".section-edit-controls .icon-delete")) {
 
             const section = e.target.closest(".shelves-section");
-
             if (!section || section.classList.contains("shelves-section--default")) return;
 
-            section.remove();
-            isDirty = true;
+            openConfirmModal({
+                title: "Delete section?",
+                description: "This section and all shelves inside it will be permanently deleted.",
+                confirmText: "Delete",
+                onConfirm: () => {
+                    section.remove();
+                    isDirty = true;
+                }
+            });
 
             return;
         }
+
 
         /* GLOBAL SAVE */
         if (e.target.closest(".icon-button-group--submenu-button .icon-save")) {

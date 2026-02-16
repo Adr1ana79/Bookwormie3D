@@ -454,7 +454,7 @@ export function initShelves() {
 
                 targetGrid.insertBefore(shelf, placeholder);
 
-                submenu.classList.add("hidden");
+                closeContextMenus();
             });
 
             submenu.appendChild(btn);
@@ -512,6 +512,7 @@ export function initShelves() {
                 });
 
                 submenu.classList.add("hidden");
+                closeContextMenus();
             }
 
             submitBtn.addEventListener("click", createSection);
@@ -530,6 +531,15 @@ export function initShelves() {
         submenu.style.top = menu.style.top;
 
         submenu.classList.remove("hidden");
+    }
+
+
+    function closeContextMenus() {
+        const menu = document.querySelector(".shelves-context-menu");
+        const submenu = document.querySelector(".context-submenu");
+
+        menu?.classList.add("hidden");
+        submenu?.classList.add("hidden");
     }
 
 }

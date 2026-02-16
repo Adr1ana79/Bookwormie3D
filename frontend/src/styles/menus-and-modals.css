@@ -234,7 +234,7 @@
 .add-shelf-form {
     display: flex;
     width: 39.5rem;
-    height: 39.25rem;
+    height: 37rem;
     padding: 3rem 3.75rem 2.75rem 3.75rem;
     flex-direction: column;
     align-items: flex-start;
@@ -259,26 +259,16 @@
     background: none;
 }
 
-.form-group--shelf .section__title {
-    color: var(--white-100);
-    font-family: "Sofia Sans";
-    font-size: 0.9rem;
+.form-group--shelf .section-header--title {
+    font-size: 1.1rem;
     font-style: normal;
     font-weight: 700;
     line-height: 150%; /* 1.3125rem */
-    letter-spacing: -0.00963rem;
+    letter-spacing: 0.03rem;
 }
 
-.form-group--shelf .section__title-bookmark {
+.form-group--shelf .section-header--ribbon {
     width: 10rem;
-
-    position: absolute;
-    top: 50%;
-    left: 0;
-    transform: translateY(-25%);
-
-    z-index: 1;
-    pointer-events: none;
 }
 
 

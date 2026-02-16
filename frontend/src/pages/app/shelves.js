@@ -1,4 +1,5 @@
 import { openConfirmModal } from "../../ui-elements/confirmModal.js";
+import { initShelfForm } from "../../ui-elements/shelfForm.js";
 
 export function initShelves() {
 
@@ -114,6 +115,25 @@ export function initShelves() {
             return;
         }
 
+        /* ------------------------------------
+          ADD BOOKSHELF
+       ------------------------------------ */
+
+        let activeSection = null;
+
+        const shelfForm = initShelfForm((shelfData) => {
+            if (!activeSection) return;
+
+            createShelfCard(activeSection, shelfData);
+        });
+
+        if (e.target.closest(".add-shelf-button")) {
+
+            activeSection = e.target.closest(".shelves-section");
+
+            shelfForm.open();
+            return;
+        }
 
         /* GLOBAL SAVE */
         if (e.target.closest(".icon-button-group--submenu-button .icon-save")) {
@@ -299,4 +319,50 @@ export function initShelves() {
 
         container.insertBefore(section, defaultSection.nextElementSibling);
     }
+
+
+    function createShelfCard(section, shelf) {
+
+        const grid = section.querySelector(".shelves-grid");
+
+        const li = document.createElement("li");
+        li.className = "shelf-card";
+
+        const imagePath = `assets/images/shelf-thumbnails/${shelf.design}-${shelf.size}.png`;
+        const uniqueTitle = generateUniqueShelfName(section, shelf.title);
+
+        li.innerHTML = `
+        <img src="${imagePath}" alt="">
+        <p>${uniqueTitle}</p>
+    `;
+
+        // добавяме преди placeholder-а
+        const placeholder = grid.querySelector(".add-shelf-placeholder");
+
+        grid.insertBefore(li, placeholder);
+
+        isDirty = true;
+    }
+
+    function generateUniqueShelfName(section, baseName) {
+
+        const existingTitles = Array.from(
+            section.querySelectorAll(".shelf-card p")
+        ).map(p => p.textContent.trim());
+
+        if (!existingTitles.includes(baseName)) {
+            return baseName;
+        }
+
+        let counter = 2;
+        let newName = `${baseName} ${counter}`;
+
+        while (existingTitles.includes(newName)) {
+            counter++;
+            newName = `${baseName} ${counter}`;
+        }
+
+        return newName;
+    }
+
 }

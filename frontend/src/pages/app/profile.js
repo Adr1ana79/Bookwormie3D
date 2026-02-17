@@ -89,16 +89,22 @@ function initProfileNameEdit(profileSection) {
             const profileView = document.getElementById("view-profile");
             const additionalView = document.getElementById("view-signup-additional");
 
-            // Показваме auth layout (където е additional screen)
             showAuthLayout();
 
-            // Смяна на view
+            // изключваме всички auth screens
+            document
+                .querySelectorAll(".auth-view")
+                .forEach(view => view.classList.remove("active"));
+
+            // активираме само additional
+            additionalView.classList.add("active");
+
             switchView(profileView, additionalView);
 
-            // Активиране на edit режим
             additionalView.dataset.mode = "edit";
             additionalView.dispatchEvent(new Event("enter-edit-mode"));
         });
+
     }
 
 }

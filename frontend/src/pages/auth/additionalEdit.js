@@ -11,6 +11,15 @@ export function initAdditionalEditMode() {
 
     const form = section.querySelector("#signup-additional-form");
 
+    const genreButtons = section.querySelectorAll(".genre-option");
+
+    genreButtons.forEach(btn => {
+        btn.addEventListener("click", () => {
+            btn.classList.toggle("genre-option--selected");
+        });
+    });
+
+
     let originalData = {};
 
     function collectFormData() {
@@ -42,12 +51,48 @@ export function initAdditionalEditMode() {
     saveBtn.addEventListener("click", () => {
 
         const newData = collectFormData();
+        const profileView = document.getElementById("view-profile");
 
-        // Тук можеш да update-неш profile
-        console.log("Saved additional info:", newData);
+        // --- UPDATE SOCIALS ---
+        const socialsList = profileView.querySelector(".profile-social-networks");
+        socialsList.innerHTML = "";
 
-        section.dataset.mode = "signup";
+        ["instagram", "Goodreads", "Facebook", "LinkedIn", "Pinterest"]
+            .forEach(name => {
+
+                if (newData[name]) {
+
+                    const li = document.createElement("li");
+                    li.className = "social-network__item";
+
+                    li.innerHTML = `
+                <img src="assets/images/icons/social-networks/${name.toLowerCase()}.svg" alt="${name}">
+                <span>${newData[name]}</span>
+            `;
+
+                    socialsList.appendChild(li);
+                }
+            });
+
+        // --- UPDATE GENRES ---
+        const genresList = profileView.querySelector(".favourite-genres");
+        genresList.innerHTML = "";
+
+        const selectedGenres = section.querySelectorAll(".genre-option.genre-option--selected");
+
+        selectedGenres.forEach(btn => {
+            const li = document.createElement("li");
+            li.className = "favourite-genres__item";
+            li.textContent = btn.textContent.trim();
+            genresList.appendChild(li);
+        });
+
+        showAppLayout();
+
+        const additionalView = document.getElementById("view-signup-additional");
+        switchView(additionalView, profileView);
     });
+
 
     // Cancel
     cancelBtn.addEventListener("click", () => {
@@ -55,9 +100,6 @@ export function initAdditionalEditMode() {
         restoreFormData(originalData);
 
         showAppLayout();
-
-        const profileView = document.getElementById("view-profile");
-        const additionalView = document.getElementById("view-signup-additional");
 
         switchView(additionalView, profileView);
     });
@@ -67,15 +109,4 @@ export function initAdditionalEditMode() {
 
         form.reset();
     });
-
-    saveBtn.addEventListener("click", () => {
-
-        showAppLayout();
-
-        const profileView = document.getElementById("view-profile");
-        const additionalView = document.getElementById("view-signup-additional");
-
-        switchView(additionalView, profileView);
-    });
-
 }

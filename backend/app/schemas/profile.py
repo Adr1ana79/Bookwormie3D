@@ -1,0 +1,18 @@
+from pydantic import BaseModel, EmailStr
+from datetime import datetime
+
+
+class ProfileCreate(BaseModel):
+    username: str
+    email: EmailStr
+    password: str
+
+
+class ProfileResponse(BaseModel):
+    id: int
+    username: str
+    email: EmailStr
+    created_at: datetime
+
+    class Config:
+        from_attributes = True

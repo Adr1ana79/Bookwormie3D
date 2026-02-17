@@ -85,18 +85,8 @@
     overflow-y: auto;
 }
 
-
-.shelves-page-content::-webkit-scrollbar {
-    width: 8px;
-}
-
-.shelves-page-content::-webkit-scrollbar-track {
-    background: transparent;
-}
-
-.shelves-page-content::-webkit-scrollbar-thumb {
-    background-color: rgba(80, 150, 100, 0.3);
-    border-radius: 8px;
+.search-active .shelves-page-content {
+    overflow-y: visible;
 }
 
 .shelves-section {
@@ -121,7 +111,9 @@
     margin-left: -1rem;
 
     display: flex;
-    width: 48.375rem;
+    width: 100%;
+    max-width: 48.375rem;
+
     height: auto;
     align-items: flex-start;
     align-content: flex-start;

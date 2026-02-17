@@ -1,6 +1,7 @@
 import { openConfirmModal } from "../../ui-elements/confirmModal.js";
 import { initShelfForm } from "../../ui-elements/shelfForm.js";
 import { initShelfContextMenu } from "../../ui-elements/shelfContextMenu.js";
+import { initSearch } from "../../ui-elements/search.js";
 
 export function initShelves() {
 
@@ -15,16 +16,7 @@ export function initShelves() {
 
     let isDirty = false;
 
-    function setMode(mode) {
-        shelvesView.dataset.mode = mode;
-    }
-
-    function clearRenaming() {
-        container.querySelectorAll(".is-renaming")
-            .forEach(section => section.classList.remove("is-renaming"));
-    }
-
-    let originalState = null;
+    let originalState =  container.innerHTML;
 
     let activeSection = null;
 
@@ -35,6 +27,42 @@ export function initShelves() {
         },
         onUpdate: updateShelfCard
     });
+
+    const searchBar = document.querySelector(".search-bar");
+    const searchInput = document.querySelector(".search-bar__input");
+
+    function setMode(mode) {
+        shelvesView.dataset.mode = mode;
+
+        const isView = mode === "view";
+        const isEdit = mode === "edit";
+        const isAdd = mode === "add";
+        const isSearch = mode === "search";
+
+        // SEARCH BAR disable logic (само за edit/add)
+        if (searchBar && searchInput) {
+            if (isEdit || isAdd) {
+                searchBar.classList.add("is-disabled");
+                searchInput.disabled = true;
+            } else {
+                searchBar.classList.remove("is-disabled");
+                searchInput.disabled = false;
+            }
+        }
+
+        // EDIT / ADD buttons
+        editBtn.disabled = isAdd || isSearch;
+        addBtn.disabled = !isView;
+
+        // NAVIGATION disable при search
+        document.body.classList.toggle("search-active", isSearch);
+    }
+
+
+    function clearRenaming() {
+        container.querySelectorAll(".is-renaming")
+            .forEach(section => section.classList.remove("is-renaming"));
+    }
 
     /* ------------------------------------
        CLICK DELEGATION
@@ -218,16 +246,22 @@ export function initShelves() {
         }
     });
 
-    function updateShelfCard(shelfElement, data) {
+    initSearch({
+        onSearch: (query) => {
+            performSearch(query);
+        }
+    });
 
-        const section = shelfElement.closest(".shelves-section");
+    searchInput.addEventListener("input", () => {
 
-        const uniqueTitle = generateUniqueShelfName(section, data.title);
+        if (!searchInput.value.trim() &&
+            shelvesView.dataset.mode === "search") {
 
-        shelfElement.querySelector("p").textContent = uniqueTitle;
+            container.innerHTML = originalState;
+            setMode("view");
+        }
+    });
 
-        isDirty = true;
-    }
 
     shelvesView.addEventListener("keydown", (e) => {
 
@@ -540,6 +574,71 @@ export function initShelves() {
 
         menu?.classList.add("hidden");
         submenu?.classList.add("hidden");
+    }
+
+
+    function performSearch(query) {
+
+        // създаваме временен DOM от оригиналното shelves
+        const temp = document.createElement("div");
+        temp.innerHTML = originalState;
+
+        const allShelves = Array.from(
+            temp.querySelectorAll(".shelf-card")
+        );
+
+        const matches = allShelves.filter(card => {
+
+            // игнорираме placeholder-а
+            if (card.classList.contains("add-shelf-placeholder")) {
+                return false;
+            }
+
+            const titleEl = card.querySelector("p");
+            if (!titleEl) return false;
+
+            return titleEl.textContent
+                .toLowerCase()
+                .includes(query.toLowerCase());
+        });
+
+
+        if (matches.length === 0) {
+            container.innerHTML = `
+        <section class="search-results empty">
+            <h2>No results found</h2>
+            <p>Try a different title or author.</p>
+        </section>
+    `;
+        } else {
+            container.innerHTML = `
+        <section class="search-results">
+            <h2>Results (${matches.length})</h2>
+            <ul class="shelves-grid"></ul>
+        </section>
+    `;
+        }
+
+
+        const grid = container.querySelector(".shelves-grid");
+
+        matches.forEach(card => {
+            grid.appendChild(card.cloneNode(true));
+        });
+
+        setMode("search");
+    }
+
+
+    function updateShelfCard(shelfElement, data) {
+
+        const section = shelfElement.closest(".shelves-section");
+
+        const uniqueTitle = generateUniqueShelfName(section, data.title);
+
+        shelfElement.querySelector("p").textContent = uniqueTitle;
+
+        isDirty = true;
     }
 
 }

@@ -1,3 +1,17 @@
+html::-webkit-scrollbar {
+    width: 8px;
+}
+
+html::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+html::-webkit-scrollbar-thumb {
+    background-color: rgba(80, 150, 100, 0.6);
+    border-radius: 8px;
+    transition: background-color 0.1s ease;
+}
+
 .view {
     display: none;
 }
@@ -55,6 +69,8 @@
 
     position: fixed;
     margin-top: 3.6rem;
+
+    height: 4rem;
 
     display: flex;
     flex-direction: row;
@@ -322,6 +338,102 @@ input[type="search"]::-webkit-search-cancel-button:active {
 .search-bar img {
     width: 1.5rem;
     height: auto;
+}
+
+.search-bar.is-disabled {
+    background: var(--mint-100);
+    box-shadow: none;
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.search-bar.is-disabled:hover {
+    transform: none;
+}
+
+.search-bar.is-disabled .search-bar__input {
+    cursor: not-allowed;
+    color: var(--green-300);
+}
+
+.search-bar.is-disabled img {
+    opacity: 0.5;
+}
+
+
+.search-results .shelves-grid {
+    padding-bottom: 4rem;
+}
+
+.search-results h2{
+    font-weight: 600;
+}
+
+.search-suggestions {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 45rem;
+
+    margin-top: 0.5rem;
+
+    background: var(--mint-100);
+    border-radius: 1.2rem;
+
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+
+    padding-bottom: 0.5rem;
+
+    display: flex;
+    flex-direction: column;
+
+    z-index: 20;
+}
+
+.search-suggestions button {
+    all: unset;
+
+    padding: 0.6rem 1.2rem;
+
+    cursor: pointer;
+
+    font-family: "Sofia Sans";
+    font-size: 1rem;
+    font-weight: 500;
+
+    color: var(--green-400);
+
+    transition: background 0.15s ease;
+}
+
+.search-suggestions button:hover {
+    background: var(--mint-300);
+    border-radius: 1rem;
+}
+
+.search-suggestions button:not(:last-child) {
+    border-bottom: 1px solid var(--mint-300);
+}
+
+.search-suggestions button:first-child {
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
+}
+
+.search-suggestions button:last-child {
+    border-bottom-left-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+}
+
+
+.search-suggestions button.active {
+    background: var(--mint-200);
+}
+
+.search-suggestions button.active {
+    background: var(--mint-300);
+    color: var(--aqua-100);
 }
 
 
@@ -688,8 +800,12 @@ button[data-view="settings"] .sidebar__icon {
 }
 
 .icon-button:disabled {
-    background-color: var(--grey-100);
+    background-color: var(--mint-200);
     box-shadow: none;
+    cursor: not-allowed;
+}
+.icon-button:disabled:hover {
+    transform: none;
 }
 
 

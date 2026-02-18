@@ -83,7 +83,7 @@ def test_db():
         return {"error": str(e)}
 
 
-@app.post("/profiles", response_model=ProfileResponse)
+@app.post("/profiles")
 def create_profile(profile: ProfileCreate, db: Session = Depends(get_db)):
 
     existing_user = db.query(Profile).filter(
@@ -104,7 +104,31 @@ def create_profile(profile: ProfileCreate, db: Session = Depends(get_db)):
     db.commit()
     db.refresh(new_profile)
 
-    return new_profile
+    access_token = create_access_token(
+        data={
+            "sub": new_profile.email,
+            "role": new_profile.role
+        }
+    )
+
+    refresh_token = create_refresh_token(
+        data={
+            "sub": new_profile.email,
+            "role": new_profile.role
+        }
+    )
+
+    return {
+        "access_token": access_token,
+        "refresh_token": refresh_token,
+        "token_type": "bearer",
+        "user": {
+            "id": new_profile.id,
+            "username": new_profile.username,
+            "email": new_profile.email
+        }
+    }
+
 
 
 @app.post("/login", response_model=TokenResponse)
@@ -141,7 +165,13 @@ def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depend
 
 @app.get("/me")
 def read_current_user(current_user: str = Depends(get_current_user)):
-    return {"logged_in_as": current_user}
+    return {
+        "id": current_user.id,
+        "username": current_user.username,
+        "email": current_user.email,
+        "role": current_user.role
+    }
+
 
 @app.get("/profiles", response_model=list[ProfileResponse])
 def get_profiles(

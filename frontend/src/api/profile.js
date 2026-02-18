@@ -1,7 +1,9 @@
+import { getToken } from "./auth.js";
+
 const BASE_URL = "http://127.0.0.1:8000";
 
 export async function getProfiles() {
-    const token = localStorage.getItem("token");
+    const token = getToken();
 
     const response = await fetch(`${BASE_URL}/profiles`, {
         headers: {

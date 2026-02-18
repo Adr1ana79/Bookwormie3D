@@ -1,5 +1,6 @@
 import { switchView } from '../viewManager.js';
 import { enterApp } from '../app/appFlow.js';
+import { login } from '../../api/auth.js';
 
 export function initLogin() {
     const loginView = document.getElementById('view-login');
@@ -17,13 +18,30 @@ export function initLogin() {
         switchView(loginView, signupView);
     });
 
-    // primary → app (засега fake success)
-    continueButton.addEventListener('click', () => {
-        // ТУК по-късно ще има:
-        // - validation
-        // - authService.login()
-        // - show app layout
-        enterApp();
+    // primary → backend login
+    continueButton.addEventListener('click', async () => {
+        const emailInput = loginView.querySelector('#login-email');
+        const passwordInput = loginView.querySelector('#login-password');
+
+        const email = emailInput.value.trim();
+        const password = passwordInput.value.trim();
+
+        if (!email || !password) {
+            alert("Please enter email and password");
+            return;
+        }
+
+        try {
+            const result = await login(email, password);
+
+            if (result.access_token) {
+                enterApp();
+            } else {
+                alert("Invalid credentials");
+            }
+        } catch (error) {
+            console.error("Login error:", error);
+            alert("Server error");
+        }
     });
 }
-

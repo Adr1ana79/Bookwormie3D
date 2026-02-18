@@ -10,11 +10,10 @@ import { initShelf } from "./pages/app/shelf.js";
 import { initProfile } from "./pages/app/profile.js";
 import { initSettings } from "./pages/app/settings.js";
 
-import { login } from "./api/auth.js";
-import { getProfiles } from "./api/profile.js";
-
+import { getToken } from "./api/auth.js";
 
 document.addEventListener('DOMContentLoaded', () => {
+
     initStart();
     initAuth();
     initLogin();
@@ -26,4 +25,11 @@ document.addEventListener('DOMContentLoaded', () => {
     initShelf();
     initProfile();
     initSettings();
+
+    if (getToken()) {
+        document.dispatchEvent(new Event('auth:login-success'));
+    } else {
+        console.log("User is not logged in");
+    }
 });
+

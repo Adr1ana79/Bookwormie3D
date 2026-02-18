@@ -10,6 +10,9 @@ import { initShelf } from "./pages/app/shelf.js";
 import { initProfile } from "./pages/app/profile.js";
 import { initSettings } from "./pages/app/settings.js";
 
+import { login } from "./api/auth.js";
+import { getProfiles } from "./api/profile.js";
+
 
 document.addEventListener('DOMContentLoaded', () => {
     initStart();

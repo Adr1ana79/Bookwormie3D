@@ -10,6 +10,7 @@ from sqlalchemy.orm import Session
 from jose import JWTError, jwt
 from datetime import datetime, timedelta
 from sqlalchemy import or_
+from sqlalchemy.sql.functions import user
 
 from app.database import engine
 from app.models.profile import Profile
@@ -20,6 +21,9 @@ from app.database import get_db
 from app.core.security import hash_password
 from app.core.security import verify_password, create_access_token, create_refresh_token
 from app.core.security import SECRET_KEY, ALGORITHM
+
+from app.models.genre import Genre
+from app.schemas.profile import GenresUpdate
 
 
 app = FastAPI()
@@ -57,6 +61,9 @@ def get_current_user(
 
     if user is None:
         raise HTTPException(status_code=401, detail="User not found")
+
+    print("TOKEN PAYLOAD:", payload)
+    print("LOOKING FOR EMAIL:", email)
 
     return user
 
@@ -106,8 +113,8 @@ def create_profile(profile: ProfileCreate, db: Session = Depends(get_db)):
 
     access_token = create_access_token(
         data={
-            "sub": new_profile.email,
-            "role": new_profile.role
+            "sub": user.email,
+            "role": user.role
         }
     )
 
@@ -128,7 +135,6 @@ def create_profile(profile: ProfileCreate, db: Session = Depends(get_db)):
             "email": new_profile.email
         }
     }
-
 
 
 @app.post("/login", response_model=TokenResponse)
@@ -162,15 +168,41 @@ def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depend
     }
 
 
-
 @app.get("/me")
-def read_current_user(current_user: str = Depends(get_current_user)):
+def read_current_user(current_user: Profile = Depends(get_current_user)):
+
     return {
         "id": current_user.id,
         "username": current_user.username,
         "email": current_user.email,
-        "role": current_user.role
+        "role": current_user.role,
+        "genres": [g.genre_name_en for g in current_user.genres],
+        "socials": [
+            sn.network_name for sn in current_user.social_networks
+        ]
     }
+
+
+# @app.patch("/me/genres")
+# def update_genres(
+#     data: GenresUpdate,
+#     current_user: Profile = Depends(get_current_user),
+#     db: Session = Depends(get_db)
+# ):
+#
+#     current_user.genres = []
+#
+#     new_genres = db.query(Genre).filter(
+#         Genre.id.in_(data.genres)
+#     ).all()
+#
+#     current_user.genres = new_genres
+#
+#     db.commit()
+#
+#     return {"message": "Genres updated successfully"}
+
+
 
 
 @app.get("/profiles", response_model=list[ProfileResponse])

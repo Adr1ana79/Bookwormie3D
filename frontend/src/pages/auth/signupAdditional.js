@@ -26,7 +26,7 @@ export function initSignupAdditional() {
         try {
             const result = await signup(signupData);
 
-            localStorage.setItem("accessToken", result.accessToken);
+            localStorage.setItem("access_token", result.accessToken);
 
             document.dispatchEvent(
                 new CustomEvent("auth:login-success", {

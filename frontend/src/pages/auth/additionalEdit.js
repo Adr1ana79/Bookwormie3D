@@ -1,6 +1,7 @@
 import { switchView, showAppLayout } from "../viewManager.js";
+import { loadProfileData } from "../app/profile.js";
 
-export function initAdditionalEditMode() {
+export async function initAdditionalEditMode() {
 
     const section = document.getElementById("view-signup-additional");
     if (!section) return;
@@ -48,51 +49,21 @@ export function initAdditionalEditMode() {
     });
 
     // Save
-    saveBtn.addEventListener("click", () => {
+    saveBtn.addEventListener("click", async () => {
 
-        const newData = collectFormData();
-        const profileView = document.getElementById("view-profile");
+        const selectedGenres = section.querySelectorAll(
+            ".genre-option.genre-option--selected"
+        );
 
-        // --- UPDATE SOCIALS ---
-        const socialsList = profileView.querySelector(".profile-social-networks");
-        socialsList.innerHTML = "";
+        const selectedIds = Array.from(selectedGenres)
+            .map(btn => Number(btn.dataset.id));
 
-        ["instagram", "Goodreads", "Facebook", "LinkedIn", "Pinterest"]
-            .forEach(name => {
-
-                if (newData[name]) {
-
-                    const li = document.createElement("li");
-                    li.className = "social-network__item";
-
-                    li.innerHTML = `
-                <img src="assets/images/icons/social-networks/${name.toLowerCase()}.svg" alt="${name}">
-                <span>${newData[name]}</span>
-            `;
-
-                    socialsList.appendChild(li);
-                }
-            });
-
-        // --- UPDATE GENRES ---
-        const genresList = profileView.querySelector(".favourite-genres");
-        genresList.innerHTML = "";
-
-        const selectedGenres = section.querySelectorAll(".genre-option.genre-option--selected");
-
-        selectedGenres.forEach(btn => {
-            const li = document.createElement("li");
-            li.className = "favourite-genres__item";
-            li.textContent = btn.textContent.trim();
-            genresList.appendChild(li);
-        });
-
-        showAppLayout();
-
-        const additionalView = document.getElementById("view-signup-additional");
-        switchView(additionalView, profileView);
+        try {
+//            await saveGenres(selectedIds);
+        } catch (err) {
+            console.error(err);
+        }
     });
-
 
     // Cancel
     cancelBtn.addEventListener("click", () => {
@@ -101,6 +72,8 @@ export function initAdditionalEditMode() {
 
         showAppLayout();
 
+        const additionalView = document.getElementById("view-signup-additional");
+        const profileView = document.getElementById("view-profile");
         switchView(additionalView, profileView);
     });
 
@@ -109,4 +82,29 @@ export function initAdditionalEditMode() {
 
         form.reset();
     });
+}
+
+
+async function saveGenres(selectedIds) {
+
+    const token = localStorage.getItem("access_token");
+
+    const response = await fetch("http://localhost:8000/me/genres", {
+        method: "PATCH",
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify({
+            genres: selectedIds
+        })
+    });
+
+    console.log("AUTH HEADER:", `Bearer ${token}`);
+    console.log("TOKEN:", localStorage.getItem("access_token"));
+
+
+    if (!response.ok) {
+        throw new Error("Failed to update genres");
+    }
 }

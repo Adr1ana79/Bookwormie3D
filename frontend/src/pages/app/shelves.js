@@ -232,15 +232,29 @@ export function initShelves() {
     });
 
     initShelfContextMenu({
-        onOpen: (shelf) => {
-            const shelfId = shelf.dataset.id;
+        onOpen: (element) => {
+
+            const card = element.closest(".shelf-card");
+            if (!card) return;
+
+            const img = card.querySelector("img");
+            if (!img) return;
+
+            const fileName = img.src.split("/").pop().replace(".png", "");
+            const [design, size] = fileName.split("-");
+
+            if (!design || !size) {
+                console.warn("Could not extract design/size from image:", img.src);
+                return;
+            }
 
             document.dispatchEvent(
                 new CustomEvent("app:open-shelf", {
-                    detail: { shelfId }
+                    detail: { design, size }
                 })
             );
         },
+
 
         onEdit: (shelf) => {
             shelfForm.openEdit(shelf);

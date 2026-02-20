@@ -11,8 +11,9 @@ import { initProfile } from "./pages/app/profile.js";
 import { initSettings } from "./pages/app/settings.js";
 
 import { getToken } from "./api/auth.js";
+import { getCurrentUser } from "./api/profile.js";
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
 
     initStart();
     initAuth();
@@ -26,10 +27,22 @@ document.addEventListener('DOMContentLoaded', () => {
     initProfile();
     initSettings();
 
-    if (getToken()) {
-        document.dispatchEvent(new Event('auth:login-success'));
-    } else {
-        console.log("User is not logged in");
+    const token = getToken();
+
+    if (token) {
+        try {
+            const user = await getCurrentUser();
+
+            document.dispatchEvent(
+                new CustomEvent('auth:login-success', {
+                    detail: user
+                })
+            );
+
+        } catch (error) {
+            console.log("Token invalid");
+            localStorage.removeItem("access_token");
+        }
     }
 });
 

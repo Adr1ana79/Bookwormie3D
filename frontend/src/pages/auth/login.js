@@ -1,6 +1,7 @@
 import { switchView } from '../viewManager.js';
 import { enterApp } from '../app/appFlow.js';
 import { login } from '../../api/auth.js';
+import { getCurrentUser } from '../../api/profile.js';
 
 export function initLogin() {
     const loginView = document.getElementById('view-login');
@@ -35,7 +36,9 @@ export function initLogin() {
             const result = await login(email, password);
 
             if (result.access_token) {
-                enterApp();
+                const user = await getCurrentUser();
+                enterApp(user);
+
             } else {
                 alert("Invalid credentials");
             }

@@ -21,21 +21,8 @@ export async function login(email, password) {
     return data;
 }
 
-export async function getProfiles() {
-    const token = getToken();
-
-    const response = await fetch("http://127.0.0.1:8000/profiles", {
-        headers: {
-            "Authorization": `Bearer ${token}`
-        }
-    });
-
-    return response.json();
-}
-
-
 export function logout() {
-    localStorage.removeItem("token");
+    localStorage.removeItem("access_token");
 }
 
 export function getToken() {

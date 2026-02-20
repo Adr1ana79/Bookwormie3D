@@ -75,9 +75,13 @@ export function initShelves() {
         if (card && !card.classList.contains("add-shelf-placeholder")) {
             document.dispatchEvent(
                 new CustomEvent("app:open-shelf", {
-                    detail: { shelfId: card.dataset.id }
+                    detail: {
+                        design: "basic",
+                        size: "standard"
+                    }
                 })
             );
+
             return;
         }
 

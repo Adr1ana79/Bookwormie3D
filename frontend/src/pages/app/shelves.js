@@ -72,18 +72,31 @@ export function initShelves() {
 
         /* OPEN SHELF (само във view mode) */
         const card = e.target.closest(".shelf-card");
+
         if (card && !card.classList.contains("add-shelf-placeholder")) {
+
+            const img = card.querySelector("img");
+            if (!img) return;
+
+            const fileName = img.src.split("/").pop().replace(".png", "");
+            const [design, size] = fileName.split("-");
+
+
+            if (!design || !size) {
+                console.warn("Missing design or size:", card);
+                return;
+            }
+
             document.dispatchEvent(
                 new CustomEvent("app:open-shelf", {
-                    detail: {
-                        design: "basic",
-                        size: "standard"
-                    }
+                    detail: { design, size }
                 })
             );
 
             return;
         }
+
+
 
         /* -----------------------------
            START RENAME
@@ -405,8 +418,8 @@ export function initShelves() {
         const li = document.createElement("li");
         li.className = "shelf-card";
 
-        li.dataset.design = shelf.design;
-        li.dataset.size = shelf.size;
+        li.dataset.design = shelf.design || "basic";
+        li.dataset.size = shelf.size || "standard";
 
         const imagePath = `assets/images/shelf-thumbnails/${shelf.design}-${shelf.size}.png`;
         const uniqueTitle = generateUniqueShelfName(section, shelf.title);

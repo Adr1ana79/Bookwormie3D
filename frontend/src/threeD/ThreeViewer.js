@@ -1,7 +1,9 @@
 import * as THREE from "https://unpkg.com/three@0.160.0/build/three.module.js";
 import { GLTFLoader } from "https://unpkg.com/three@0.160.0/examples/jsm/loaders/GLTFLoader.js?module";
 
-export function initThreeViewer(container, modelPath) {
+import { designConfig } from "./designConfig.js";
+
+export function initThreeViewer(container, modelPath, design) {
 
     container.innerHTML = "";
 
@@ -9,12 +11,14 @@ export function initThreeViewer(container, modelPath) {
 
     const renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setSize(container.clientWidth, container.clientHeight);
-    renderer.toneMappingExposure = 1.1;
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.6;  // пробвай 1.3 – 1.6
     renderer.outputColorSpace = THREE.SRGBColorSpace;
-    renderer.toneMapping = THREE.NoToneMapping;
+
+    const config = designConfig[design] || designConfig.basic;
 
 
-    scene.background = new THREE.Color(0xfcdac7);
+    scene.background = new THREE.Color(config.background);
 
     const camera = new THREE.PerspectiveCamera(
         75,
@@ -27,19 +31,17 @@ export function initThreeViewer(container, modelPath) {
 
     camera.position.z = 3;
 
-    // Ambient – запълва сенките
-    const ambient = new THREE.AmbientLight(0xffffff, 0.6);
+    const ambient = new THREE.AmbientLight(0xfff1d6, 0.8); // топъл ambient
     scene.add(ambient);
 
-    // Основна светлина
-    const keyLight = new THREE.DirectionalLight(0xffffff, 1.2);
+    const keyLight = new THREE.DirectionalLight(0xffe3b0, 1.1); // топла основна светлина
     keyLight.position.set(5, 10, 8);
     scene.add(keyLight);
 
-    // Контра светлина за depth
-    const backLight = new THREE.DirectionalLight(0xffffff, 0.5);
-    backLight.position.set(-5, 5, -5);
-    scene.add(backLight);
+    const fillLight = new THREE.DirectionalLight(0xffffff, 0.4); // неутрален fill
+    fillLight.position.set(-5, 5, -5);
+    scene.add(fillLight);
+
 
 
     const loader = new GLTFLoader();
@@ -51,9 +53,9 @@ export function initThreeViewer(container, modelPath) {
         model.traverse((child) => {
             if (child.isMesh) {
                 child.material = new THREE.MeshStandardMaterial({
-                    color: 0xb0815b,
-                    roughness: 0.7,
-                    metalness: 0.1
+                    color: config.modelColor,
+                    roughness: 0.3,   // по-ниска roughness = по-светъл
+                    metalness: 0.0
                 });
             }
         });

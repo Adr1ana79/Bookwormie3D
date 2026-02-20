@@ -11,6 +11,6 @@ export function initShelf() {
 
         const modelPath = `assets/models/shelves/${design}/${design}-${size}.glb`;
 
-        initThreeViewer(threeContainer, modelPath);
+        initThreeViewer(threeContainer, modelPath, design);
     });
 }

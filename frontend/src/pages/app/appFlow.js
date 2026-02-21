@@ -1,4 +1,6 @@
 import { initSidebarNav, setActiveNav } from '../../ui-elements/navbar.js';
+import { renderProfile } from './profile.js';
+import { getCurrentUser } from "../../api/profile.js";
 
 let currentView = null;
 let appMain = null;
@@ -72,8 +74,6 @@ function showView(viewKey) {
 
     currentView = viewKey;
 }
-
-
 
 export function enterApp() {
     document.dispatchEvent(new Event('auth:login-success'));

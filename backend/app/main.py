@@ -140,6 +140,8 @@ def create_profile(profile: ProfileCreate, db: Session = Depends(get_db)):
 @app.post("/login", response_model=TokenResponse)
 def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
 
+    print("LOGIN ROUTE HIT")
+
     user = db.query(Profile).filter(
         or_(
             Profile.username == form_data.username,
@@ -153,7 +155,6 @@ def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depend
     if not verify_password(form_data.password, user.password_hash):
         raise HTTPException(status_code=401, detail="Invalid credentials")
 
-
     access_token = create_access_token(
         data={
             "sub": user.email,
@@ -163,7 +164,6 @@ def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depend
 
     return {
         "access_token": access_token,
-        "refresh_token": refresh_token,
         "token_type": "bearer"
     }
 
@@ -182,27 +182,15 @@ def read_current_user(current_user: Profile = Depends(get_current_user)):
         ]
     }
 
+@app.delete("/me")
+def delete_current_user(
+    current_user: Profile = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    db.delete(current_user)
+    db.commit()
 
-# @app.patch("/me/genres")
-# def update_genres(
-#     data: GenresUpdate,
-#     current_user: Profile = Depends(get_current_user),
-#     db: Session = Depends(get_db)
-# ):
-#
-#     current_user.genres = []
-#
-#     new_genres = db.query(Genre).filter(
-#         Genre.id.in_(data.genres)
-#     ).all()
-#
-#     current_user.genres = new_genres
-#
-#     db.commit()
-#
-#     return {"message": "Genres updated successfully"}
-
-
+    return {"message": "Profile deleted successfully"}
 
 
 @app.get("/profiles", response_model=list[ProfileResponse])
@@ -224,3 +212,24 @@ def refresh_token(refresh_token: str):
     payload = jwt.decode(refresh_token, SECRET_KEY, algorithms=[ALGORITHM])
     new_access_token = create_access_token(data={"sub": payload["sub"]})
     return {"access_token": new_access_token}
+
+
+
+# @app.patch("/me/genres")
+# def update_genres(
+#     data: GenresUpdate,
+#     current_user: Profile = Depends(get_current_user),
+#     db: Session = Depends(get_db)
+# ):
+#
+#     current_user.genres = []
+#
+#     new_genres = db.query(Genre).filter(
+#         Genre.id.in_(data.genres)
+#     ).all()
+#
+#     current_user.genres = new_genres
+#
+#     db.commit()
+#
+#     return {"message": "Genres updated successfully"}

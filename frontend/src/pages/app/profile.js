@@ -26,58 +26,18 @@ export async function initProfile() {
 
     initProfilePictureModal();
     initProfileNameEdit(profileSection);
-    initAdditionalEditMode();
+    await initAdditionalEditMode();
 
     document.addEventListener("auth:login-success", async () => {
         const profileSection = document.getElementById("view-profile");
         if (!profileSection) return;
 
-        await loadProfileData(profileSection);
+        loadProfileData(profileSection);
     });
     console.log("INIT PROFILE");
 
     const editAdditionalBtn = document.getElementById("edit-additional-button");
     console.log("BUTTON:", editAdditionalBtn);
-
-    async function loadProfileData(profileSection) {
-        try {
-            const user = await getCurrentUser();
-            renderProfile(profileSection, user);
-        } catch (err) {
-            console.error("Failed to load profile:", err);
-        }
-    }
-
-    function renderProfile(section, user) {
-        const nameEl = section.querySelector(".profile-name");
-        const emailEl = section.querySelector(".profile-email");
-        const genreList = section.querySelector(".favourite-genres");
-        const socialList = section.querySelector(".profile-social-networks");
-
-        if (nameEl) nameEl.textContent = user.username;
-        if (emailEl) emailEl.textContent = user.email;
-
-        genreList.innerHTML = "";
-        user.genres.forEach(genre => {
-            const li = document.createElement("li");
-            li.className = "favourite-genres__item";
-            li.textContent = genre;
-            genreList.appendChild(li);
-        });
-
-        socialList.innerHTML = "";
-        user.socials.forEach(network => {
-            const li = document.createElement("li");
-            li.className = "social-network__item";
-
-            li.innerHTML = `
-                <span>${network}</span>
-            `;
-
-            socialList.appendChild(li);
-        });
-
-    }
 }
 
 function initProfileNameEdit(profileSection) {
@@ -158,6 +118,8 @@ function initProfileNameEdit(profileSection) {
 }
 
 export async function loadProfileData(profileSection) {
+    if (!profileSection) return;
+
     try {
         const user = await getCurrentUser();
         renderProfile(profileSection, user);
@@ -166,10 +128,28 @@ export async function loadProfileData(profileSection) {
     }
 }
 
-function renderProfile(section, user) {
+export function renderProfile(section, user) {
     const nameEl = section.querySelector(".profile-name");
     const emailEl = section.querySelector(".profile-email");
+    const genreList = section.querySelector(".favourite-genres");
+    const socialList = section.querySelector(".profile-social-networks");
 
     if (nameEl) nameEl.textContent = user.username;
     if (emailEl) emailEl.textContent = user.email;
+
+    genreList.innerHTML = "";
+    user.genres.forEach(genre => {
+        const li = document.createElement("li");
+        li.className = "favourite-genres__item";
+        li.textContent = genre;
+        genreList.appendChild(li);
+    });
+
+    socialList.innerHTML = "";
+    user.socials.forEach(network => {
+        const li = document.createElement("li");
+        li.className = "social-network__item";
+        li.innerHTML = `<span>${network}</span>`;
+        socialList.appendChild(li);
+    });
 }

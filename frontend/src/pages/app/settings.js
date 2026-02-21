@@ -1,6 +1,7 @@
-import { switchView } from "../viewManager.js";
 import { openConfirmModal } from "../../ui-elements/confirmModal.js";
 import { goToAuth } from "./appFlow.js";
+import { getToken } from "../../api/auth.js";
+
 
 export function initSettings() {
     const settingsView = document.getElementById("view-settings");
@@ -42,10 +43,10 @@ export function initSettings() {
         if (e.target.closest("#logout-btn")) {
             openConfirmModal({
                 title: "Log out?",
-                description: "\"You will be signed out of your account. You can log back in at any time.",
+                description: "You will be signed out of your account.",
                 confirmText: "Log out",
                 onConfirm: () => {
-                    console.log("Going to auth");
+                    localStorage.removeItem("access_token");
                     goToAuth();
                 }
             });
@@ -58,22 +59,28 @@ export function initSettings() {
                     "This action is irreversible. All your data will be permanently deleted.",
                 confirmText: "Delete",
 
-                onConfirm: () => {
-                    console.log("Delete confirm triggered");
+                onConfirm: async () => {
 
-                    const user = JSON.parse(localStorage.getItem("currentUser"));
-                    console.log("User:", user);
+                    try {
 
-                    if (user) {
-                        const users = JSON.parse(localStorage.getItem("users")) || [];
-                        const updatedUsers = users.filter(u => u.id !== user.id);
-                        localStorage.setItem("users", JSON.stringify(updatedUsers));
+                        const token = getToken();
+
+                        await fetch("http://127.0.0.1:8000/me", {
+                            method: "DELETE",
+                            headers: {
+                                "Authorization": `Bearer ${token}`
+                            }
+                        });
+
+                        localStorage.removeItem("access_token");
+
+                        goToAuth();
+
+                    } catch (error) {
+                        console.error("Delete failed:", error);
+                        alert("Failed to delete profile");
                     }
-
-                    localStorage.removeItem("currentUser");
-                    goToAuth();
                 }
-
             });
         }
     });

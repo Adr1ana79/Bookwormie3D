@@ -4,14 +4,13 @@ import { initLogin } from "./pages/auth/login.js";
 import { initSignup } from "./pages/auth/signup.js";
 import { initSignupAdditional } from "./pages/auth/signupAdditional.js";
 
-import { initAppFlow } from "./pages/app/appFlow.js";
+import {initAppFlow } from "./pages/app/appFlow.js";
 import { initShelves } from "./pages/app/shelves.js";
 import { initShelf } from "./pages/app/shelf.js";
 import { initProfile } from "./pages/app/profile.js";
 import { initSettings } from "./pages/app/settings.js";
 
 import { getToken } from "./api/auth.js";
-import { getCurrentUser } from "./api/profile.js";
 
 document.addEventListener('DOMContentLoaded', async () => {
 
@@ -24,20 +23,18 @@ document.addEventListener('DOMContentLoaded', async () => {
     initAppFlow();
     initShelves();
     initShelf();
-    initProfile();
+    await initProfile();
     initSettings();
 
     const token = getToken();
 
     if (token) {
         try {
-            const user = await getCurrentUser();
-
             document.dispatchEvent(
-                new CustomEvent('auth:login-success', {
-                    detail: user
-                })
+                new Event('auth:login-success')
             );
+
+            await loadAndRenderProfile();
 
         } catch (error) {
             console.log("Token invalid");

@@ -3,6 +3,7 @@ import { initProfilePictureModal } from "../../ui-elements/profilePicture.js";
 import { initAdditionalEditMode } from "../auth/additionalEdit.js";
 import { switchView, showAuthLayout } from "../viewManager.js";
 import { getCurrentUser } from "../../api/profile.js";
+import { getToken } from "../../api/auth.js";
 
 
 export async function initProfile() {
@@ -117,8 +118,13 @@ function initProfileNameEdit(profileSection) {
 
 }
 
+
 export async function loadProfileData(profileSection) {
+
     if (!profileSection) return;
+
+    const token = getToken();
+    if (!token) return;
 
     try {
         const user = await getCurrentUser();

@@ -1,6 +1,7 @@
 import { switchView } from '../viewManager.js';
 import { enterApp } from '../app/appFlow.js';
 import { signupData } from './signup.js';
+import {showFieldError} from "./login.js";
 
 export function initSignupAdditional() {
     const additionalView =
@@ -27,11 +28,25 @@ export function initSignupAdditional() {
             const result = await signup(signupData);
 
             localStorage.setItem("access_token", result.access_token);
-
             enterApp();
 
-        } catch (err) {
-            console.error(err.message);
+        } catch (error) {
+
+            if (error.message.includes("Username")) {
+                switchView(additionalView, signupView);
+                showFieldError(
+                    document.querySelector('#signup-username'),
+                    "Username already exists"
+                );
+            }
+
+            if (error.message.includes("email")) {
+                switchView(additionalView, signupView);
+                showFieldError(
+                    document.querySelector('#signup-email'),
+                    "Email already exists"
+                );
+            }
         }
     });
 }

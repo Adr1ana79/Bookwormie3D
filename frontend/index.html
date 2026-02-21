@@ -492,35 +492,32 @@
                 <form id="signup-form" class="auth-form" novalidate>
 
                     <!-- Username -->
-                    <fieldset class="form-group-of-two">
-                        <div class="form-group">
-                            <label for="signup-username" class="form-field__label">
-                                Username
-                            </label>
+                    <div class="form-group">
+                        <label for="signup-username" class="form-field__label">
+                            Username
+                        </label>
 
-                            <div class="form-field form-field--large form-field--default">
-                                <input id="signup-username"
-                                       type="text"
-                                       name="username"
-                                       maxlength="50"
-                                       class="form-field__input"
-                                       placeholder="Enter username"
-                                       aria-describedby="signup-username-error name-specifier"
-                                       required>
-                            </div>
-                            <div id="signup-username-error"
-                                 class="form-field__help form-field__help--error"
-                                 hidden>
+                        <div class="form-field form-field--large form-field--default">
+                            <input id="signup-username"
+                                   type="text"
+                                   name="username"
+                                   maxlength="50"
+                                   class="form-field__input"
+                                   placeholder="Enter username"
+                                   aria-describedby="signup-username-error"
+                                   required>
+                        </div>
+                        <div id="signup-username-error"
+                             class="form-field__help form-field__help--error hidden">
 
-                                <span class="form-field__help-icon" hidden></span>
-                                <span class="form-field__help-text" hidden>Error message here</span>
-                            </div>
+                            <span class="form-field__help-icon"></span>
+                            <span class="form-field__help-text">Error message here</span>
                         </div>
 
                         <p id="name-specifier" class="input-specifier">
-                            Allowed characters: letters, numbers, hyphen (-) and apostrophe (')
+                            Allowed: letters, numbers, hyphen (-) and apostrophe (')
                         </p>
-                    </fieldset>
+                    </div>
 
                     <!-- Email -->
                     <div class="form-group">
@@ -540,11 +537,10 @@
                         </div>
 
                         <div id="signup-email-error"
-                             class="form-field__help form-field__help--error"
-                             hidden>
+                             class="form-field__help form-field__help--error hidden">
 
-                            <span class="form-field__help-icon" hidden></span>
-                            <span class="form-field__help-text" hidden>Error message here</span>
+                            <span class="form-field__help-icon"></span>
+                            <span class="form-field__help-text">Error message here</span>
                         </div>
                     </div>
 
@@ -563,7 +559,7 @@
                                        maxlength="100"
                                        class="form-field__input"
                                        placeholder="Enter password"
-                                       aria-describedby="password-specifier signup-password-error"
+                                       aria-describedby="signup-password-error"
                                        required>
 
                                 <button type="button"
@@ -578,11 +574,10 @@
                             </div>
 
                             <div id="signup-password-error"
-                                 class="form-field__help form-field__help--error"
-                                 hidden>
+                                 class="form-field__help form-field__help--error hidden">
 
-                                <span class="form-field__help-icon" hidden></span>
-                                <span class="form-field__help-text" hidden>Error message here</span>
+                                <span class="form-field__help-icon"></span>
+                                <span class="form-field__help-text">Error message here</span>
                             </div>
                         </div>
 
@@ -614,11 +609,10 @@
                             </div>
 
                             <div id="signup-confirm-password-error"
-                                 class="form-field__help form-field__help--error"
-                                 hidden>
+                                 class="form-field__help form-field__help--error hidden">
 
-                                <span class="form-field__help-icon" hidden></span>
-                                <span class="form-field__help-text" hidden>Error message here</span>
+                                <span class="form-field__help-icon"></span>
+                                <span class="form-field__help-text">Error message here</span>
                             </div>
                         </div>
 
@@ -649,7 +643,7 @@
                                 class="button secondary-button button-label button-label--secondary">
                             Log in
                         </button>
-                        <button type="submit"
+                        <button type="button"
                                 class="button primary-button button-label button-label--primary">
                             Continue
                         </button>

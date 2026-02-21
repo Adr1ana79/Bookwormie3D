@@ -924,6 +924,8 @@ button[data-view="settings"] .sidebar__icon {
     justify-content: center;
     align-items: center;
     align-self: stretch;
+
+    gap: 1rem;
 }
 
 .form-group {

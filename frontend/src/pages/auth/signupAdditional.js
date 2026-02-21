@@ -26,13 +26,7 @@ export function initSignupAdditional() {
         try {
             const result = await signup(signupData);
 
-            localStorage.setItem("access_token", result.accessToken);
-
-            document.dispatchEvent(
-                new CustomEvent("auth:login-success", {
-                    detail: result.user
-                })
-            );
+            localStorage.setItem("access_token", result.access_token);
 
             enterApp();
 
@@ -55,7 +49,7 @@ async function signup(data) {
     const result = await response.json();
 
     if (!response.ok) {
-        throw new Error(result.message || "Signup failed");
+        throw new Error(result.detail || "Signup failed");
     }
 
     return result;

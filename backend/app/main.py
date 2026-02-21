@@ -113,8 +113,8 @@ def create_profile(profile: ProfileCreate, db: Session = Depends(get_db)):
 
     access_token = create_access_token(
         data={
-            "sub": user.email,
-            "role": user.role
+            "sub": new_profile.email,
+            "role": new_profile.role
         }
     )
 

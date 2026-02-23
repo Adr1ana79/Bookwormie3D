@@ -154,7 +154,7 @@
     font-size: 1rem;
     font-style: normal;
     font-weight: 700;
-    line-height: 150%; /* 1.5rem */
+    line-height: 150%;
     letter-spacing: -0.011rem;
 }
 
@@ -166,12 +166,10 @@
 
 /* --- EDIT STATE --- */
 
-/* ADD mode wins */
 .is-adding-section .edit-only {
     display: none !important;
 }
 
-/* EDIT mode hides add UI */
 .is-editing-sections .add-only {
     display: none !important;
 }

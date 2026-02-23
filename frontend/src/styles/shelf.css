@@ -90,7 +90,7 @@
 
 .shelf-stage {
     position: fixed;
-    left: 19rem;
+    left: 19rem !important;
     top: 1rem;
     width: 80vw;
     height: 100vh;
@@ -103,4 +103,8 @@
 #three-container {
     width: 100%;
     height: 800px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

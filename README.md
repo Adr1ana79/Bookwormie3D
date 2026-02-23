@@ -28,22 +28,23 @@ Download the project source code from the version control system (Git).
 #### 2. Create a Virtual Environment (Recommended)
 Run the following command to create a virtual environment:
 
-python -m venv venv
+''' python -m venv venv '''
 
 
 Activate the environment:
 
 Windows:
-venv\Scripts\activate
+''' venv\Scripts\activate '''
 
 macOS/Linux:
-source venv/bin/activate
+''' source venv/bin/activate '''
 
 
 #### 3. Install Dependencies
 Install the required packages using pip:
 
-pip install -r requirements.txt
+''' pip install -r requirements.txt '''
+
 Key dependencies include: FastAPI, SQLAlchemy, psycopg2, python-jose, passlib, and uvicorn.
 
 
@@ -60,8 +61,9 @@ Verify the connection to the server.
 #### 5. Start the Server
 Run the backend using Uvicorn:
 
-uvicorn app.main:app --reload
-Default Server URL: http://127.0.0.1:8000
+''' uvicorn app.main:app --reload '''
+
+Default Server URL: http://127.0.0.1:8000 
 
 Interactive API Documentation: http://127.0.0.1:8000/docs
 
@@ -79,7 +81,7 @@ VS Code: Use the Live Server extension.
 
 Python Simple Server:
 
-python -m http.server 5500
+''' python -m http.server 5500 '''
 
 Any built-in IDE web server.
 

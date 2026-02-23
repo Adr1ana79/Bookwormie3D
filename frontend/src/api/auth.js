@@ -7,7 +7,7 @@ export async function login(email, password) {
             "Content-Type": "application/x-www-form-urlencoded"
         },
         body: new URLSearchParams({
-            username: email,  // OAuth2 изисква да се казва username
+            username: email,
             password: password
         })
     });

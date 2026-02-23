@@ -133,7 +133,7 @@ function validatePassword(input) {
         showFieldWarning(input, "Password strength: weak");
     }
 
-    return true; // 🔥 винаги true ако няма error
+    return true;
 }
 
 function validateConfirmPassword(passwordInput, confirmInput) {

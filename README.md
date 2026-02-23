@@ -28,7 +28,7 @@ Download the project source code from the version control system (Git).
 #### 2. Create a Virtual Environment (Recommended)
 Run the following command to create a virtual environment:
 
-''' python -m venv venv '''
+''' Bash python -m venv venv '''
 
 
 Activate the environment:

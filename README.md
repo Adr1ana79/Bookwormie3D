@@ -38,20 +38,20 @@ macOS/Linux:
 
 source venv/bin/activate
 
-####3. Install Dependencies
+#### 3. Install Dependencies
 Install the required packages using pip:
 
 pip install -r requirements.txt
 Key dependencies include: FastAPI, SQLAlchemy, psycopg2, python-jose, passlib, and uvicorn.
 
-####4. Database Configuration
+#### 4. Database Configuration
 Create a PostgreSQL database.
 
 Configure the connection string in the configuration file (e.g., database.py).
 
 Verify the connection to the server.
 
-####5. Start the Server
+#### 5. Start the Server
 Run the backend using Uvicorn:
 
 uvicorn app.main:app --reload
@@ -62,7 +62,7 @@ Interactive API Documentation: http://127.0.0.1:8000/docs
 ### Frontend Installation and Startup
 The Frontend is built with Vanilla JavaScript and does not require external package managers.
 
-####1. Start a Local Server
+#### 1. Start a Local Server
 You can serve the frontend using one of the following methods:
 
 VS Code: Use the Live Server extension.
@@ -72,16 +72,16 @@ Python Simple Server:
 python -m http.server 5500
 Any built-in IDE web server.
 
-####2. Access in Browser
+#### 2. Access in Browser
 Once the server is running, open your browser at:
 http://localhost:5500
 
-####3. Connecting to the Backend
+#### 3. Connecting to the Backend
 The Frontend communicates with the Backend via REST API requests to http://localhost:8000.
 
 Note: Ensure the Backend server is running before using the application.
 
-####Additional Configurations
+#### Additional Configurations
 CORS: Middleware must be configured on the backend to allow the local origin.
 
 WebGL: Ensure WebGL is enabled in your web browser.

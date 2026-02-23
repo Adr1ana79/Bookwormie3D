@@ -1,16 +1,16 @@
-// pages/app/shelf.js
+import { initThreeViewer } from "../../threeD/ThreeViewer.js";
+
 export function initShelf() {
     const shelfView = document.getElementById('view-shelf');
     if (!shelfView) return;
 
-    const backLink = shelfView.querySelector('.local_navigation a');
-    if (!backLink) return;
+    const threeContainer = shelfView.querySelector("#three-container");
 
-    backLink.addEventListener('click', (event) => {
-        event.preventDefault();
+    document.addEventListener("app:open-shelf", (event) => {
+        const { design, size } = event.detail;
 
-        document.dispatchEvent(
-            new CustomEvent('app:back-to-shelves')
-        );
+        const modelPath = `assets/models/shelves/${design}/${design}-${size}.glb`;
+
+        initThreeViewer(threeContainer, modelPath, design);
     });
 }

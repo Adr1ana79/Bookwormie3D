@@ -85,5 +85,22 @@
 
     object-fit: fill;
     pointer-events: none;
+    z-index: 1;
+}
+
+.shelf-stage {
+    position: fixed;
+    left: 19rem;
+    top: 1rem;
+    width: 80vw;
+    height: 100vh;
+
+    object-fit: fill;
+    pointer-events: none;
     z-index: 0;
+}
+
+#three-container {
+    width: 100%;
+    height: 800px;
 }

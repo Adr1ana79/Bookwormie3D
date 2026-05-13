@@ -3,23 +3,55 @@ import { GLTFLoader } from "https://unpkg.com/three@0.160.0/examples/jsm/loaders
 
 import { designConfig } from "./designConfig.js";
 
-export function initThreeViewer(container, modelPath, design) {
+export function initThreeViewer(container, modelPath, design, size) {
 
     container.innerHTML = "";
 
     const scene = new THREE.Scene();
 
-    const renderer = new THREE.WebGLRenderer({ antialias: true });
-    renderer.setSize(container.clientWidth, container.clientHeight);
-    renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.6;  // пробвай 1.3 – 1.6
-    renderer.outputColorSpace = THREE.SRGBColorSpace;
-
     const config = designConfig[design] || designConfig.basic;
 
+    const sizeZoomConfig = {
+
+        mini: {
+            defaultZ: 2.3,
+            zoomZ: 1
+        },
+
+        standard: {
+            defaultZ: 1.9,
+            zoomZ: 0.7
+        }
+
+    };
+
+    const zoomConfig =
+        sizeZoomConfig[size] || sizeZoomConfig.standard;
 
     scene.background = new THREE.Color(config.background);
 
+    // renderer
+    const renderer = new THREE.WebGLRenderer({
+        antialias: true
+    });
+
+    renderer.setSize(
+        container.clientWidth,
+        container.clientHeight
+    );
+
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.6;
+    renderer.outputColorSpace = THREE.SRGBColorSpace;
+
+    renderer.setSize(
+        container.clientWidth,
+        container.clientHeight
+    );
+
+    container.appendChild(renderer.domElement);
+
+    // camera
     const camera = new THREE.PerspectiveCamera(
         75,
         container.clientWidth / container.clientHeight,
@@ -27,72 +59,148 @@ export function initThreeViewer(container, modelPath, design) {
         1000
     );
 
-    container.appendChild(renderer.domElement);
+    camera.position.set(0, 0, zoomConfig.defaultZ);
+    camera.lookAt(0, 0, 0);
 
-    camera.position.z = 3;
-
-    const ambient = new THREE.AmbientLight(0xfff1d6, 0.8); // топъл ambient
+    // lights
+    const ambient = new THREE.AmbientLight(0xfff1d6, 0.8);
     scene.add(ambient);
 
-    const keyLight = new THREE.DirectionalLight(0xffe3b0, 1.1); // топла основна светлина
+    const keyLight = new THREE.DirectionalLight(0xffe3b0, 1.1);
     keyLight.position.set(5, 10, 8);
     scene.add(keyLight);
 
-    const fillLight = new THREE.DirectionalLight(0xffffff, 0.4); // неутрален fill
+    const fillLight = new THREE.DirectionalLight(0xffffff, 0.4);
     fillLight.position.set(-5, 5, -5);
     scene.add(fillLight);
 
+    // zoom state
+    let targetModelY = 0;
+    let targetZ = zoomConfig.defaultZ;
 
+    let currentLevel = 0;
 
+    let model = null;
+
+    const shelfLevels = [
+        1.2,
+        0.6,
+        0,
+        -0.6,
+        -1.2
+    ];
+
+    function zoomToLevel(index) {
+
+        if (index < 0 || index >= shelfLevels.length) return;
+
+        currentLevel = index;
+
+        // движим модела, не камерата
+        targetModelY = -shelfLevels[index];
+
+        // лек zoom
+        targetZ = zoomConfig.zoomZ;
+    }
+
+    function resetZoom() {
+        targetModelY = 0;
+        targetZ = zoomConfig.defaultZ;
+    }
+
+    // interactions
+    container.addEventListener("wheel", (event) => {
+
+        event.preventDefault();
+
+        if (event.deltaY > 0) {
+            zoomToLevel(currentLevel + 1);
+        } else {
+            zoomToLevel(currentLevel - 1);
+        }
+
+    }, { passive: false });
+
+    container.addEventListener("dblclick", resetZoom);
+
+    // loader
     const loader = new GLTFLoader();
 
     loader.load(modelPath, (gltf) => {
 
-        const model = gltf.scene;
-        // override material (както вече направихме)
+        model = gltf.scene;
+
+        // materials
         model.traverse((child) => {
+
             if (child.isMesh) {
+
                 child.material = new THREE.MeshStandardMaterial({
                     color: config.modelColor,
-                    roughness: 0.3,   // по-ниска roughness = по-светъл
-                    metalness: 0.0
+                    roughness: 0.3,
+                    metalness: 0.0,
+                    side: THREE.DoubleSide
                 });
+
             }
+
         });
 
-        // 📦 Центрираме модела
+        // centering
         const box = new THREE.Box3().setFromObject(model);
+
         const center = box.getCenter(new THREE.Vector3());
         const size = box.getSize(new THREE.Vector3());
 
-        model.position.sub(center); // центрираме в 0,0,0
+        model.position.sub(center);
 
-        // 📏 Автоматичен scale
+        // auto scale
         const maxDim = Math.max(size.x, size.y, size.z);
+
         const scale = 2 / maxDim;
+
         model.scale.setScalar(scale);
 
-        // Blender Z-up → Three Y-up
+        // orientation
         model.rotation.x = -Math.PI / 2;
-
-        // Обръщаме отпред
         model.rotation.z = Math.PI;
 
-        model.position.y += 0.2; // леко надолу
-        model.position.x = 0;    // гарантира центриране
-        model.scale.z *= -1;
+        // fine positioning
+        model.position.y += 0.2;
+        model.position.x = 0;
 
+        // flip
+        model.scale.z *= -1;
 
         scene.add(model);
 
     });
 
-
-
+    // animation loop
     function animate() {
+
         requestAnimationFrame(animate);
+
+        // smooth model movement
+        if (model) {
+
+            model.position.y += (
+                targetModelY - model.position.y
+            ) * 0.2;
+
+        }
+
+        // smooth zoom
+        camera.position.z += (
+            targetZ - camera.position.z
+        ) * 0.2;
+
+        camera.lookAt(0, 0, 0);
+
         renderer.render(scene, camera);
+
     }
 
     animate();
+
 }

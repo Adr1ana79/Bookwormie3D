@@ -48,6 +48,56 @@ export function initAppFlow() {
     document.addEventListener('app:open-shelf', () => {
         showView('shelf');
     });
+
+    document.addEventListener("click", (e) => {
+
+        const link =
+            e.target.closest(".terms-title");
+
+        if (!link) return;
+
+        e.preventDefault();
+
+        console.log("TERMS CLICK");
+
+        sessionStorage.setItem(
+            "skipScrollReset",
+            "true"
+        );
+
+        const targetId =
+            link.dataset.target;
+
+        document.dispatchEvent(
+            new CustomEvent("app:navigate", {
+                detail: "settings"
+            })
+        );
+
+        console.log("NAVIGATION DISPATCHED");
+
+        requestAnimationFrame(() => {
+
+            requestAnimationFrame(() => {
+
+                const target =
+                    document.getElementById(targetId);
+
+                console.log(target);
+
+                if (target) {
+                    console.log("SCROLLING TO TARGET");
+
+                    target.scrollIntoView({
+                        behavior: "smooth",
+                        block: "start"
+                    });
+                }
+
+            });
+
+        });
+    });
 }
 
 function resetViewState(view) {
@@ -108,8 +158,17 @@ function showView(viewKey) {
                 sessionStorage.removeItem("restoreShelvesScroll");
 
             } else {
+                const skipReset =
+                    sessionStorage.getItem("skipScrollReset");
 
-                window.scrollTo(0, 0);
+                if (skipReset === "true") {
+
+                    sessionStorage.removeItem("skipScrollReset");
+
+                } else {
+
+                    window.scrollTo(0, 0);
+                }
             }
 
         });

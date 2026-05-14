@@ -78,32 +78,48 @@ export function initThreeViewer(container, modelPath, design, size) {
     let targetModelY = 0;
     let targetZ = zoomConfig.defaultZ;
 
-    let currentLevel = 0;
+    let currentLevel = 3;
 
     let model = null;
 
-    const shelfLevels = [
-        1.2,
-        0.6,
-        0,
-        -0.6,
-        -1.2
-    ];
+    const shelfLevelConfig = {
+
+        mini: [
+            0.45,
+            0.2,
+            0,
+            -0.2,
+            -0.45
+        ],
+
+        standard: [
+            0.75,
+            0.4,
+            0,
+            -0.4,
+            -0.75
+        ]
+
+    };
+
+    const shelfLevels =
+        shelfLevelConfig[size] || shelfLevelConfig.standard;
 
     function zoomToLevel(index) {
 
-        if (index < 0 || index >= shelfLevels.length) return;
+        currentLevel = Math.max(
+            0,
+            Math.min(index, shelfLevels.length - 1)
+        );
 
-        currentLevel = index;
-
-        // движим модела, не камерата
-        targetModelY = -shelfLevels[index];
-
-        // лек zoom
+        targetModelY = -shelfLevels[currentLevel];
         targetZ = zoomConfig.zoomZ;
     }
 
     function resetZoom() {
+
+        currentLevel = 2;
+
         targetModelY = 0;
         targetZ = zoomConfig.defaultZ;
     }

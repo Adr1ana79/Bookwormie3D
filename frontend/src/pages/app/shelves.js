@@ -88,6 +88,16 @@ export function initShelves() {
                 );
             }
 
+            const shelfName =
+                card.querySelector("p")?.textContent.trim();
+
+            const section =
+                card.closest(".shelves-section");
+
+            const sectionName =
+                section?.querySelector(".section-header--title")
+                    ?.textContent.trim();
+
             const img = card.querySelector("img");
             if (!img) return;
 
@@ -105,7 +115,12 @@ export function initShelves() {
 
             document.dispatchEvent(
                 new CustomEvent("app:open-shelf", {
-                    detail: { design, size }
+                    detail: {
+                        design,
+                        size,
+                        shelfName,
+                        sectionName
+                    }
                 })
             );
 

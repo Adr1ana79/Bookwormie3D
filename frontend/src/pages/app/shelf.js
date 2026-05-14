@@ -26,7 +26,27 @@ export function initShelf() {
     };
 
     document.addEventListener("app:open-shelf", (event) => {
+        const backButton =
+            shelfView.querySelector(".back-button");
+
+        const shelfTitle =
+            shelfView.querySelector(".local_navigation strong");
+
+
         const { design, size } = event.detail;
+        const {
+            shelfName,
+            sectionName
+        } = event.detail;
+
+
+        if (backButton && sectionName) {
+            backButton.textContent = sectionName;
+        }
+
+        if (shelfTitle && shelfName) {
+            shelfTitle.textContent = shelfName;
+        }
 
         const modelPath = `assets/models/shelves/${design}/${design}-${size}.glb`;
 

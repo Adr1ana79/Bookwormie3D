@@ -35,10 +35,8 @@ export async function initProfile() {
 
         loadProfileData(profileSection);
     });
-    console.log("INIT PROFILE");
 
     const editAdditionalBtn = document.getElementById("edit-additional-button");
-    console.log("BUTTON:", editAdditionalBtn);
 }
 
 function initProfileNameEdit(profileSection) {

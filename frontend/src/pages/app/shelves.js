@@ -74,13 +74,21 @@ export function initShelves() {
         const card = e.target.closest(".shelf-card");
 
         if (card && !card.classList.contains("add-shelf-placeholder")) {
+            if (shelvesView.dataset.mode !== "view") return;
+
+            const scrollContainer =
+                shelvesView.querySelector(".shelves-page-content");
+
+            sessionStorage.setItem(
+                "shelvesScrollPosition",
+                scrollContainer.scrollTop
+            );
 
             const img = card.querySelector("img");
             if (!img) return;
 
             const fileName = img.src.split("/").pop().replace(".png", "");
             const [design, size] = fileName.split("-");
-
 
             if (!design || !size) {
                 console.warn("Missing design or size:", card);
@@ -93,10 +101,17 @@ export function initShelves() {
                 })
             );
 
+            shelvesView.classList.add("hidden");
+
+            const shelfView =
+                document.getElementById("view-shelf");
+
+            if (shelfView) {
+                shelfView.classList.remove("hidden");
+            }
+
             return;
         }
-
-
 
         /* -----------------------------
            START RENAME

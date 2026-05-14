@@ -1163,7 +1163,7 @@
 
                 <!-- Top bar -->
                 <header class="content-header__shelf">
-                    <header class="content-header__top">
+                    <div class="content-header__top">
                         <div class="search-bar">
                             <img src="assets/images/icons/search-icon.svg" alt="">
                             <input type="search" placeholder="Search by title or author" class="search-bar__input">
@@ -1175,10 +1175,14 @@
                             <button type="button" class="icon-button icon-add green-icon-button large-icon-button"
                                     aria-label="Add book"></button>
                         </div>
-                    </header>
+                    </div>
 
                     <nav class="local_navigation">
-                        <a href="#section-id" class="back-button">Section name</a>
+                        <button type="button"
+                                class="back-button"
+                                aria-label="Go back">
+                            Section name
+                        </button>
                         <span aria-hidden="true">→</span>
                         <strong>Shelf name</strong>
                     </nav>

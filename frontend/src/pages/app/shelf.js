@@ -1,5 +1,4 @@
 import { initThreeViewer } from "../../threeD/ThreeViewer.js";
-import { switchView } from "../viewManager.js";
 
 export function initShelf() {
     const shelfView = document.getElementById('view-shelf');
@@ -14,29 +13,16 @@ export function initShelf() {
 
         e.preventDefault();
 
+        sessionStorage.setItem(
+            "restoreShelvesScroll",
+            "true"
+        );
+
         document.dispatchEvent(
             new CustomEvent('app:navigate', {
                 detail: 'shelves'
             })
         );
-
-        const shelvesView =
-            document.getElementById("view-shelves");
-
-        const scrollContainer =
-            shelvesView?.querySelector(".shelves-page-content");
-
-        const savedScroll =
-            sessionStorage.getItem("shelvesScrollPosition");
-
-        if (savedScroll && scrollContainer) {
-
-            requestAnimationFrame(() => {
-
-                scrollContainer.scrollTop =
-                    parseInt(savedScroll, 10);
-            });
-        }
     };
 
     document.addEventListener("app:open-shelf", (event) => {

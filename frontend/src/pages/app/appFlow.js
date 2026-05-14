@@ -72,7 +72,82 @@ function showView(viewKey) {
     // добавяме новия
     appMain.appendChild(nextView);
 
+    requestAnimationFrame(() => {
+
+        requestAnimationFrame(() => {
+
+            const scrollContainer =
+                nextView.querySelector(".shelves-page-content");
+
+            if (!scrollContainer) return;
+
+            const shouldRestore =
+                sessionStorage.getItem("restoreShelvesScroll");
+
+            if (
+                shouldRestore === "true" &&
+                viewKey === "shelves"
+            ) {
+
+                const savedScroll =
+                    sessionStorage.getItem("shelvesScrollPosition");
+
+                if (savedScroll) {
+
+                    window.scrollTo({
+                        top: parseInt(savedScroll, 10),
+                        behavior: "instant"
+                    });
+
+                    console.log(
+                        "RESTORED:",
+                        scrollContainer.scrollTop
+                    );
+                }
+
+                sessionStorage.removeItem("restoreShelvesScroll");
+
+            } else {
+
+                window.scrollTo(0, 0);
+            }
+
+        });
+
+    });
+
     currentView = viewKey;
+
+    const shouldRestore =
+        sessionStorage.getItem("restoreShelvesScroll");
+
+    if (
+        shouldRestore === "true" &&
+        viewKey === "shelves"
+    ) {
+
+        const savedScroll =
+            sessionStorage.getItem("shelvesScrollPosition");
+
+        requestAnimationFrame(() => {
+
+            requestAnimationFrame(() => {
+
+                window.scrollTo({
+                    top: parseInt(savedScroll || 0, 10),
+                    behavior: "instant"
+                });
+
+            });
+
+        });
+
+        sessionStorage.removeItem("restoreShelvesScroll");
+
+    } else {
+
+        window.scrollTo(0, 0);
+    }
 }
 
 export function enterApp() {

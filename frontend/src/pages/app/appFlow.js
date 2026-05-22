@@ -58,8 +58,6 @@ export function initAppFlow() {
 
         e.preventDefault();
 
-        console.log("TERMS CLICK");
-
         sessionStorage.setItem(
             "skipScrollReset",
             "true"
@@ -74,8 +72,6 @@ export function initAppFlow() {
             })
         );
 
-        console.log("NAVIGATION DISPATCHED");
-
         requestAnimationFrame(() => {
 
             requestAnimationFrame(() => {
@@ -86,8 +82,6 @@ export function initAppFlow() {
                 console.log(target);
 
                 if (target) {
-                    console.log("SCROLLING TO TARGET");
-
                     target.scrollIntoView({
                         behavior: "smooth",
                         block: "start"

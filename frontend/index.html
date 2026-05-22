@@ -162,83 +162,205 @@
         </div>
     </section>
 
-    <section id="add-book-modal"
-             class="modal modal--add-book"
+    <section id="add-edit-book-modal"
+             class="modal modal--add-edit-book"
              role="dialog"
              aria-modal="true"
-             aria-labelledby="add-book-title"
+             aria-labelledby="add-edit-book-title"
              hidden>
 
         <div class="modal__overlay"></div>
 
         <div class="modal__content">
             <header class="modal__header">
-                <h2 id="add-book-title">Add book</h2>
-
-                <nav class="modal-tabs">
-                    <button type="button" class="is-active">Book</button>
-                    <button type="button">Bookend</button>
-                </nav>
+                <h2 id="add-edit-book-title">Book</h2>
             </header>
 
-            <form class="add-book-form">
+            <form id="add-edit-book-form" class="add-edit-book-form">
+                <input type="hidden" name="mode" value="add">
+                <input type="hidden" name="book-id" value="">
 
-                <!-- Size -->
-                <fieldset>
-                    <legend>Height</legend>
-                    <label><input type="radio" name="height" value="high"> High</label>
-                    <label><input type="radio" name="height" value="medium" checked> Medium</label>
-                    <label><input type="radio" name="height" value="short"> Short</label>
+                <fieldset class="book-picker">
+                    <legend class="section-header">
+                        <img class="section-header--ribbon"
+                             src="assets/images/design-elements/section-label-book.svg"
+                             alt="">
+                        <span class="section-header--title">Height</span>
+                    </legend>
+
+                    <div class="book-picker__grid book-picker__grid--height">
+                        <label class="book-option">
+                            <input type="radio" name="height" value="high">
+                            <span class="book-option__preview">
+                                <img src="assets/images/book-personalisation/height-high.png" alt="">
+                            </span>
+                            <span class="book-option__name">High</span>
+                        </label>
+
+                        <label class="book-option">
+                            <input type="radio" name="height" value="medium" checked>
+                            <span class="book-option__preview is-active">
+                                <img src="assets/images/book-personalisation/height-medium-active.png" alt="">
+                            </span>
+                            <span class="book-option__name">Medium</span>
+                        </label>
+
+                        <label class="book-option">
+                            <input type="radio" name="height" value="short">
+                            <span class="book-option__preview">
+                                <img src="assets/images/book-personalisation/height-short.png" alt="">
+                            </span>
+                            <span class="book-option__name">Short</span>
+                        </label>
+                    </div>
                 </fieldset>
 
-                <fieldset>
-                    <legend>Width</legend>
-                    <label><input type="radio" name="width" value="thin"> Thin</label>
-                    <label><input type="radio" name="width" value="medium" checked> Medium</label>
-                    <label><input type="radio" name="width" value="wide"> Wide</label>
+                <fieldset class="book-picker">
+                    <legend class="section-header">
+                        <img class="section-header--ribbon"
+                             src="assets/images/design-elements/section-label-book-color.svg"
+                             alt="">
+                        <span class="section-header--title">Font</span>
+                    </legend>
+
+                    <div class="book-picker__grid book-picker__grid--font">
+                        <label class="book-option book-option--font">
+                            <input type="radio" name="font" value="normal" checked>
+                            <span class="book-option__preview">Абв 123</span>
+                            <span class="book-option__name">Normal</span>
+                        </label>
+
+                        <label class="book-option book-option--font font-creepy">
+                            <input type="radio" name="font" value="creepy">
+                            <span class="book-option__preview">Абв 123</span>
+                            <span class="book-option__name">Creepy</span>
+                        </label>
+                    </div>
                 </fieldset>
 
-                <!-- Font -->
-                <fieldset>
-                    <legend>Font</legend>
-                    <label><input type="radio" name="font" value="normal" checked> Normal</label>
-                    <label><input type="radio" name="font" value="creepy"> Creepy</label>
-                    <label><input type="radio" name="font" value="gothic"> Gothic</label>
-                    <label><input type="radio" name="font" value="typewriter"> Typewriter</label>
-                    <label><input type="radio" name="font" value="elegant"> Elegant</label>
-                    <label><input type="radio" name="font" value="manuscript"> Manuscript</label>
-                </fieldset>
+                <fieldset class="book-picker">
+                    <legend class="section-header">
+                        <img class="section-header--ribbon"
+                             src="assets/images/design-elements/section-label-book-color.svg"
+                             alt="">
+                        <span class="section-header--title">Color</span>
+                    </legend>
 
-                <!-- Color -->
-                <fieldset>
-                    <legend>Color</legend>
-                    <label><input type="radio" name="color" value="black" checked></label>
-                    <label><input type="radio" name="color" value="navi"></label>
-                    <label><input type="radio" name="color" value="green"></label>
-                    <label><input type="radio" name="color" value="mustard"></label>
-                    <label><input type="radio" name="color" value="red"></label>
-                    <label><input type="radio" name="color" value="brown"></label>
-                    <hr>
-                    <label><input type="radio" name="color" value="blue"></label>
-                    <label><input type="radio" name="color" value="violet"></label>
-                    <label><input type="radio" name="color" value="cyan"></label>
-                    <label><input type="radio" name="color" value="yellow"></label>
-                    <label><input type="radio" name="color" value="peach"></label>
-                    <label><input type="radio" name="color" value="coral"></label>
-                </fieldset>
+                    <div class="book-color-grid">
+                        <label class="color-option" style="--book-color: #2f3542;">
+                            <input type="radio" name="color" value="black">
+                            <span class="color-option__swatch"></span>
+                            <span class="sr-only">Black</span>
+                        </label>
 
-                <!-- Book info -->
-                <div class="form-group">
-                    <label for="book-title">Title</label>
-                    <input id="book-title" name="title" type="text" required>
-                </div>
+                        <label class="color-option" style="--book-color: #ffc928;">
+                            <input type="radio" name="color" value="yellow" checked>
+                            <span class="color-option__swatch"></span>
+                            <span class="sr-only">Yellow</span>
+                        </label>
 
-                <div class="form-group">
-                    <label for="book-author">Author</label>
-                    <input id="book-author" name="author" type="text" required>
-                </div>
+<!--                        <label class="color-option" style="&#45;&#45;book-color: #2f3542;">-->
+<!--                            <input type="radio" name="color" value="black">-->
+<!--                            <span class="color-option__swatch"></span>-->
+<!--                            <span class="sr-only">Black</span>-->
+<!--                        </label>-->
 
-                <!-- Actions -->
+<!--                        <label class="color-option" style="&#45;&#45;book-color: #ffc928;">-->
+<!--                            <input type="radio" name="color" value="yellow" checked>-->
+<!--                            <span class="color-option__swatch"></span>-->
+<!--                            <span class="sr-only">Yellow</span>-->
+<!--                        </label>-->
+
+<!--                        <label class="color-option" style="&#45;&#45;book-color: #2f3542;">-->
+<!--                            <input type="radio" name="color" value="black">-->
+<!--                            <span class="color-option__swatch"></span>-->
+<!--                            <span class="sr-only">Black</span>-->
+<!--                        </label>-->
+
+<!--                        <label class="color-option" style="&#45;&#45;book-color: #ffc928;">-->
+<!--                            <input type="radio" name="color" value="yellow" checked>-->
+<!--                            <span class="color-option__swatch"></span>-->
+<!--                            <span class="sr-only">Yellow</span>-->
+<!--                        </label>-->
+
+                        <hr class="shelf-context-menu__separator">
+
+<!--                        <label class="color-option" style="&#45;&#45;book-color: #2f3542;">-->
+<!--                            <input type="radio" name="color" value="black">-->
+<!--                            <span class="color-option__swatch"></span>-->
+<!--                            <span class="sr-only">Black</span>-->
+<!--                        </label>-->
+<!--    -->
+<!--                        <label class="color-option" style="&#45;&#45;book-color: #ffc928;">-->
+<!--                            <input type="radio" name="color" value="yellow" checked>-->
+<!--                            <span class="color-option__swatch"></span>-->
+<!--                            <span class="sr-only">Yellow</span>-->
+<!--                        </label>-->
+
+<!--                        <label class="color-option" style="&#45;&#45;book-color: #2f3542;">-->
+<!--                            <input type="radio" name="color" value="black">-->
+<!--                            <span class="color-option__swatch"></span>-->
+<!--                            <span class="sr-only">Black</span>-->
+<!--                        </label>-->
+
+<!--                        <label class="color-option" style="&#45;&#45;book-color: #ffc928;">-->
+<!--                            <input type="radio" name="color" value="yellow" checked>-->
+<!--                            <span class="color-option__swatch"></span>-->
+<!--                            <span class="sr-only">Yellow</span>-->
+<!--                        </label>-->
+
+<!--                        <label class="color-option" style="&#45;&#45;book-color: #2f3542;">-->
+<!--                            <input type="radio" name="color" value="black">-->
+<!--                            <span class="color-option__swatch"></span>-->
+<!--                            <span class="sr-only">Black</span>-->
+<!--                        </label>-->
+
+<!--                        <label class="color-option" style="&#45;&#45;book-color: #ffc928;">-->
+<!--                            <input type="radio" name="color" value="yellow" checked>-->
+<!--                            <span class="color-option__swatch"></span>-->
+<!--                            <span class="sr-only">Yellow</span>-->
+<!--                        </label>-->
+
+                    </div>
+
+                    <label><input type="radio" name="color" value="black"><span>Black</span></label>
+                    <label><input type="radio" name="color" value="navy"><span>Navy</span></label>
+                    <label><input type="radio" name="color" value="green"><span>Green</span></label>
+                    <label><input type="radio" name="color" value="mustard"><span>Mustard</span></label>
+                    <label><input type="radio" name="color" value="red"><span>Red</span></label>
+                    <label><input type="radio" name="color" value="brown"><span>Brown</span></label>
+
+                    <label><input type="radio" name="color" value="blue"><span>Blue</span></label>
+                    <label><input type="radio" name="color" value="violet"><span>Violet</span></label>
+                    <label><input type="radio" name="color" value="cyan"><span>Cyan</span></label>
+                    <label><input type="radio" name="color" value="yellow" checked><span>Yellow</span></label>
+                    <label><input type="radio" name="color" value="peach"><span>Peach</span></label>
+                    <label><input type="radio" name="color" value="coral"><span>Coral</span></label>
+
+                    <div class="form-group edit-only">
+                        <div class="form-field--small">
+                            <div class="form-field__control">
+                                <input type="text"
+                                       name="book-title"
+                                       class="form-field form-field__input__small"
+                                       placeholder="Enter book title"
+                                       required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group edit-only">
+                        <div class="form-field--small">
+                            <div class="form-field__control">
+                                <input type="text"
+                                       name="book-title"
+                                       class="form-field form-field__input__small"
+                                       placeholder="Enter author's name"
+                                       required>
+                            </div>
+                        </div>
+                    </div>
+
                 <div class="button-group">
                     <button type="submit" class="button primary-button">Save</button>
                     <button type="button" class="button secondary-button" data-close>
@@ -248,7 +370,6 @@
             </form>
         </div>
     </section>
-
     <section id="edit-profile-picture-modal"
              class="modal modal--edit-profile-picture"
              role="dialog"
@@ -320,6 +441,290 @@
                 </button>
             </div>
         </div>
+    </section>
+
+    <section id="book-content-modal"
+             class="modal modal--book-content"
+             role="dialog"
+             aria-modal="true"
+             aria-labelledby="book-content"
+             hidden>
+
+        <div class="modal__overlay"></div>
+
+        <div class="modal__content">
+
+            <!-- 3D object, height, font, color (vertical)-->
+            <div class="book-content__visual">
+
+                <!-- Book scene / 3D stage (horizontal) -->
+                <div class="book-stage" role="img" aria-label="Book">
+                    <div id="three-container-book"></div>
+
+                    <button type="button" class="icon-button icon-edit green-icon-button medium-icon-button edit-only"
+                            aria-label="Edit book visualization"></button>
+                </div>
+
+                <!-- Height (vertical) -->
+                <div id="book-content__visual--height"
+                     class="book-content__visual--section">
+
+                    <div class="section-header">
+                        <img class="section-header--ribbon"
+                             src="assets/images/design-elements/section-label-book.svg"
+                             alt="">
+                        <span class="section-header--title">Height</span>
+                    </div>
+
+                    <div class="book-content__visual-element">
+                        <img class="book-visual-element--option-chosen"
+                             src="assets/images/book-personalisation/height-medium-active.png"
+                             alt="">
+                        <p class="book-visual-element--option-name">Medium</p>
+                    </div>
+                </div>
+
+                <!-- Font (vertical) -->
+                <div id="book-content__visual--font"
+                     class="book-content__visual--section">
+
+                    <div class="section-header">
+                        <img class="section-header--ribbon"
+                             src="assets/images/design-elements/section-label-book-color.svg"
+                             alt="">
+                        <span class="section-header--title">Font</span>
+                    </div>
+
+                    <div class="book-content__visual-element">
+                        <span class="book-visual-element--option-chosen">Abc 123</span>
+                        <p class="book-visual-element--option-name">Normal</p>
+                    </div>
+                </div>
+
+                <!-- Color (vertical) -->
+                <div id="book-content__visual--color"
+                     class="book-content__visual--section">
+                    <div class="section-header">
+                        <img class="section-header--ribbon"
+                             src="assets/images/design-elements/section-label-book.svg"
+                             alt="">
+                        <span class="section-header--title">Color</span>
+                    </div>
+
+                    <div class="book-color"></div>
+                </div>
+            </div>
+
+            <div class="book-content__info">
+                <!-- title-rating, buttons (horizontal)-->
+                <div class="book-content__info--top">
+
+                    <!-- title, stars (horizontal)-->
+                    <div class="book-content__title-rating">
+                        <!-- title, author (vertical)-->
+                        <div class="book-content__info--title">
+                            <h2 class="book-content__title view-only">Title</h2>
+                            <h3 class="book-content__author view-only">Author Name</h3>
+
+                            <div class="form-group edit-only">
+                                <div class="form-field--small">
+                                    <div class="form-field__control">
+                                        <input type="text"
+                                               name="book-title"
+                                               class="form-field form-field__input__small"
+                                               placeholder="Enter book title"
+                                               required>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group edit-only">
+                                <div class="form-field--small">
+                                    <div class="form-field__control">
+                                        <input type="text"
+                                               name="book-title"
+                                               class="form-field form-field__input__small"
+                                               placeholder="Enter author's name"
+                                               required>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- rating ★⯪☆ (vertical)-->
+                        <div class="book-content__info--rating">
+                            <span class="book-content__stars">
+                                ☆☆☆☆☆
+                            </span>
+                            <p class="book-content__score view-only">Rate: 0.0</p>
+
+                            <!-- (horizontal)-->
+                            <div class="book-content__score--edit edit-only">
+                                <div class="form-group">
+                                    <div class="form-field--small">
+                                        <div class="form-field__control">
+                                            <input type="number"
+                                                   min="0"
+                                                   max="5"
+                                                   step="0.5"
+                                                   placeholder="Rate">
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="book-content__score--edit-helper">From 0.0 to 5.0</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- edit and delete buttons -->
+                    <div class="icon-button-group">
+                        <div class="edit-control">
+                            <button type="button" class="icon-button icon-edit green-icon-button medium-icon-button view-only"
+                                    aria-label="Edit book"></button>
+
+                            <div class="icon-button-group--submenu-button edit-only">
+                                <img src="assets/images/icons/edit-icon.svg" alt="" class="submenu-icon">
+
+                                <button type="button"
+                                        class="icon-button icon-save dark-green-icon-button small-icon-button">
+                                </button>
+
+                                <button type="button"
+                                        class="icon-button icon-cancel red-icon-button small-icon-button">
+                                </button>
+                            </div>
+                        </div>
+
+                        <button type="button" class="icon-button icon-delete red-icon-button medium-icon-button"
+                                aria-label="Delete book">
+                        </button>
+                    </div>
+                </div>
+
+                <!-- status, page-count, genres (vertical)-->
+                <div class="book-content__info--details">
+
+                    <!-- status (horizontal)-->
+                    <div class="book-content__info--status">
+                        <p class="book-details--title">Status</p>
+                        <span class="book-details--option view-only">Unread</span>
+
+                        <fieldset class="book-status edit-only">
+                            <label class="book-status__option">
+                                <input type="radio" name="book-status" value="unread" checked>
+                                <span>Unread</span>
+                            </label>
+
+                            <label class="book-status__option">
+                                <input type="radio" name="book-status" value="reading">
+                                <span>Reading</span>
+                            </label>
+
+                            <label class="book-status__option">
+                                <input type="radio" name="book-status" value="read">
+                                <span>Read</span>
+                            </label>
+                        </fieldset>
+                    </div>
+
+                    <!-- page count (horizontal)-->
+                    <div class="book-content__info--pages">
+                        <p class="book-details--title">Page count</p>
+                        <span class="book-details--option view-only">0</span>
+
+                        <div class="book-content__pages--edit edit-only">
+                            <div class="form-group">
+                                <div class="form-field--small">
+                                    <div class="form-field__control">
+                                        <input type="number"
+                                               max="2000"
+                                               name="page-count"
+                                               class="form-field form-field__input__small"
+                                               placeholder="Number of pages">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- genres (horizontal)-->
+                    <div class="book-content__info--genres">
+                        <p class="book-details--title">Genre</p>
+                        <ul class="favourite-genres">
+                            <li class="favourite-genres__item">History</li>
+                            <li class="favourite-genres__item">Romance</li>
+                            <li class="favourite-genres__item">Art and culture</li>
+                        </ul>
+                    </div>
+
+                </div>
+
+                <!-- review (vertical) -->
+                <div class="book-content__info--review">
+                    <div class="section-header">
+                        <img class="section-header--ribbon"
+                             src="assets/images/design-elements/section-label-profile.svg"
+                             alt="">
+                        <span class="section-header--title">Review</span>
+                    </div>
+
+                    <div class="book-content--review">
+                        <div class="book-content--review-background edit-only"></div>
+                        <textarea class="book-details--title">Review</textarea>
+                    </div>
+                </div>
+
+                <!-- Actions -->
+                <div class="button-group--two">
+                    <button type="button" class="button secondary-button button-label button-label--secondary" data-close>
+                        Cancel
+                    </button>
+                    <button type="submit" class="button primary-button button-label button-label--primary">
+                        Save
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="book-genres-modal"
+             class="modal"
+             role="dialog"
+             aria-modal="true"
+             aria-labelledby="book-genres-modal"
+             hidden>
+
+        <fieldset class="form-group">
+            <legend class="form-legend">Genres</legend>
+
+            <ul class="genres-grid">
+                <li><button type="button" class="genre-option">Science fiction</button></li>
+                <li><button type="button" class="genre-option">Fantasy</button></li>
+                <li><button type="button" class="genre-option">Romance </button></li>
+                <li><button type="button" class="genre-option">Thriller </button></li>
+                <li><button type="button" class="genre-option">Mystery </button></li>
+                <li><button type="button" class="genre-option">Crime</button></li>
+                <li><button type="button" class="genre-option">Historical fiction</button></li>
+                <li><button type="button" class="genre-option">Adventure</button></li>
+                <li><button type="button" class="genre-option">Graphic Novels</button></li>
+                <li><button type="button" class="genre-option">Horror</button></li>
+                <li><button type="button" class="genre-option">Dystopia</button></li>
+                <li><button type="button" class="genre-option">Satire</button></li>
+                <li><button type="button" class="genre-option">Drama</button></li>
+                <li><button type="button" class="genre-option">(Auto)Biographies</button></li>
+                <li><button type="button" class="genre-option">History</button></li>
+                <li><button type="button" class="genre-option">Philosophy</button></li>
+                <li><button type="button" class="genre-option">Psychology</button></li>
+                <li><button type="button" class="genre-option">Sociology</button></li>
+                <li><button type="button" class="genre-option">Business and economics</button></li>
+                <li><button type="button" class="genre-option">Science and technology</button></li>
+                <li><button type="button" class="genre-option">Journalism</button></li>
+                <li><button type="button" class="genre-option">Sociology</button></li>
+                <li><button type="button" class="genre-option">Education</button></li>
+                <li><button type="button" class="genre-option">Art and culture</button></li>
+                <li><button type="button" class="genre-option">Religion and spirituality</button></li>
+            </ul>
+        </fieldset>
     </section>
 
 
@@ -1196,6 +1601,9 @@
                 <!-- Shelf scene / 3D stage -->
                 <div class="shelf-stage" role="img" aria-label="Bookshelf with books">
                     <div id="three-container"></div>
+
+                    <!-- overlays -->
+                    <div id="shelf-overlay"></div>
                 </div>
 
 
@@ -1439,6 +1847,7 @@
         </div>
     </div>
 
+
     <!-- MENUS -->
     <div id="sort-sections-menu"
          class="sort-sections-menu hidden"
@@ -1467,6 +1876,15 @@
         </button>
     </div>
 
+    <div class="book-context-menu hidden"
+         role="menu"
+         aria-label="Book actions">
+        <button type="button" role="menuitem" data-action="open">Open</button>
+        <hr class="shelf-context-menu__separator">
+        <button type="button" role="menuitem" data-action="edit">Edit</button>
+        <button type="button" role="menuitem" data-action="delete">Delete</button>
+    </div>
+
     <div class="context-submenu hidden"
          role="menu"
          aria-label="Relocate to">
@@ -1478,7 +1896,6 @@
         <hr class="shelf-context-menu__separator">
         <button class="add-option" type="button" role="menuitem"><label>New section</label></button>
     </div>
-
 
     <!-- JS -->
     <script type="module" src="src/app.js"></script>

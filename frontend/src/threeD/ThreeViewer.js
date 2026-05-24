@@ -2,7 +2,7 @@ import * as THREE from "https://unpkg.com/three@0.160.0/build/three.module.js";
 import { GLTFLoader } from "https://unpkg.com/three@0.160.0/examples/jsm/loaders/GLTFLoader.js?module";
 
 import { designConfig } from "./designConfig.js";
-import { renderBooks } from "./bookManager.js";
+import { renderBooks, setBookLabelsVisible } from "./bookManager.js";
 import { testBooks} from "../pages/app/book.js";
 import { getShelfLayout } from "./shelfLayout.js";
 
@@ -37,6 +37,8 @@ export function initThreeViewer(container, modelPath, design, size) {
     const renderer = new THREE.WebGLRenderer({
         antialias: true
     });
+
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
     renderer.setSize(
         container.clientWidth,
@@ -112,7 +114,6 @@ export function initThreeViewer(container, modelPath, design, size) {
         shelfLevelConfig[size] || shelfLevelConfig.standard;
 
     function zoomToLevel(index) {
-
         currentLevel = Math.max(
             0,
             Math.min(index, shelfLevels.length - 1)
@@ -120,14 +121,17 @@ export function initThreeViewer(container, modelPath, design, size) {
 
         targetModelY = -shelfLevels[currentLevel];
         targetZ = zoomConfig.zoomZ;
+
+        setBookLabelsVisible(shelfGroup, true);
     }
 
     function resetZoom() {
-
         currentLevel = 2;
 
         targetModelY = 0;
         targetZ = zoomConfig.defaultZ;
+
+        setBookLabelsVisible(shelfGroup, false);
     }
 
     // interactions

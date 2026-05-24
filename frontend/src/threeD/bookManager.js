@@ -19,6 +19,15 @@ async function loadBookModel() {
     return loadedBookModel;
 }
 
+export function setBookLabelsVisible(shelfGroup, isVisible) {
+    shelfGroup.traverse((child) => {
+        if (child.userData.type === "book-label") {
+            child.visible = isVisible;
+        }
+    });
+}
+
+
 export async function createBookMesh(book) {
     const heightMap = {
         short: 0.3,
@@ -60,8 +69,99 @@ export async function createBookMesh(book) {
 
     mesh.userData.type = "book";
     mesh.userData.bookId = book.id;
+    mesh.userData.book = book;
+
+    const label = createBookLabel(book);
+    label.visible = false;
+    mesh.add(label);
 
     return mesh;
+}
+
+function createBookTitleTexture(book) {
+    const canvas = document.createElement("canvas");
+    canvas.width = 512;
+    canvas.height = 1024;
+
+    const ctx = canvas.getContext("2d");
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    ctx.fillStyle = "#ffffff";
+    ctx.font = "bold 80px Arial";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+
+    const titleLimitMap = {
+        short: {
+            max: 13,
+            slice: 11
+        },
+        medium: {
+            max: 18,
+            slice: 15
+        },
+        high: {
+            max: 22,
+            slice: 18
+        }
+    };
+
+    const titleLimit =
+        titleLimitMap[book.height] || titleLimitMap.medium;
+
+    const title =
+        book.title.length > titleLimit.max
+            ? book.title.slice(0, titleLimit.slice) + "..."
+            : book.title;
+
+    ctx.save();
+
+    ctx.translate(canvas.width / 2, canvas.height / 2);
+    ctx.rotate(-Math.PI / 2);
+    ctx.fillText(title, 0, 0);
+
+    ctx.restore();
+
+    const texture = new THREE.CanvasTexture(canvas);
+    texture.colorSpace = THREE.SRGBColorSpace;
+    texture.minFilter = THREE.LinearFilter;
+    texture.magFilter = THREE.LinearFilter;
+    texture.generateMipmaps = false;
+    texture.anisotropy = 4;
+    texture.needsUpdate = true;
+
+    return texture;
+}
+
+function createBookLabel(book) {
+    const texture = createBookTitleTexture(book);
+
+    const labelSizeMap = {
+        short: { width: 0.28, height: 0.40 },
+        medium: { width: 0.28, height: 0.40 },
+        high: { width: 0.28, height: 0.42 }
+    };
+
+    const material = new THREE.MeshBasicMaterial({
+        map: texture,
+        transparent: true,
+        side: THREE.DoubleSide
+    });
+
+    const size = labelSizeMap[book.height] || labelSizeMap.medium;
+
+    const geometry = new THREE.PlaneGeometry(
+        size.width,
+        size.height
+    );
+
+    const label = new THREE.Mesh(geometry, material);
+    label.userData.type = "book-label";
+    label.userData.bookId = book.id;
+    label.position.set(0, 0, 0.18);
+
+    return label;
 }
 
 function alignBookToBaseY(mesh, baseY) {

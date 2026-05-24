@@ -223,7 +223,6 @@ export const testBooks = [
     },
 
     // --- Още 10 книги за РЕД 0 (row: 0, индекси от 6 до 15) ---
-    { id: "book-21", title: "Echoes of the Past", author: "Julian Vance", height: "high", color: "navy", font: "gothic", row: 0, index: 6 },
     { id: "book-22", title: "The Crimson Tide", author: "Clara Thorne", height: "medium", color: "red", font: "normal", row: 0, index: 7 },
     { id: "book-23", title: "Midnight Sun", author: "Marcus Aurel", height: "short", color: "bronze", font: "elegant", row: 0, index: 8 },
     { id: "book-24", title: "Shadows in the Mist", author: "Sophia Reed", height: "high", color: "black", font: "normal", row: 0, index: 9 },
@@ -256,7 +255,6 @@ export const testBooks = [
     { id: "book-89", title: "The Obsidian Key", author: "Damon Knight", height: "short", color: "violet", font: "gothic", row: 0, index: 34 },
 
     // --- РЕД 1 (row: 1) ---
-    { id: "book-31", title: "Beyond the Veil", author: "Lucas Gray", height: "high", color: "black", font: "gothic", row: 1, index: 6 },
     { id: "book-32", title: "The Iron Crown", author: "Fiona Sterling", height: "medium", color: "bronze", font: "normal", row: 1, index: 7 },
     { id: "book-33", title: "Secrets of the Oasis", author: "Amir Khan", height: "short", color: "yellow", font: "elegant", row: 1, index: 8 },
     { id: "book-34", title: "Deep Blue Sea", author: "Robert Ocean", height: "high", color: "blue", font: "normal", row: 1, index: 9 },

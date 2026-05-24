@@ -1,11 +1,29 @@
 import * as THREE from "https://unpkg.com/three@0.160.0/build/three.module.js";
-import { getShelfLayout } from "./shelfLayout.js";
+import { GLTFLoader } from "https://unpkg.com/three@0.160.0/examples/jsm/loaders/GLTFLoader.js?module";
+import { getShelfLayout, isSlotBlocked } from "./shelfLayout.js";
 
-export function createBookMesh(book) {
+const BOOK_MODEL_PATH = "assets/models/book/book.glb";
+
+let loadedBookModel = null;
+
+async function loadBookModel() {
+    if (loadedBookModel) {
+        return loadedBookModel;
+    }
+
+    const loader = new GLTFLoader();
+
+    const gltf = await loader.loadAsync(BOOK_MODEL_PATH);
+    loadedBookModel = gltf.scene;
+
+    return loadedBookModel;
+}
+
+export async function createBookMesh(book) {
     const heightMap = {
-        short: 0.14,
-        medium: 0.165,
-        high: 0.2
+        short: 0.3,
+        medium: 0.36,
+        high: 0.42
     };
 
     const colorMap = {
@@ -23,55 +41,72 @@ export function createBookMesh(book) {
         coral: 0xFF6F55
     };
 
-
-    const width = 0.035;
-    const depth = 0.07;
     const height = heightMap[book.height] || heightMap.medium;
 
-    const geometry = new THREE.BoxGeometry(width, height, depth);
-    const material = new THREE.MeshStandardMaterial({
-        color: colorMap[book.color] || colorMap.yellow
+    const bookTemplate = await loadBookModel();
+    const mesh = bookTemplate.clone(true);
+
+    mesh.traverse((child) => {
+        if (child.isMesh) {
+            child.material = new THREE.MeshStandardMaterial({
+                color: colorMap[book.color] || colorMap.yellow,
+                roughness: 0.35,
+                metalness: 0
+            });
+        }
     });
 
-    const mesh = new THREE.Mesh(geometry, material);
+    mesh.scale.set(0.43, height, 0.12);
 
     mesh.userData.type = "book";
     mesh.userData.bookId = book.id;
-    mesh.userData.bookHeight = height;
 
     return mesh;
 }
 
-export function positionBook(mesh, book, shelfSize) {
-    const layout = getShelfLayout(shelfSize);
+function alignBookToBaseY(mesh, baseY) {
+    const box = new THREE.Box3().setFromObject(mesh);
+    const bottomY = box.min.y;
+
+    mesh.position.y += baseY - bottomY;
+}
+
+export function positionBook(mesh, book, shelfSize, shelfDesign) {
+    const layout = getShelfLayout(shelfSize, shelfDesign);
 
     const baseY =
         layout.startY +
         layout.baseRows[book.row];
 
-    const x = layout.startX + book.index * layout.slotWidth;
-
-    const y =
-        baseY +
-        (mesh.userData.bookHeight * mesh.scale.y) / 2;
+    const x =
+        layout.startX +
+        book.index * layout.slotWidth;
 
     mesh.position.set(
         x,
-        y,
+        0,
         layout.z
     );
+
+    alignBookToBaseY(mesh, baseY);
 }
 
-export function renderBooks(books, shelfGroup, shelfSize) {
-    const layout = getShelfLayout(shelfSize);
+export async function renderBooks(books, shelfGroup, shelfSize, shelfDesign) {
+    const layout = getShelfLayout(shelfSize, shelfDesign);
 
-    books.forEach(book => {
-        const mesh = createBookMesh(book);
+    for (const book of books) {
+        if (isSlotBlocked(layout, book.row, book.index)) {
+            continue;
+        }
 
-        mesh.scale.setScalar(layout.bookScale || 1);
+        const mesh = await createBookMesh(book);
 
-        positionBook(mesh, book, shelfSize);
+        if (layout.bookScale) {
+            mesh.scale.multiplyScalar(layout.bookScale);
+        }
+
+        positionBook(mesh, book, shelfSize, shelfDesign);
 
         shelfGroup.add(mesh);
-    });
+    }
 }

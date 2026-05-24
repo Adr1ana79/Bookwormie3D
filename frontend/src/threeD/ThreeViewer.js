@@ -4,6 +4,7 @@ import { GLTFLoader } from "https://unpkg.com/three@0.160.0/examples/jsm/loaders
 import { designConfig } from "./designConfig.js";
 import { renderBooks } from "./bookManager.js";
 import { testBooks} from "../pages/app/book.js";
+import { getShelfLayout } from "./shelfLayout.js";
 
 export function initThreeViewer(container, modelPath, design, size) {
 
@@ -147,7 +148,7 @@ export function initThreeViewer(container, modelPath, design, size) {
     // loader
     const loader = new GLTFLoader();
 
-    loader.load(modelPath, (gltf) => {
+    loader.load(modelPath, async (gltf) => {
 
         model = gltf.scene;
 
@@ -199,7 +200,15 @@ export function initThreeViewer(container, modelPath, design, size) {
 
         shelfGroup.add(model);
 
-        renderBooks(testBooks, shelfGroup, size);
+        const layout = getShelfLayout(size, design);
+
+        if (layout.modelOffset) {
+            model.position.x += layout.modelOffset.x || 0;
+            model.position.y += layout.modelOffset.y || 0;
+            model.position.z += layout.modelOffset.z || 0;
+        }
+
+        await renderBooks(testBooks, shelfGroup, size, design);
     });
 
     // animation loop

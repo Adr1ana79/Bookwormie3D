@@ -2,6 +2,8 @@ import * as THREE from "https://unpkg.com/three@0.160.0/build/three.module.js";
 import { GLTFLoader } from "https://unpkg.com/three@0.160.0/examples/jsm/loaders/GLTFLoader.js?module";
 
 import { designConfig } from "./designConfig.js";
+import { renderBooks } from "./bookManager.js";
+import { testBooks} from "../pages/app/book.js";
 
 export function initThreeViewer(container, modelPath, design, size) {
 
@@ -81,6 +83,9 @@ export function initThreeViewer(container, modelPath, design, size) {
     let currentLevel = 3;
 
     let model = null;
+
+    const shelfGroup = new THREE.Group();
+    scene.add(shelfGroup);
 
     const shelfLevelConfig = {
 
@@ -166,12 +171,16 @@ export function initThreeViewer(container, modelPath, design, size) {
         const box = new THREE.Box3().setFromObject(model);
 
         const center = box.getCenter(new THREE.Vector3());
-        const size = box.getSize(new THREE.Vector3());
+        const modelSize = box.getSize(new THREE.Vector3());
 
         model.position.sub(center);
 
         // auto scale
-        const maxDim = Math.max(size.x, size.y, size.z);
+        const maxDim = Math.max(
+            modelSize.x,
+            modelSize.y,
+            modelSize.z
+        );
 
         const scale = 2 / maxDim;
 
@@ -188,8 +197,9 @@ export function initThreeViewer(container, modelPath, design, size) {
         // flip
         model.scale.z *= -1;
 
-        scene.add(model);
+        shelfGroup.add(model);
 
+        renderBooks(testBooks, shelfGroup, size);
     });
 
     // animation loop
@@ -200,8 +210,8 @@ export function initThreeViewer(container, modelPath, design, size) {
         // smooth model movement
         if (model) {
 
-            model.position.y += (
-                targetModelY - model.position.y
+            shelfGroup.position.y += (
+                targetModelY - shelfGroup.position.y
             ) * 0.2;
 
         }
@@ -214,9 +224,14 @@ export function initThreeViewer(container, modelPath, design, size) {
         camera.lookAt(0, 0, 0);
 
         renderer.render(scene, camera);
-
     }
 
     animate();
 
+    return {
+        scene,
+        camera,
+        renderer
+        // getModel: () => model
+    };
 }

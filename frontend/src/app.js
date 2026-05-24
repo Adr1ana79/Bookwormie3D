@@ -34,11 +34,13 @@ document.addEventListener('DOMContentLoaded', async () => {
                 new Event('auth:login-success')
             );
 
-            await loadAndRenderProfile();
-
         } catch (error) {
-            console.log("Token invalid");
-            localStorage.removeItem("access_token");
+            console.error(error);
+
+            if (error.status === 401) {
+                console.log("Token invalid");
+                localStorage.removeItem("access_token");
+            }
         }
     }
 });

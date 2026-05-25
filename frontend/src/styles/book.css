@@ -1,0 +1,116 @@
+.tooltip {
+    position: fixed;
+    z-index: 9999;
+    pointer-events: none;
+
+    display: flex;
+    flex-direction: column;
+    max-width: 300px;
+    max-height: 220px;
+    padding: 2rem 2rem;
+
+    gap: 1.2rem;
+
+    background: var(--white-300);
+    border-radius: 0.75rem;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+}
+
+.tooltip[hidden] {
+    display: none;
+}
+
+
+.tooltip__info-title-author {
+    display: flex;
+
+    max-width: 260px;
+
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.1rem;
+
+    padding: 0;
+}
+
+.tooltip__book-title {
+    font-size: 20px;
+    font-weight: 800;
+
+    padding: 0 0 0.3rem 0;
+    margin: 0;
+
+}
+
+.tooltip__author-name {
+    font-weight: 700;
+    font-size: 17px;
+    color: var(--aqua-300);
+
+    margin: 0;
+}
+
+
+.tooltip__info-group {
+    display: flex;
+
+    max-width: 260px;
+
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 2.3rem;
+
+    padding: 0;
+}
+
+.tooltip__info-subgroup {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.7rem;
+
+    padding-top: 0.1rem;
+    margin: 0;
+
+}
+
+.tooltip__label {
+    font-weight: 600;
+    font-size: 16px;
+    color: var(--aqua-300);
+
+    padding: 0;
+    margin: 0;
+}
+
+.tooltip__value {
+    font-weight: 800;
+    font-size: 16px;
+    color: var(--aqua-100);
+
+    padding: 0;
+    margin: 0;
+}
+
+
+.tooltip__info-rating {
+    gap: 0.16rem;
+    align-items: center;
+}
+
+.tooltip__info-rating .tooltip__label{
+    font-size: 13px;
+}
+
+.tooltip__book-rating {
+    gap: 0;
+    font-weight: 600;
+    font-size: 13px;
+
+    color: var(--aqua-300);
+}
+
+.tooltip__stars {
+    font-size: 17px;
+    color: var(--DP-yellow);
+}

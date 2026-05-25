@@ -67,6 +67,12 @@ export function initThreeViewer(container, modelPath, design, size) {
     camera.position.set(0, 0, zoomConfig.defaultZ);
     camera.lookAt(0, 0, 0);
 
+    const raycaster = new THREE.Raycaster();
+    const mouse = new THREE.Vector2();
+
+    let hoveredBook = null;
+    let hoverTimeout = null;
+
     // lights
     const ambient = new THREE.AmbientLight(0xfff1d6, 0.8);
     scene.add(ambient);
@@ -148,6 +154,155 @@ export function initThreeViewer(container, modelPath, design, size) {
     }, { passive: false });
 
     container.addEventListener("dblclick", resetZoom);
+
+    function getTooltipStars(rating) {
+        const numericRating = Number(rating) || 0;
+        const roundedRating = Math.round(numericRating * 2) / 2;
+
+        let stars = "";
+
+        for (let i = 1; i <= 5; i++) {
+            if (roundedRating >= i) {
+                stars += "★";
+            } else if (roundedRating === i - 0.5) {
+                stars += "⯪";
+            } else {
+                stars += "☆";
+            }
+        }
+
+        return stars;
+    }
+
+    function getIntersectedBook(event) {
+
+        const rect =
+            renderer.domElement.getBoundingClientRect();
+
+        mouse.x =
+            ((event.clientX - rect.left) / rect.width) * 2 - 1;
+
+        mouse.y =
+            -((event.clientY - rect.top) / rect.height) * 2 + 1;
+
+        raycaster.setFromCamera(mouse, camera);
+
+        const intersects =
+            raycaster.intersectObjects(
+                shelfGroup.children,
+                true
+            );
+
+        for (const intersect of intersects) {
+
+            let object = intersect.object;
+
+            while (object) {
+
+                if (object.userData.type === "book") {
+                    return object;
+                }
+
+                object = object.parent;
+            }
+        }
+
+        return null;
+    }
+
+    function positionTooltip(tooltip, mouseX, mouseY) {
+        const offset = 18;
+
+        tooltip.hidden = false;
+
+        const tooltipRect = tooltip.getBoundingClientRect();
+
+        let left = mouseX + offset;
+        let top = mouseY + offset;
+
+        if (left + tooltipRect.width > window.innerWidth) {
+            left = mouseX - tooltipRect.width - offset;
+        }
+
+        if (top + tooltipRect.height > window.innerHeight) {
+            top = mouseY - tooltipRect.height - offset;
+        }
+
+        tooltip.style.left = `${Math.max(8, left)}px`;
+        tooltip.style.top = `${Math.max(8, top)}px`;
+    }
+
+
+    function showBookTooltip(book, x, y) {
+
+        const tooltip = document.querySelector("#book-info-tooltip");
+
+        tooltip.querySelector(".tooltip__book-title").textContent =
+            book.title || "Untitled";
+
+        tooltip.querySelector(".tooltip__author-name").textContent =
+            book.author || "Unknown author";
+
+        tooltip.querySelector(".tooltip__book-status").textContent =
+            book.status || "Unread";
+
+        tooltip.querySelector(".tooltip__book-rating").textContent =
+            book.rating ?? "0.0";
+
+        tooltip.querySelector(".tooltip__stars").textContent =
+            getTooltipStars(book.rating);
+
+        tooltip.querySelector(".tooltip__page-count").textContent =
+            book.pages ?? "—";
+
+        positionTooltip(tooltip, x, y);
+
+        tooltip.hidden = false;
+    }
+
+    function hideTooltip() {
+
+        const tooltip =
+            document.querySelector("#book-info-tooltip");
+
+        tooltip.hidden = true;
+    }
+
+    container.addEventListener("mousemove", (event) => {
+
+        const bookMesh =
+            getIntersectedBook(event);
+
+        if (!bookMesh) {
+
+            hoveredBook = null;
+
+            clearTimeout(hoverTimeout);
+
+            hideTooltip();
+
+            return;
+        }
+
+        if (hoveredBook === bookMesh) {
+            return;
+        }
+
+        hoveredBook = bookMesh;
+
+        clearTimeout(hoverTimeout);
+
+        hoverTimeout = setTimeout(() => {
+            const book = bookMesh.userData.book;
+
+            showBookTooltip(
+                book,
+                event.clientX,
+                event.clientY
+            );
+        }, 800);
+
+    });
 
     // loader
     const loader = new GLTFLoader();

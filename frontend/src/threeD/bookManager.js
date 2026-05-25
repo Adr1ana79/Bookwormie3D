@@ -2,7 +2,7 @@ import * as THREE from "https://unpkg.com/three@0.160.0/build/three.module.js";
 import { GLTFLoader } from "https://unpkg.com/three@0.160.0/examples/jsm/loaders/GLTFLoader.js?module";
 import { getShelfLayout, isSlotBlocked } from "./shelfLayout.js";
 
-const BOOK_MODEL_PATH = "assets/models/book/book.glb";
+const BOOK_MODEL_PATH = "assets/models/book/book-1.glb";
 
 let loadedBookModel = null;
 
@@ -160,6 +160,7 @@ function createBookLabel(book) {
     label.userData.type = "book-label";
     label.userData.bookId = book.id;
     label.position.set(0, 0, 0.18);
+    label.raycast = () => {};
 
     return label;
 }

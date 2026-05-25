@@ -681,7 +681,9 @@
 
                     <div class="book-content--review">
                         <div class="book-content--review-background edit-only"></div>
-                        <textarea class="book-details--title">Review</textarea>
+                        <textarea class="book-details--title" maxlength="2000">
+                            Review
+                        </textarea>
                     </div>
                 </div>
 
@@ -736,6 +738,33 @@
                 <li><button type="button" class="genre-option">Religion and spirituality</button></li>
             </ul>
         </fieldset>
+    </section>
+
+    <section id="book-info-tooltip"
+             class="tooltip"
+             role="tooltip"
+             aria-labelledby="book-info-tooltip-title"
+             hidden>
+
+        <div class="tooltip__info-title-author">
+            <h3 id="book-info-tooltip-title"
+                class="tooltip__book-title">Book title</h3>
+
+            <p class="tooltip__author-name">Author Name</p>
+        </div>
+
+        <div class="tooltip__info-group">
+            <div class="tooltip__info-subgroup">
+                <p class="tooltip__label">Status:  <span class="tooltip__value tooltip__book-status">Unread</span></p>
+
+                <p class="tooltip__label">Page count:  <span class="tooltip__value tooltip__page-count">0</span></p>
+            </div>
+
+            <div class="tooltip__info-subgroup tooltip__info-rating">
+                <span class="tooltip__value tooltip__stars">☆☆☆☆☆</span>
+                <p class="tooltip__label">Rate: <span class="tooltip__value tooltip__book-rating">0.0</span></p>
+            </div>
+        </div>
     </section>
 
 

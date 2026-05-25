@@ -139,7 +139,7 @@ export function getShelfLayout(size, design) {
                     -0.32,
                     -0.55
                 ],
-                z: 0.2,
+                z: 0.61,
 
                 blockedSlots: [
                     { row: 0, from: 0, to: 5 },

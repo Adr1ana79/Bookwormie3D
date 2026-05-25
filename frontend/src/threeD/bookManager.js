@@ -70,6 +70,7 @@ export async function createBookMesh(book) {
     mesh.userData.type = "book";
     mesh.userData.bookId = book.id;
     mesh.userData.book = book;
+    mesh.userData.targetZ = 0;
 
     const label = createBookLabel(book);
     label.visible = false;
@@ -189,6 +190,9 @@ export function positionBook(mesh, book, shelfSize, shelfDesign) {
         layout.z
     );
 
+    mesh.userData.baseZ = layout.z;
+    mesh.userData.targetZ = layout.z;
+
     alignBookToBaseY(mesh, baseY);
 }
 
@@ -211,3 +215,4 @@ export async function renderBooks(books, shelfGroup, shelfSize, shelfDesign) {
         shelfGroup.add(mesh);
     }
 }
+

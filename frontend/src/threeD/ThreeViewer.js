@@ -3,7 +3,7 @@ import { GLTFLoader } from "https://unpkg.com/three@0.160.0/examples/jsm/loaders
 
 import { designConfig } from "./designConfig.js";
 import { renderBooks, setBookLabelsVisible } from "./bookManager.js";
-import { testBooks} from "../pages/app/book.js";
+import { testBooks, openBookContentModal } from "../pages/app/book.js";
 import { getShelfLayout } from "./shelfLayout.js";
 
 export function initThreeViewer(container, modelPath, design, size) {
@@ -72,6 +72,7 @@ export function initThreeViewer(container, modelPath, design, size) {
 
     let hoveredBook = null;
     let hoverTimeout = null;
+    let hoveredBookOriginalZ = null;
 
     // lights
     const ambient = new THREE.AmbientLight(0xfff1d6, 0.8);
@@ -268,6 +269,22 @@ export function initThreeViewer(container, modelPath, design, size) {
         tooltip.hidden = true;
     }
 
+    function pullBookForward(bookMesh) {
+        if (hoveredBookOriginalZ === null) {
+            hoveredBookOriginalZ = bookMesh.position.z;
+        }
+
+        bookMesh.userData.targetZ = bookMesh.userData.baseZ + 0.03;
+    }
+
+    function resetPulledBook() {
+        if (hoveredBook && hoveredBookOriginalZ !== null) {
+            hoveredBook.userData.targetZ = hoveredBook.userData.baseZ;
+        }
+
+        hoveredBookOriginalZ = null;
+    }
+
     container.addEventListener("mousemove", (event) => {
 
         const bookMesh =
@@ -275,6 +292,7 @@ export function initThreeViewer(container, modelPath, design, size) {
 
         if (!bookMesh) {
 
+            resetPulledBook();
             hoveredBook = null;
 
             clearTimeout(hoverTimeout);
@@ -288,7 +306,11 @@ export function initThreeViewer(container, modelPath, design, size) {
             return;
         }
 
+        resetPulledBook();
+
         hoveredBook = bookMesh;
+
+        pullBookForward(bookMesh);
 
         clearTimeout(hoverTimeout);
 
@@ -300,9 +322,43 @@ export function initThreeViewer(container, modelPath, design, size) {
                 event.clientX,
                 event.clientY
             );
-        }, 800);
+        }, 700);
 
     });
+
+
+
+    // function openBookContentModal(book) {
+    //     const modal = document.querySelector("#book-content-modal");
+    //
+    //     if (!modal) {
+    //         return;
+    //     }
+    //
+    //     modal.querySelector(".book-content__title").textContent =
+    //         book.title || "Untitled";
+    //
+    //     modal.querySelector(".book-content__author").textContent =
+    //         book.author || "Unknown author";
+    //
+    //     modal.hidden = false;
+    // }
+
+    container.addEventListener("click", (event) => {
+        console.log("Shelf clicked");
+
+        const bookMesh = getIntersectedBook(event);
+
+        console.log("Clicked book mesh:", bookMesh);
+
+        if (!bookMesh) return;
+
+        clearTimeout(hoverTimeout);
+        hideTooltip();
+
+        openBookContentModal(bookMesh.userData.book);
+    });
+
 
     // loader
     const loader = new GLTFLoader();
@@ -392,6 +448,22 @@ export function initThreeViewer(container, modelPath, design, size) {
         camera.lookAt(0, 0, 0);
 
         renderer.render(scene, camera);
+
+        shelfGroup.traverse((child) => {
+
+            if (
+                child.userData.type === "book" &&
+                child.userData.targetZ !== undefined
+            ) {
+
+                child.position.z += (
+                    child.userData.targetZ -
+                    child.position.z
+                ) * 0.11;
+
+            }
+
+        });
     }
 
     animate();

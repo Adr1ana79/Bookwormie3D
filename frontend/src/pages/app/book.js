@@ -13,7 +13,11 @@ export const testBooks = [
         color: "yellow",
         font: "normal",
         row: 0,
-        index: 0
+        index: 0,
+        genres: ["Science fiction", "Graphic novel and comics"],
+        review: "„Сянката на вятъра“ не е просто роман; тя е любовно писмо към самата литература. Историята ни пренася в мъгливата, меланхолична Барселона от първата половина на XX век. Младият Даниел Семпере е отведен от баща си в Гробището на забравените книги – тайно място, където се съхраняват томове, обречени на забвение. Даниел има право да избере една книга и да обещае, че ще я пази с живота си. Изборът му пада върху „Сянката на вятъра“ от мистериозния автор Хулиан Каракс. От този момент нататък животът на момчето се преплита с мрачната и трагична съдба на самия писател.\n" +
+            "\n" +
+            "Сафон превръща Барселона в жив персонаж. Описанията на сенчестите улички, постоянният дъжд и старинните имения създават готическа, почти хипнотизираща атмосфера. Начинът, по който авторът изгражда мистерията около Каракс, държи читателя в постоянно напрежение, балансирайки между детективски роман и класическа трагедия."
     },
 
     {
@@ -22,11 +26,16 @@ export const testBooks = [
         author: "Daniel Hart",
         status: "Reading",
         pages: 1200,
+        rating: 4.7,
         height: "high",
         color: "green",
         font: "gothic",
         row: 0,
-        index: 1
+        index: 1,
+        genres: ["History", "Romance"],
+        review: "„Дюн“ е основополагащ стълб в научната фантастика, чието влияние може да бъде сравнено само с това на „Властелинът на пръстените“ във фентъзито. Хърбърт създава невероятно сложна и детайлна вселена, управлявана от феодални касти, космически гилдии и религиозни ордени. В центъра на този свят е пустинната планета Аракис (Дюн) – единственият източник на „подправката“, най-ценният ресурс в галактиката, който позволява междузвездното пътуване и удължава човешкия живот.\n" +
+            "\n" +
+            "Това, което прави „Дюн“ шедьовър, е не просто екшънът или технологичният напредък (който всъщност е съзнателно ограничен в света на Хърбърт), а детайлното изследване на екологията, религията и политиката. Аракис е суров, безмилостен свят, и Хърбърт описва оцеляването на него толкова реалистично, че читателят почти може да усети пясъка между зъбите си и жаждата на героите."
     },
 
     {
@@ -40,7 +49,11 @@ export const testBooks = [
         color: "red",
         font: "elegant",
         row: 0,
-        index: 2
+        index: 2,
+        genres: ["History", "Romance"],
+        review: "Нора Сийд е млада жена, която се чувства напълно провалена. Загубила работата си, котката си, най-добрата си приятелка и брат си (в емоционален смисъл), тя решава, че за никого няма значение дали съществува. В полунощ, на границата между живота и смъртта, Нора се озовава в безкрайна библиотека. Книгите по рафтовете съдържат историите на всички животи, които тя би могла да изживее, ако беше направила други избори – ако не беше се отказала от плуването, ако беше останала с бившия си годеник, ако беше станала рок звезда или учен в Арктика.\n" +
+            "\n" +
+            "Нора получава шанса да изпробва тези паралелни реалности, за да намери „перфектния“ живот и да задраска всички съжаления от своята „Книга на съжаленията“."
     },
 
     {
@@ -54,7 +67,11 @@ export const testBooks = [
         color: "blue",
         font: "manuscript",
         row: 0,
-        index: 3
+        index: 3,
+        genres: ["History", "Romance"],
+        review: "Действието се развива през 1327 г. в едно уединено и богато бенедиктинско абатство в Северна Италия. Францисканският монах Уилям от Баскервил и неговият млад послушник Адсон от Мелк пристигат в манастира, за да присъстват на важна богословска среща. Престоят им обаче е засенчен от поредица от зловещи и мистериозни убийства на монаси. Уилям, който притежава остър ум, дедуктивни способности (напомнящи за Шерлок Холмс) и познания по наука, е натоварен от абата да разследва случая.\n" +
+            "\n" +
+            "Еко, който е световноизвестен професор по семиотика (наука за знаците), превръща романа в огромен интелектуален пъзел. Разследването се върти около манастирската библиотека – изключителен лабиринт, в който се съхраняват редки и забранени книги."
     },
 
     {
@@ -352,3 +369,143 @@ export const testBooks = [
     { id: "book-96", title: "Starlight Voyage", author: "Diana Moon", height: "short", color: "blue", font: "elegant", row: 7, index: 34 }
 
 ];
+
+function getBookStars(rating) {
+    const numericRating = Number(rating) || 0;
+    const roundedRating = Math.round(numericRating * 2) / 2;
+
+    let stars = "";
+
+    for (let i = 1; i <= 5; i++) {
+        if (roundedRating >= i) {
+            stars += "★";
+        } else if (roundedRating === i - 0.5) {
+            stars += "⯪";
+        } else {
+            stars += "☆";
+        }
+    }
+
+    return stars;
+}
+
+function renderBookGenres(modal, genres) {
+    const genresList = modal.querySelector("#book-content__info--genres .favourite-genres");
+
+    genresList.innerHTML = "";
+
+    if (!genres.length) {
+        const emptyGenre = document.createElement("li");
+        emptyGenre.className = "favourite-genres__item";
+        emptyGenre.textContent = "No genre";
+        genresList.appendChild(emptyGenre);
+        return;
+    }
+
+    genres.forEach((genre) => {
+        const item = document.createElement("li");
+        item.className = "favourite-genres__item";
+        item.textContent = genre;
+        genresList.appendChild(item);
+    });
+}
+
+function renderBookVisuals(modal, book) {
+    const heightName = book.height || "medium";
+    const fontName = book.font || "normal";
+    const colorName = book.color || "yellow";
+
+    const heightText = modal.querySelector("#book-content__visual--height .book-visual-element--option-name");
+    const fontText = modal.querySelector("#book-content__visual--font .book-visual-element--option-name");
+    const colorPreview = modal.querySelector(".book-color");
+    const fontPreview = modal.querySelector("#font");
+    const heightImage = modal.querySelector("#height");
+
+    heightText.textContent = capitalize(heightName);
+    fontText.textContent = capitalize(fontName);
+    fontPreview.textContent = "Abc 123";
+    fontPreview.dataset.font = fontName;
+
+    heightImage.src = `assets/images/book-personalisation/height-${heightName}-active.png`;
+
+    colorPreview.dataset.color = colorName;
+    colorPreview.style.backgroundColor = getBookColor(colorName);
+}
+
+function capitalize(value) {
+    return value.charAt(0).toUpperCase() + value.slice(1);
+}
+
+function getBookColor(color) {
+    const colors = {
+        black: "#41414D",
+        navy: "#4D698B",
+        green: "#536B4E",
+        bronze: "#A97142",
+        red: "#8C2238",
+        brown: "#502323",
+        blue: "#0078C9",
+        violet: "#8196E5",
+        cyan: "#1CC1BA",
+        yellow: "#FFC529",
+        peach: "#FE9784",
+        coral: "#FF6F55"
+    };
+
+    return colors[color] || colors.yellow;
+}
+
+
+export function openBookContentModal(book) {
+    const modal = document.querySelector("#book-content-modal");
+
+    if (!modal) return;
+
+    modal.querySelector(".book-content__title").textContent =
+        book.title || "Untitled";
+
+    modal.querySelector(".book-content__author").textContent =
+        book.author || "Unknown author";
+
+    modal.querySelector("#book-content__info--status .book-details--option").textContent =
+        book.status || "Unread";
+
+    modal.querySelector("#book-content__info--pages .book-details--option").textContent =
+        book.pages ?? "—";
+
+    modal.querySelector(".book-content__score").textContent =
+        `Rate: ${book.rating ?? "0.0"}`;
+
+    modal.querySelector(".book-content__stars").textContent =
+        getBookStars(book.rating);
+
+    modal.querySelector(".book-details--review").value =
+        book.review || "";
+
+    renderBookGenres(modal, book.genres || []);
+    renderBookVisuals(modal, book);
+
+
+    const cancelBtn = modal.querySelector("[data-close]");
+    const overlay =
+        modal.querySelector(".modal__overlay");
+
+    if (cancelBtn) {
+        cancelBtn.onclick = () => {
+            modal.hidden = true;
+        };
+    }
+
+    if (overlay) {
+        overlay.onclick = () => {
+            modal.hidden = true;
+        };
+    }
+
+    console.log("Opening book:", book);
+    console.log("Modal:", modal);
+    console.log("Review field:", modal.querySelector(".book-details--review"));
+
+
+    modal.hidden = false;
+}

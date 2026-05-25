@@ -263,6 +263,28 @@
 }
 
 
+
+#book-content-modal .modal__overlay {
+    background: rgba(0, 0, 0, 0.6);
+}
+
+#book-content-modal .modal__content {
+    display: flex;
+    flex-direction: row;
+
+    width: 60rem;
+    height: 35rem;
+
+    gap: 6rem;
+    padding: 3rem 3rem;
+
+    border-radius: 0.75rem;
+    background: var(--white-300);
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+}
+
+
+
 #add-shelf-modal .modal-content {
     display: flex;
     flex-direction: column;

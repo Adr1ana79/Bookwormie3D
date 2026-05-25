@@ -455,7 +455,7 @@
     </section>
 
     <section id="book-content-modal"
-             class="modal modal--book-content"
+             class="modal"
              role="dialog"
              aria-modal="true"
              aria-labelledby="book-content"
@@ -465,16 +465,15 @@
 
         <div class="modal__content">
 
-            <!-- 3D object, height, font, color (vertical)-->
+            <button type="button" class="button secondary-button button-label button-label--secondary" data-close>
+                Close
+            </button>
+
+            <!-- height, font, color (vertical)-->
             <div class="book-content__visual">
 
-                <!-- Book scene / 3D stage (horizontal) -->
-                <div class="book-stage" role="img" aria-label="Book">
-                    <div id="three-container-book"></div>
-
-                    <button type="button" class="icon-button icon-edit green-icon-button medium-icon-button edit-only"
-                            aria-label="Edit book visualization"></button>
-                </div>
+                <button type="button" class="icon-button icon-edit green-icon-button medium-icon-button edit-only"
+                        aria-label="Edit book visualization"></button>
 
                 <!-- Height (vertical) -->
                 <div id="book-content__visual--height"
@@ -488,7 +487,8 @@
                     </div>
 
                     <div class="book-content__visual-element">
-                        <img class="book-visual-element--option-chosen"
+                        <img id="height"
+                             class="book-visual-element--option-chosen"
                              src="assets/images/book-personalisation/height-medium-active.png"
                              alt="">
                         <p class="book-visual-element--option-name">Medium</p>
@@ -501,13 +501,13 @@
 
                     <div class="section-header">
                         <img class="section-header--ribbon"
-                             src="assets/images/design-elements/section-label-book-color.svg"
+                             src="assets/images/design-elements/section-label-book.svg"
                              alt="">
                         <span class="section-header--title">Font</span>
                     </div>
 
                     <div class="book-content__visual-element">
-                        <span class="book-visual-element--option-chosen">Abc 123</span>
+                        <span id="font" class="book-visual-element--option-chosen">Abc 123</span>
                         <p class="book-visual-element--option-name">Normal</p>
                     </div>
                 </div>
@@ -517,7 +517,7 @@
                      class="book-content__visual--section">
                     <div class="section-header">
                         <img class="section-header--ribbon"
-                             src="assets/images/design-elements/section-label-book.svg"
+                             src="assets/images/design-elements/section-label-book-color.svg"
                              alt="">
                         <span class="section-header--title">Color</span>
                     </div>
@@ -616,9 +616,11 @@
                 <div class="book-content__info--details">
 
                     <!-- status (horizontal)-->
-                    <div class="book-content__info--status">
-                        <p class="book-details--title">Status</p>
+                    <div id="book-content__info--status"
+                         class="book-content__info--detail">
+                        <p class="book-details--title">Status:</p>
                         <span class="book-details--option view-only">Unread</span>
+
 
                         <fieldset class="book-status edit-only">
                             <label class="book-status__option">
@@ -639,8 +641,9 @@
                     </div>
 
                     <!-- page count (horizontal)-->
-                    <div class="book-content__info--pages">
-                        <p class="book-details--title">Page count</p>
+                    <div id="book-content__info--pages"
+                         class="book-content__info--detail">
+                        <p class="book-details--title">Page count:</p>
                         <span class="book-details--option view-only">0</span>
 
                         <div class="book-content__pages--edit edit-only">
@@ -659,8 +662,9 @@
                     </div>
 
                     <!-- genres (horizontal)-->
-                    <div class="book-content__info--genres">
-                        <p class="book-details--title">Genre</p>
+                    <div id="book-content__info--genres"
+                         class="book-content__info--detail">
+                        <p class="book-details--title">Genre:</p>
                         <ul class="favourite-genres">
                             <li class="favourite-genres__item">History</li>
                             <li class="favourite-genres__item">Romance</li>
@@ -676,25 +680,17 @@
                         <img class="section-header--ribbon"
                              src="assets/images/design-elements/section-label-profile.svg"
                              alt="">
-                        <span class="section-header--title">Review</span>
+                        <span id="review--ribbon-title" class="section-header--title">Review</span>
                     </div>
 
                     <div class="book-content--review">
                         <div class="book-content--review-background edit-only"></div>
-                        <textarea class="book-details--title" maxlength="2000">
-                            Review
+                        <textarea class="book-details--review"
+                                  placeholder="Write your review..."
+                                  maxlength="2000"
+                                  disabled>
                         </textarea>
                     </div>
-                </div>
-
-                <!-- Actions -->
-                <div class="button-group--two">
-                    <button type="button" class="button secondary-button button-label button-label--secondary" data-close>
-                        Cancel
-                    </button>
-                    <button type="submit" class="button primary-button button-label button-label--primary">
-                        Save
-                    </button>
                 </div>
             </div>
         </div>

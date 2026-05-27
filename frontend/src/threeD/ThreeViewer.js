@@ -3,7 +3,7 @@ import { GLTFLoader } from "https://unpkg.com/three@0.160.0/examples/jsm/loaders
 
 import { designConfig } from "./designConfig.js";
 import { renderBooks, setBookLabelsVisible } from "./bookManager.js";
-import { testBooks, openBookContentModal } from "../pages/app/book.js";
+import { testBooks, openBookContentModal, getBookStars } from "../pages/app/book.js";
 import { getShelfLayout } from "./shelfLayout.js";
 
 export function initThreeViewer(container, modelPath, design, size) {
@@ -156,25 +156,6 @@ export function initThreeViewer(container, modelPath, design, size) {
 
     container.addEventListener("dblclick", resetZoom);
 
-    function getTooltipStars(rating) {
-        const numericRating = Number(rating) || 0;
-        const roundedRating = Math.round(numericRating * 2) / 2;
-
-        let stars = "";
-
-        for (let i = 1; i <= 5; i++) {
-            if (roundedRating >= i) {
-                stars += "★";
-            } else if (roundedRating === i - 0.5) {
-                stars += "⯪";
-            } else {
-                stars += "☆";
-            }
-        }
-
-        return stars;
-    }
-
     function getIntersectedBook(event) {
 
         const rect =
@@ -251,7 +232,7 @@ export function initThreeViewer(container, modelPath, design, size) {
             book.rating ?? "0.0";
 
         tooltip.querySelector(".tooltip__stars").textContent =
-            getTooltipStars(book.rating);
+            getBookStars(book.rating);
 
         tooltip.querySelector(".tooltip__page-count").textContent =
             book.pages ?? "—";
@@ -325,24 +306,6 @@ export function initThreeViewer(container, modelPath, design, size) {
         }, 700);
 
     });
-
-
-
-    // function openBookContentModal(book) {
-    //     const modal = document.querySelector("#book-content-modal");
-    //
-    //     if (!modal) {
-    //         return;
-    //     }
-    //
-    //     modal.querySelector(".book-content__title").textContent =
-    //         book.title || "Untitled";
-    //
-    //     modal.querySelector(".book-content__author").textContent =
-    //         book.author || "Unknown author";
-    //
-    //     modal.hidden = false;
-    // }
 
     container.addEventListener("click", (event) => {
         console.log("Shelf clicked");
@@ -422,6 +385,8 @@ export function initThreeViewer(container, modelPath, design, size) {
             model.position.y += layout.modelOffset.y || 0;
             model.position.z += layout.modelOffset.z || 0;
         }
+
+        await document.fonts.ready;
 
         await renderBooks(testBooks, shelfGroup, size, design);
     });

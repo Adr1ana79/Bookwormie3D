@@ -22,37 +22,6 @@
 <body>
 
     <!-- MODALS -->
-    <section class="modal modal--confirmation"
-             role="dialog"
-             aria-modal="true"
-             aria-labelledby="confirmation-title"
-             aria-describedby="confirmation-description"
-             hidden>
-
-        <div class="modal__overlay"></div>
-
-        <div class="modal__content">
-            <h2 id="confirmation-title">Are you sure?</h2>
-
-            <p id="confirmation-description">
-                This action is irreversible. All related data will be permanently deleted.
-            </p>
-
-            <div class="button-group button-group--two">
-                <button type="button"
-                        class="button primary-button button-label button-label--primary"
-                        data-close>
-                    Cancel
-                </button>
-
-                <button type="button"
-                        class="button secondary-button button-label button-label--permanent"
-                        data-confirm>
-                    Delete
-                </button>
-            </div>
-        </div>
-    </section>
 
     <section id="add-shelf-modal"
              class="modal"
@@ -159,6 +128,79 @@
                     </button>
                 </div>
             </form>
+        </div>
+    </section>
+
+    <section id="edit-profile-picture-modal"
+             class="modal modal--edit-profile-picture"
+             role="dialog"
+             aria-modal="true"
+             aria-labelledby="edit-profile-picture"
+             hidden>
+
+        <div class="modal__overlay"></div>
+
+        <div class="modal__content">
+            <div class="avatar-selection">
+                <label class="avatar-option is-selected">
+                    <input type="radio" name="avatar" value="preset-1" checked>
+                    <img src="assets/images/profile-personalisation/default-picture.svg" alt="Avatar 1">
+                </label>
+
+                <label class="avatar-option">
+                    <input type="radio" name="avatar" value="preset-2">
+                    <img src="assets/images/profile-personalisation/coral-picture.svg" alt="Avatar 1">
+                </label>
+
+                <label class="avatar-option">
+                    <input type="radio" name="avatar" value="preset-3">
+                    <img src="assets/images/profile-personalisation/aqua-picture.svg" alt="Avatar 2">
+                </label>
+
+                <label class="avatar-option">
+                    <input type="radio" name="avatar" value="preset-4">
+                    <img src="assets/images/profile-personalisation/yellow-picture.svg" alt="Avatar 2">
+
+                </label>
+
+                <label class="avatar-option">
+                    <input type="radio" name="avatar" value="preset-5">
+                    <img src="assets/images/profile-personalisation/green-picture.svg" alt="Avatar 2">
+                </label>
+            </div>
+
+            <div class="upload-section">
+                <div class="avatar-option current-avatar-preview">
+                    <img src="assets/images/profile-personalisation/image-holder.svg" id="preview-img" alt="Preview">
+                </div>
+
+                <div class="upload-controls">
+                    <div class="upload-actions">
+                        <label for="file-upload" class="button-upload">
+                            <i class="icon-upload"></i> Upload photo
+                        </label>
+                        <input id="file-upload" type="file" accept="image/jpeg, image/png" hidden>
+
+                        <button type="button" class="icon-button icon-delete small-icon-button red-icon-button"></button>
+                    </div>
+
+                    <p class="upload-hint">Supports: JPG, PNG, up to 2MB</p>
+                </div>
+            </div>
+
+            <div class="button-group button-group--two">
+                <button type="button"
+                        class="button primary-button button-label button-label--primary"
+                        data-close>
+                    Save
+                </button>
+
+                <button type="button"
+                        class="button secondary-button button-label button-label--secondary"
+                        data-confirm>
+                    Cancel
+                </button>
+            </div>
         </div>
     </section>
 
@@ -381,81 +423,9 @@
         </div>
     </section>
 
-    <section id="edit-profile-picture-modal"
-             class="modal modal--edit-profile-picture"
-             role="dialog"
-             aria-modal="true"
-             aria-labelledby="edit-profile-picture"
-             hidden>
-
-        <div class="modal__overlay"></div>
-
-        <div class="modal__content">
-            <div class="avatar-selection">
-                <label class="avatar-option is-selected">
-                    <input type="radio" name="avatar" value="preset-1" checked>
-                    <img src="assets/images/profile-personalisation/default-picture.svg" alt="Avatar 1">
-                </label>
-
-                <label class="avatar-option">
-                    <input type="radio" name="avatar" value="preset-2">
-                    <img src="assets/images/profile-personalisation/coral-picture.svg" alt="Avatar 1">
-                </label>
-
-                <label class="avatar-option">
-                    <input type="radio" name="avatar" value="preset-3">
-                    <img src="assets/images/profile-personalisation/aqua-picture.svg" alt="Avatar 2">
-                </label>
-
-                <label class="avatar-option">
-                    <input type="radio" name="avatar" value="preset-4">
-                    <img src="assets/images/profile-personalisation/yellow-picture.svg" alt="Avatar 2">
-
-                </label>
-
-                <label class="avatar-option">
-                    <input type="radio" name="avatar" value="preset-5">
-                    <img src="assets/images/profile-personalisation/green-picture.svg" alt="Avatar 2">
-                </label>
-            </div>
-
-            <div class="upload-section">
-                <div class="avatar-option current-avatar-preview">
-                    <img src="assets/images/profile-personalisation/image-holder.svg" id="preview-img" alt="Preview">
-                </div>
-
-                <div class="upload-controls">
-                    <div class="upload-actions">
-                        <label for="file-upload" class="button-upload">
-                            <i class="icon-upload"></i> Upload photo
-                        </label>
-                        <input id="file-upload" type="file" accept="image/jpeg, image/png" hidden>
-
-                        <button type="button" class="icon-button icon-delete small-icon-button red-icon-button"></button>
-                    </div>
-
-                    <p class="upload-hint">Supports: JPG, PNG, up to 2MB</p>
-                </div>
-            </div>
-
-            <div class="button-group button-group--two">
-                <button type="button"
-                        class="button primary-button button-label button-label--primary"
-                        data-close>
-                    Save
-                </button>
-
-                <button type="button"
-                        class="button secondary-button button-label button-label--secondary"
-                        data-confirm>
-                    Cancel
-                </button>
-            </div>
-        </div>
-    </section>
-
     <section id="book-content-modal"
              class="modal"
+             data-mode="view"
              role="dialog"
              aria-modal="true"
              aria-labelledby="book-content"
@@ -465,15 +435,14 @@
 
         <div class="modal__content">
 
-            <button type="button" class="button secondary-button button-label button-label--secondary" data-close>
+            <button type="button" class="button secondary-button button-label button-label--secondary view-only" data-close>
                 Close
             </button>
 
             <!-- height, font, color (vertical)-->
             <div class="book-content__visual">
 
-                <button type="button" class="icon-button icon-edit green-icon-button medium-icon-button edit-only"
-                        aria-label="Edit book visualization"></button>
+                <div class="visuals--hider edit-only"></div>
 
                 <!-- Height (vertical) -->
                 <div id="book-content__visual--height"
@@ -524,6 +493,7 @@
 
                     <div class="book-color"></div>
                 </div>
+
             </div>
 
             <div class="book-content__info">
@@ -553,7 +523,7 @@
                                 <div class="form-field--small">
                                     <div class="form-field__control">
                                         <input type="text"
-                                               name="book-title"
+                                               name="book-author"
                                                class="form-field form-field__input__small"
                                                placeholder="Enter author's name"
                                                required>
@@ -571,17 +541,11 @@
 
                             <!-- (horizontal)-->
                             <div class="book-content__score--edit edit-only">
-                                <div class="form-group">
-                                    <div class="form-field--small">
-                                        <div class="form-field__control">
-                                            <input type="number"
-                                                   min="0"
-                                                   max="5"
-                                                   step="0.5"
-                                                   placeholder="Rate">
-                                        </div>
-                                    </div>
-                                </div>
+                                <input type="number"
+                                       name="book-rating"
+                                       class="form-field--rating"
+                                       min="0" max="5" step="0.5"
+                                       placeholder="Rate">
                                 <p class="book-content__score--edit-helper">From 0.0 to 5.0</p>
                             </div>
                         </div>
@@ -591,23 +555,27 @@
                     <div class="icon-button-group">
                         <div class="edit-control">
                             <button type="button" class="icon-button icon-edit green-icon-button medium-icon-button view-only"
-                                    aria-label="Edit book"></button>
+                                    aria-label="Edit book"
+                                    data-book-edit></button>
 
                             <div class="icon-button-group--submenu-button edit-only">
                                 <img src="assets/images/icons/edit-icon.svg" alt="" class="submenu-icon">
 
                                 <button type="button"
-                                        class="icon-button icon-save dark-green-icon-button small-icon-button">
+                                        class="icon-button icon-save dark-green-icon-button small-icon-button"
+                                        data-book-save>
                                 </button>
 
                                 <button type="button"
-                                        class="icon-button icon-cancel red-icon-button small-icon-button">
+                                        class="icon-button icon-cancel red-icon-button small-icon-button"
+                                        data-book-cancel>
                                 </button>
                             </div>
                         </div>
 
                         <button type="button" class="icon-button icon-delete red-icon-button medium-icon-button"
-                                aria-label="Delete book">
+                                aria-label="Delete book"
+                                data-book-delete>
                         </button>
                     </div>
                 </div>
@@ -624,17 +592,17 @@
 
                         <fieldset class="book-status edit-only">
                             <label class="book-status__option">
-                                <input type="radio" name="book-status" value="unread" checked>
+                                <input type="radio" name="book-status" value="Unread" checked>
                                 <span>Unread</span>
                             </label>
 
                             <label class="book-status__option">
-                                <input type="radio" name="book-status" value="reading">
+                                <input type="radio" name="book-status" value="Reading">
                                 <span>Reading</span>
                             </label>
 
                             <label class="book-status__option">
-                                <input type="radio" name="book-status" value="read">
+                                <input type="radio" name="book-status" value="Read">
                                 <span>Read</span>
                             </label>
                         </fieldset>
@@ -647,17 +615,11 @@
                         <span class="book-details--option view-only">0</span>
 
                         <div class="book-content__pages--edit edit-only">
-                            <div class="form-group">
-                                <div class="form-field--small">
-                                    <div class="form-field__control">
-                                        <input type="number"
-                                               max="2000"
-                                               name="page-count"
-                                               class="form-field form-field__input__small"
-                                               placeholder="Number of pages">
-                                    </div>
-                                </div>
-                            </div>
+                            <input type="number"
+                                   max="2000"
+                                   name="page-count"
+                                   class="form-field form-field__input__small"
+                                   placeholder="Pages">
                         </div>
                     </div>
 
@@ -670,6 +632,10 @@
                             <li class="favourite-genres__item">Romance</li>
                             <li class="favourite-genres__item">Art and culture</li>
                         </ul>
+
+                        <button data-edit-genres type="button"
+                                class="icon-button icon-edit green-icon-button small-icon-button edit-only"
+                                aria-label="Edit book genres"></button>
                     </div>
 
                 </div>
@@ -703,8 +669,22 @@
              aria-labelledby="book-genres-modal"
              hidden>
 
-        <fieldset class="form-group">
-            <legend class="form-legend">Genres</legend>
+        <div class="modal__overlay"></div>
+
+
+        <fieldset class="genres-field">
+
+            <div class="icon-button-group genre-buttons">
+                <button type="button"
+                        class="icon-button icon-save green-icon-button small-icon-button"
+                        data-genres-save>
+                </button>
+
+                <button type="button"
+                        class="icon-button icon-cancel red-icon-button small-icon-button"
+                        data-genres-cancel>
+                </button>
+            </div>
 
             <ul class="genres-grid">
                 <li><button type="button" class="genre-option">Science fiction</button></li>
@@ -733,7 +713,12 @@
                 <li><button type="button" class="genre-option">Art and culture</button></li>
                 <li><button type="button" class="genre-option">Religion and spirituality</button></li>
             </ul>
+
+
         </fieldset>
+
+
+
     </section>
 
     <section id="book-info-tooltip"
@@ -759,6 +744,38 @@
             <div class="tooltip__info-subgroup tooltip__info-rating">
                 <span class="tooltip__value tooltip__stars">☆☆☆☆☆</span>
                 <p class="tooltip__label">Rate: <span class="tooltip__value tooltip__book-rating">0.0</span></p>
+            </div>
+        </div>
+    </section>
+
+    <section class="modal modal--confirmation"
+             role="dialog"
+             aria-modal="true"
+             aria-labelledby="confirmation-title"
+             aria-describedby="confirmation-description"
+             hidden>
+
+        <div class="modal__overlay"></div>
+
+        <div class="modal__content">
+            <h2 id="confirmation-title">Are you sure?</h2>
+
+            <p id="confirmation-description">
+                This action is irreversible. All related data will be permanently deleted.
+            </p>
+
+            <div class="button-group button-group--two">
+                <button type="button"
+                        class="button primary-button button-label button-label--primary"
+                        data-close>
+                    Cancel
+                </button>
+
+                <button type="button"
+                        class="button secondary-button button-label button-label--permanent"
+                        data-confirm>
+                    Delete
+                </button>
             </div>
         </div>
     </section>

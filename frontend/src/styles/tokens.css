@@ -49,6 +49,32 @@
     font-display: swap;
 }
 
+@font-face {
+    font-family: "BookNormal";
+    src: url("../../assets/fonts/book-normal/Manrope-Medium.ttf") format("truetype");
+}
+@font-face {
+    font-family: "BookElegant";
+    src: url("../../assets/fonts/book-elegant/GentiumBookPlus-Regular.ttf") format("truetype");
+}
+@font-face {
+    font-family: "BookGothic";
+    src: url("../../assets/fonts/book-gothic/KellySlab-Regular.ttf") format("truetype");
+}
+@font-face {
+    font-family: "BookCreepy";
+    src: url("../../assets/fonts/book-creepy/Underdog-Regular.ttf") format("truetype");
+}
+@font-face {
+    font-family: "BookManuscript";
+    src: url("../../assets/fonts/book-manuscript/Lobster-Regular.ttf") format("truetype");
+}
+@font-face {
+    font-family: "BookTypewriter";
+    src: url("../../assets/fonts/book-type-machine/Type Machine.ttf") format("truetype");
+}
+
+
 body {
     font-family: "Sofia Sans", sans-serif;
     margin: 0;
@@ -102,7 +128,9 @@ body {
     --red-200: #813532;
     --grey-100: #989898;
 
-    --DP-yellow: #C3914F;
+    --yellow-100: #F6B861;
+    --yellow-200: #C3914F;
+    --yellow-300: #E4983F;
 
     /* --- FONTS --- */
     --font-primary: "Sofia Sans Semi Condensed", system-ui, sans-serif;
@@ -181,7 +209,8 @@ body {
 
     --grey-100: #AAAAAA;
 
-    --DP-yellow:  #C3914F;
+    --yellow-200:  #C3914F;
+
 
 
     body img:not(.mode-card img),
@@ -267,7 +296,7 @@ body {
 /*    --grey-100: #B0B0B0;*/
 
 
-/*    --DP-yellow: #E0B469;*/
+/*    --yellow-200: #E0B469;*/
 
 
 /*    body img:not(.mode-card img),*/

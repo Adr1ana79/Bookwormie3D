@@ -112,7 +112,7 @@
 
 .tooltip__stars {
     font-size: 17px;
-    color: var(--DP-yellow);
+    color: var(--yellow-200);
 }
 
 
@@ -181,7 +181,6 @@
     height: 1.6rem;
 
     padding: 0.3rem;
-    background-color: var(--DP-yellow);
     border: 4px solid var(--white-100);
     box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
 }
@@ -242,6 +241,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
 
     gap: 0.08rem;
 }
@@ -254,7 +254,7 @@
     font-weight: 800;
     letter-spacing: 0.3rem;
 
-    color: var(--DP-yellow);
+    color: var(--yellow-100);
 }
 
 .book-content__score {
@@ -324,7 +324,7 @@
 }
 
 .book-details--review {
-    margin-left: 0.2rem;
+    padding: 1rem 1rem 0 1rem;
     width: 36rem;
     height: 13rem;
 
@@ -333,11 +333,24 @@
 
     color: var(--font-black);
 
+    outline: none;
+    border: 3px solid var(--mint-400);
+    background-color: var(--mint-100);
+    border-radius: 0.2rem;
     resize: none;
+}
+
+.book-details--review:focus {
+    border: 3px solid var(--green-200);
+    box-shadow: 2px 2px 8px 0 rgba(0, 0, 0, 0.25);
+}
+
+.book-details--review:disabled {
+    padding: 0 1rem 0 0;
+    margin-left: 0.3rem;
+    text-indent: 0.7rem;
     background: none;
     border: none;
-    text-indent: 0.6rem;
-    padding-right: 1rem;
 }
 
 textarea::-webkit-scrollbar {
@@ -351,6 +364,7 @@ textarea::-webkit-scrollbar-track {
 textarea::-webkit-scrollbar-thumb {
     background: var(--green-200);
     border-radius: 999px;
+    opacity: 0.5;
 }
 
 textarea::-webkit-scrollbar-thumb:hover {
@@ -362,4 +376,198 @@ textarea::-webkit-scrollbar-thumb:hover {
     position: absolute;
     bottom: 4rem;
     right: 4rem;
+}
+
+
+
+#book-content-modal[data-mode="edit"] .book-content__info {
+    gap: 1.6rem;
+}
+
+#book-content-modal[data-mode="edit"] .book-content__info--details {
+    margin-top: -2rem;
+}
+
+.book-content__score--edit {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    gap: 0.5rem;
+}
+
+.form-field--rating {
+    display: inline-block;
+    width: 3rem;
+    height: 1.6rem;
+
+    font-size: 1.1rem;
+    font-family: inherit;
+    font-weight: 600;
+    text-align: center;
+    color: var(--yellow-300);
+    border: 3px solid var(--yellow-100);
+    background: var(--beige-100);
+}
+
+.form-field--rating::placeholder {
+    color: var(--yellow-100);
+    font-size: 0.9rem;
+}
+
+.form-field--rating:focus {
+    outline: none;
+
+    font-size: 1.15rem;
+
+    font-weight: 600;
+    color: var(--yellow-100);
+}
+
+.form-field--rating:focus::placeholder {
+    color: transparent;
+}
+
+.book-content__score--edit-helper {
+    font-size:0.9rem;
+    color: var(--font-grey);
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+#book-content-modal .form-field {
+    height: 2rem;
+}
+#book-content-modal .icon-button-group--submenu-button {
+    padding: 0.4rem;
+    width: 2rem;
+}
+#book-content-modal .submenu-icon {
+    width: 1.6rem !important;
+    height: auto;
+}
+
+.book-status {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.6rem;
+
+    border: none;
+    padding: 0;
+    margin: 0;
+}
+
+.book-status input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;}
+
+.book-status__option {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    padding: 0.3rem 0.5rem;
+
+    cursor: pointer;
+    border-radius: 12px;
+
+    transition: 0.2s ease;
+
+    font-size: 1.16rem;
+    font-weight: 700;
+    text-decoration: underline;
+    color: var(--aqua-200);
+}
+
+.book-status__option:hover {
+    text-decoration: none;
+    font-size: 1.18rem;
+    font-weight: 800;
+}
+
+.book-status__option:has(input[type="radio"]:checked) {
+    font-size: 1.1rem;
+    font-weight: 800;
+    text-decoration: none;
+    color: var(--aqua-300);
+}
+
+
+.book-content__pages--edit .form-field {
+    width: 3rem;
+    padding: 0.06rem 0.8rem 0.06rem 0.8rem;
+
+    font-size: 1rem;
+    font-weight: 800;
+    text-align: center;
+}
+
+.book-content__pages--edit .form-field::placeholder {
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.book-content__pages--edit .form-field:focus {
+    font-size: 1.1rem;
+    font-weight: 900;
+
+    box-shadow: none;
+}
+
+.book-content__pages--edit .form-field:focus::placeholder {
+    color: transparent;
+
+}
+
+#book-content-modal .favourite-genres__item {
+    font-size: 1.05rem;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.25);
+}
+
+#book-content-modal[data-mode="edit"] .book-details--review {
+    height: 12rem;
+    width: 40rem;
+}
+
+.visuals--hider {
+    position: fixed;
+
+    width: 9rem;
+    height: 32rem;
+
+    background: var(--white-300);
+    opacity: 0.5;
+
+    z-index: 10;
+}
+
+
+
+#book-genres-modal .genres-field {
+    display: flex;
+    flex-direction: column;
+
+    width: 30rem !important;
+
+    border: none;
+
+    z-index: 9998;
+}
+
+#book-genres-modal .genres-grid {
+    margin-top: -3rem;
+}
+
+#book-genres-modal .genre-buttons {
+    margin-right: 1.2rem;
+    align-self: flex-end;
+    justify-self: flex-end;
+
+    z-index: 9999;
 }

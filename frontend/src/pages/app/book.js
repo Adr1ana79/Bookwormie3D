@@ -1,4 +1,4 @@
-// booksState.js
+import { openConfirmModal } from "../../ui-elements/confirmModal.js";
 
 export const testBooks = [
 
@@ -370,7 +370,185 @@ export const testBooks = [
 
 ];
 
-function getBookStars(rating) {
+
+function setBookModalMode(modal, mode) {
+    modal.dataset.mode = mode;
+}
+
+function isBookModalInEditMode(modal) {
+    return modal.dataset.mode === "edit";
+}
+
+function disableBookEditing(modal) {
+    const reviewField = modal.querySelector(".book-details--review");
+
+    if (reviewField) {
+        reviewField.disabled = true;
+    }
+}
+
+function clampNumber(value, min, max) {
+    const number = Number(value);
+
+    if (Number.isNaN(number)) {
+        return min;
+    }
+
+    return Math.min(Math.max(number, min), max);
+}
+
+function bindGenreEdit(modal, book) {
+    const editGenresBtn = modal.querySelector("[data-edit-genres]");
+
+    if (!editGenresBtn) return;
+
+    editGenresBtn.onclick = () => {
+        openBookGenresModal(book, modal);
+    };
+}
+
+function openBookGenresModal(book, bookModal) {
+    const genresModal = document.querySelector("#book-genres-modal");
+    if (!genresModal) return;
+
+    const options = genresModal.querySelectorAll(".genre-option");
+    const saveBtn = genresModal.querySelector("[data-genres-save]");
+    const cancelBtn = genresModal.querySelector("[data-genres-cancel]");
+
+    let selectedGenres = [...(book.genres || [])];
+
+    options.forEach((option) => {
+        const genre = option.textContent.trim();
+
+        option.classList.toggle(
+            "genre-option--selected",
+            selectedGenres.includes(genre)
+        );
+
+        option.onclick = () => {
+            const isSelected = selectedGenres.includes(genre);
+
+            if (isSelected) {
+                selectedGenres = selectedGenres.filter(item => item !== genre);
+                option.classList.remove("genre-option--selected");
+            } else {
+                selectedGenres.push(genre);
+                option.classList.add("genre-option--selected");
+            }
+        };
+    });
+
+    saveBtn.onclick = () => {
+        book.genres = selectedGenres;
+
+        renderBookGenres(bookModal, book.genres);
+
+        genresModal.hidden = true;
+    };
+
+    cancelBtn.onclick = () => {
+        genresModal.hidden = true;
+    };
+
+    genresModal.hidden = false;
+}
+
+function fillBookEditFields(modal, book) {
+    modal.querySelector('input[name="book-title"]').value =
+        book.title || "";
+
+    modal.querySelector('input[name="book-author"]').value =
+        book.author || "";
+
+    modal.querySelector('input[name="book-rating"]').value =
+        book.rating ?? "";
+
+    modal.querySelector('input[name="page-count"]').value =
+        book.pages ?? "";
+
+    const status = book.status || "unread";
+    const statusInput = modal.querySelector(
+        `input[name="book-status"][value="${status.toLowerCase()}"]`
+    );
+
+    if (statusInput) {
+        statusInput.checked = true;
+    }
+
+    const reviewField = modal.querySelector(".book-details--review");
+    reviewField.disabled = false;
+}
+
+function removeBookFromShelf(book) {
+    console.log("Delete:", book);
+}
+
+
+function bindBookModalEditControls(modal, book) {
+    const editBtn = modal.querySelector("[data-book-edit]");
+    const saveBtn = modal.querySelector("[data-book-save]");
+    const cancelBtn = modal.querySelector("[data-book-cancel]");
+    const deleteBtn = modal.querySelector("[data-book-delete]");
+
+    if (editBtn) {
+        editBtn.onclick = () => {
+            setBookModalMode(modal, "edit");
+            fillBookEditFields(modal, book);
+        };
+    }
+
+    if (cancelBtn) {
+        cancelBtn.onclick = () => {
+            const reviewField = modal.querySelector(".book-details--review");
+
+            reviewField.disabled = true;
+            fillBookViewFields(modal, book);
+            setBookModalMode(modal, "view");
+        };
+    }
+
+    if (saveBtn) {
+        saveBtn.onclick = () => {
+            const titleInput = modal.querySelector('input[name="book-title"]');
+            const authorInput = modal.querySelector('input[name="book-author"]');
+            const ratingInput = modal.querySelector('input[name="book-rating"]');
+            const pagesInput = modal.querySelector('input[name="page-count"]');
+            const statusInput = modal.querySelector('input[name="book-status"]:checked');
+            const reviewField = modal.querySelector(".book-details--review");
+
+            book.title = titleInput.value.trim() || "Untitled";
+            book.author = authorInput.value.trim() || "Unknown author";
+            book.rating = clampNumber(ratingInput.value, 0, 5);
+            book.pages = clampNumber(pagesInput.value, 0, 2000);
+            book.status = statusInput ? statusInput.value : "Unread";
+            book.review = reviewField.value.trim();
+
+            reviewField.disabled = true;
+
+            fillBookViewFields(modal, book);
+            setBookModalMode(modal, "view");
+        };
+    }
+
+
+    if (deleteBtn) {
+        deleteBtn.onclick = () => {
+            openConfirmModal({
+                title: "Delete book?",
+                description: "This book will be permanently deleted.",
+                confirmText: "Delete",
+                onConfirm: () => {
+                    console.log("Delete book:", book.id);
+
+                    modal.hidden = true;
+                }
+            });
+        };
+    }
+}
+
+
+export function getBookStars(rating) {
     const numericRating = Number(rating) || 0;
     const roundedRating = Math.round(numericRating * 2) / 2;
 
@@ -456,11 +634,7 @@ function getBookColor(color) {
 }
 
 
-export function openBookContentModal(book) {
-    const modal = document.querySelector("#book-content-modal");
-
-    if (!modal) return;
-
+function fillBookViewFields(modal, book) {
     modal.querySelector(".book-content__title").textContent =
         book.title || "Untitled";
 
@@ -484,7 +658,17 @@ export function openBookContentModal(book) {
 
     renderBookGenres(modal, book.genres || []);
     renderBookVisuals(modal, book);
+}
 
+export function openBookContentModal(book) {
+    const modal = document.querySelector("#book-content-modal");
+
+    if (!modal) return;
+
+    fillBookViewFields(modal, book);
+    setBookModalMode(modal, "view");
+    bindBookModalEditControls(modal, book);
+    bindGenreEdit(modal, book);
 
     const cancelBtn = modal.querySelector("[data-close]");
     const overlay =
@@ -492,20 +676,25 @@ export function openBookContentModal(book) {
 
     if (cancelBtn) {
         cancelBtn.onclick = () => {
+
+            if (isBookModalInEditMode(modal)) {
+                return;
+            }
+
             modal.hidden = true;
         };
     }
 
     if (overlay) {
         overlay.onclick = () => {
+
+            if (isBookModalInEditMode(modal)) {
+                return;
+            }
+
             modal.hidden = true;
         };
     }
-
-    console.log("Opening book:", book);
-    console.log("Modal:", modal);
-    console.log("Review field:", modal.querySelector(".book-details--review"));
-
 
     modal.hidden = false;
 }

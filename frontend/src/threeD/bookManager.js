@@ -27,7 +27,6 @@ export function setBookLabelsVisible(shelfGroup, isVisible) {
     });
 }
 
-
 export async function createBookMesh(book) {
     const heightMap = {
         short: 0.3,
@@ -84,12 +83,22 @@ function createBookTitleTexture(book) {
     canvas.width = 512;
     canvas.height = 1024;
 
+    const fontMap = {
+        normal: "BookNormal",
+        elegant: "BookElegant",
+        gothic: "BookGothic",
+        creepy: "BookCreepy",
+        typewriter: "BookTypewriter",
+        manuscript: "BookManuscript"
+    };
+
     const ctx = canvas.getContext("2d");
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     ctx.fillStyle = "#ffffff";
-    ctx.font = "bold 80px Arial";
+    const fontFamily = fontMap[book.font] || fontMap.normal;
+    ctx.font = `bold 90px ${fontFamily}`;
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
 

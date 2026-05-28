@@ -205,7 +205,8 @@
     </section>
 
     <section id="add-edit-book-modal"
-             class="modal modal--add-edit-book"
+             class="modal"
+             data-mode="view"
              role="dialog"
              aria-modal="true"
              aria-labelledby="add-edit-book-title"
@@ -219,205 +220,198 @@
             </header>
 
             <form id="add-edit-book-form" class="add-edit-book-form">
-                <input type="hidden" name="mode" value="add">
-                <input type="hidden" name="book-id" value="">
 
-                <fieldset class="book-picker visual-edit">
-                    <legend class="section-header">
-                        <img class="section-header--ribbon"
-                             src="assets/images/design-elements/section-label-book.svg"
-                             alt="">
-                        <span class="section-header--title">Height</span>
-                    </legend>
+                <div class="book__height-color">
+                    <fieldset class="book-picker visual-edit">
+                        <legend class="section-header">
+                            <img class="section-header--ribbon"
+                                 src="assets/images/design-elements/section-label-book.svg"
+                                 alt="">
+                            <span class="section-header--title">Height</span>
+                        </legend>
 
-                    <div class="book-picker__grid book-picker__grid--height">
-                        <label class="book-option">
-                            <input type="radio" name="height" value="high">
-                            <span class="book-option__preview">
-                                <img src="assets/images/book-personalisation/height-high.png" alt="">
-                            </span>
-                            <span class="book-option__name">High</span>
-                        </label>
+                        <div class="book-picker__grid book-picker__grid--height">
+                            <label class="book-option">
+                                <input type="radio" name="height" value="high">
+                                <img class="book-option__preview"
+                                     src="assets/images/book-personalisation/height-high.png"
+                                     alt="">
+                                <span class="book-visual-element--option-name">High</span>
+                            </label>
 
-                        <label class="book-option">
-                            <input type="radio" name="height" value="medium" checked>
-                            <span class="book-option__preview is-active">
-                                <img src="assets/images/book-personalisation/height-medium-active.png" alt="">
-                            </span>
-                            <span class="book-option__name">Medium</span>
-                        </label>
+                            <label class="book-option">
+                                <input type="radio" name="height" value="medium" checked>
+                                <img class="book-option__preview is-active"
+                                     src="assets/images/book-personalisation/height-medium-active.png"
+                                     alt="">
+                                <span class="book-visual-element--option-name">Medium</span>
+                            </label>
 
-                        <label class="book-option">
-                            <input type="radio" name="height" value="short">
-                            <span class="book-option__preview">
-                                <img src="assets/images/book-personalisation/height-short.png" alt="">
-                            </span>
-                            <span class="book-option__name">Short</span>
-                        </label>
-                    </div>
-                </fieldset>
-
-                <fieldset class="book-picker visual-edit">
-                    <legend class="section-header">
-                        <img class="section-header--ribbon"
-                             src="assets/images/design-elements/section-label-book-color.svg"
-                             alt="">
-                        <span class="section-header--title">Font</span>
-                    </legend>
-
-                    <div class="book-picker__grid book-picker__grid--font">
-                        <label class="book-option book-option--font">
-                            <input type="radio" name="font" value="normal" checked>
-                            <span class="book-option__preview">Абв 123</span>
-                            <span class="book-option__name">Normal</span>
-                        </label>
-
-                        <label class="book-option book-option--font font-creepy">
-                            <input type="radio" name="font" value="creepy">
-                            <span class="book-option__preview">Абв 123</span>
-                            <span class="book-option__name">Creepy</span>
-                        </label>
-
-                        <label class="book-option book-option--font font-creepy">
-                            <input type="radio" name="font" value="gothic">
-                            <span class="book-option__preview">Абв 123</span>
-                            <span class="book-option__name">Gothic</span>
-                        </label>
-
-                        <label class="book-option book-option--font font-creepy">
-                            <input type="radio" name="font" value="type-machine">
-                            <span class="book-option__preview">Абв 123</span>
-                            <span class="book-option__name">Type machine</span>
-                        </label>
-
-                        <label class="book-option book-option--font font-creepy">
-                            <input type="radio" name="font" value="elegant">
-                            <span class="book-option__preview">Абв 123</span>
-                            <span class="book-option__name">Elegant</span>
-                        </label>
-
-                        <label class="book-option book-option--font font-creepy">
-                            <input type="radio" name="font" value="manuscript">
-                            <span class="book-option__preview">Абв 123</span>
-                            <span class="book-option__name">Manuscript</span>
-                        </label>
-                    </div>
-                </fieldset>
-
-                <fieldset class="book-picker visual-edit">
-                    <legend class="section-header">
-                        <img class="section-header--ribbon"
-                             src="assets/images/design-elements/section-label-book-color.svg"
-                             alt="">
-                        <span class="section-header--title">Color</span>
-                    </legend>
-
-                    <div class="book-color-grid">
-                        <label class="color-option" style="--book-color: #41414D;">
-                            <input type="radio" name="color" value="black">
-                            <span class="color-option__swatch"></span>
-                            <span class="sr-only">Black</span>
-                        </label>
-
-                        <label class="color-option" style="--book-color: #4D698B;">
-                            <input type="radio" name="color" value="navy">
-                            <span class="color-option__swatch"></span>
-                            <span class="sr-only">Navy</span>
-                        </label>
-
-                        <label class="color-option" style="--book-color: #536B4E;">
-                            <input type="radio" name="color" value="green">
-                            <span class="color-option__swatch"></span>
-                            <span class="sr-only">Green</span>
-                        </label>
-
-                        <label class="color-option" style="--book-color: #A97142;">
-                            <input type="radio" name="color" value="bronze">
-                            <span class="color-option__swatch"></span>
-                            <span class="sr-only">Bronze</span>
-                        </label>
-
-                        <label class="color-option" style="--book-color: #8C2238;">
-                            <input type="radio" name="color" value="red">
-                            <span class="color-option__swatch"></span>
-                            <span class="sr-only">Red</span>
-                        </label>
-
-                        <label class="color-option" style="--book-color: #502323;">
-                            <input type="radio" name="color" value="brown">
-                            <span class="color-option__swatch"></span>
-                            <span class="sr-only">Brown</span>
-                        </label>
-
-                        <hr class="shelf-context-menu__separator">
-
-                        <label class="color-option" style="--book-color: #0078C9;">
-                            <input type="radio" name="color" value="blue">
-                            <span class="color-option__swatch"></span>
-                            <span class="sr-only">Blue</span>
-                        </label>
-
-                        <label class="color-option" style="--book-color: #8196E5;">
-                            <input type="radio" name="color" value="violet">
-                            <span class="color-option__swatch"></span>
-                            <span class="sr-only">Violet</span>
-                        </label>
-
-                        <label class="color-option" style="--book-color: #1CC1BA;">
-                            <input type="radio" name="color" value="cyan">
-                            <span class="color-option__swatch"></span>
-                            <span class="sr-only">Cyan</span>
-                        </label>
-
-                        <label class="color-option" style="--book-color: #FFC529;">
-                            <input type="radio" name="color" value="yellow" checked>
-                            <span class="color-option__swatch"></span>
-                            <span class="sr-only">Yellow</span>
-                        </label>
-
-                        <label class="color-option" style="--book-color: #FE9784;">
-                            <input type="radio" name="color" value="peach">
-                            <span class="color-option__swatch"></span>
-                            <span class="sr-only">Peach</span>
-                        </label>
-
-                        <label class="color-option" style="--book-color: #FF6F55;">
-                            <input type="radio" name="color" value="coral">
-                            <span class="color-option__swatch"></span>
-                            <span class="sr-only">Coral</span>
-                        </label>
-
-                    </div>
-
-                </fieldset>
-
-                <div class="form-group">
-                    <div class="form-field--small">
-                        <div class="form-field__control">
-                            <input type="text"
-                                   name="book-title"
-                                   class="form-field form-field__input__small"
-                                   placeholder="Enter book title">
+                            <label class="book-option">
+                                <input type="radio" name="height" value="short">
+                                <img class="book-option__preview"
+                                     src="assets/images/book-personalisation/height-short.png" alt="">
+                                <span class="book-visual-element--option-name">Short</span>
+                            </label>
                         </div>
-                    </div>
+                    </fieldset>
+
+                    <fieldset class="book-picker visual-edit">
+                        <legend class="section-header">
+                            <img class="section-header--ribbon"
+                                 src="assets/images/design-elements/section-label-book-color.svg"
+                                 alt="">
+                            <span class="section-header--title">Color</span>
+                        </legend>
+
+                        <div class="book-color-row">
+                            <label class="color-option" style="--book-color: #41414D;">
+                                <input type="radio" name="color" value="black">
+                                <div class="book-color" style="background: #41414D"></div>
+                            </label>
+
+                            <label class="color-option" style="--book-color: #4D698B;">
+                                <input type="radio" name="color" value="navy">
+                                <div class="book-color" style="background: #4D698B"></div>
+                            </label>
+
+                            <label class="color-option" style="--book-color: #536B4E;">
+                                <input type="radio" name="color" value="green">
+                                <div class="book-color" style="background: #536B4E"></div>
+                            </label>
+
+                            <label class="color-option" style="--book-color: #A97142;">
+                                <input type="radio" name="color" value="bronze">
+                                <div class="book-color" style="background: #A97142"></div>
+                            </label>
+
+                            <label class="color-option" style="--book-color: #8C2238;">
+                                <input type="radio" name="color" value="red">
+                                <div class="book-color" style="background: #8C2238"></div>
+                            </label>
+
+                            <label class="color-option" style="--book-color: #502323;">
+                                <input type="radio" name="color" value="brown">
+                                <div class="book-color" style="background: #502323"></div>
+                            </label>
+
+                        </div>
+
+                        <hr class="book-modal--color__separator">
+
+                        <div class="book-color-row">
+                            <label class="color-option" style="--book-color: #0078C9;">
+                                <input type="radio" name="color" value="blue">
+                                <div class="book-color" style="background: #0078C9"></div>
+                            </label>
+
+                            <label class="color-option" style="--book-color: #8196E5;">
+                                <input type="radio" name="color" value="violet">
+                                <div class="book-color" style="background: #8196E5"></div>
+                            </label>
+
+                            <label class="color-option" style="--book-color: #1CC1BA;">
+                                <input type="radio" name="color" value="cyan">
+                                <div class="book-color" style="background: #1CC1BA"></div>
+                            </label>
+
+                            <label class="color-option" style="--book-color: #FFC529;">
+                                <input type="radio" name="color" value="yellow" checked>
+                                <div class="book-color" style="background: #FFC529"></div>
+                            </label>
+
+                            <label class="color-option" style="--book-color: #FE9784;">
+                                <input type="radio" name="color" value="peach">
+                                <div class="book-color" style="background: #FE9784"></div>
+                            </label>
+
+                            <label class="color-option" style="--book-color: #FF6F55;">
+                                <input type="radio" name="color" value="coral">
+                                <div class="book-color" style="background: #FF6F55"></div>
+                            </label>
+
+                        </div>
+
+                    </fieldset>
                 </div>
 
-                <div class="form-group">
-                    <div class="form-field--small">
-                        <div class="form-field__control">
-                            <input type="text"
-                                   name="book-title"
-                                   class="form-field form-field__input__small"
-                                   placeholder="Enter author's name">
+                <div class="book__font-title">
+                    <fieldset class="book-picker visual-edit">
+                        <legend class="section-header">
+                            <img class="section-header--ribbon"
+                                 src="assets/images/design-elements/section-label-book.svg"
+                                 alt="">
+                            <span class="section-header--title">Font</span>
+                        </legend>
+
+                        <div class="book-picker__grid book-picker__grid--font">
+                            <label class="book-option book-option--font">
+                                <input type="radio" name="font" value="normal" checked>
+                                <span class="book-option__preview-font" style="font-family: Manrope">Abc 123</span>
+                                <span class="book-option__name">Normal</span>
+                            </label>
+
+                            <label class="book-option book-option--font">
+                                <input type="radio" name="font" value="creepy">
+                                <span class="book-option__preview-font" style="font-family: Underdog">Abc 123</span>
+                                <span class="book-option__name">Creepy</span>
+                            </label>
+
+                            <label class="book-option book-option--font">
+                                <input type="radio" name="font" value="gothic">
+                                <span class="book-option__preview-font" style="font-family: 'Kelly Slab'">Abc 123</span>
+                                <span class="book-option__name">Gothic</span>
+                            </label>
+
+                            <label class="book-option book-option--font">
+                                <input type="radio" name="font" value="type-machine">
+                                <span class="book-option__preview-font" style="font-family: 'Type Machine'">Abc 123</span>
+                                <span class="book-option__name">Typewriter</span>
+                            </label>
+
+                            <label class="book-option book-option--font">
+                                <input type="radio" name="font" value="elegant">
+                                <span class="book-option__preview-font" style="font-family: 'Gentium Book Plus'">Abc 123</span>
+                                <span class="book-option__name">Elegant</span>
+                            </label>
+
+                            <label class="book-option book-option--font">
+                                <input type="radio" name="font" value="manuscript">
+                                <span class="book-option__preview-font" style="font-family: Lobster">Abc 123</span>
+                                <span class="book-option__name">Manuscript</span>
+                            </label>
+                        </div>
+                    </fieldset>
+
+                    <div class="form-group view-only">
+                        <div class="form-field--small">
+                            <div class="form-field__control">
+                                <input type="text"
+                                       name="book-title"
+                                       class="form-field form-field__input__small"
+                                       placeholder="Enter book title">
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="button-group">
-                    <button type="submit" class="button primary-button">Save</button>
-                    <button type="button" class="button secondary-button" data-close>
-                        Cancel
-                    </button>
+                    <div class="form-group view-only">
+                        <div class="form-field--small">
+                            <div class="form-field__control">
+                                <input type="text"
+                                       name="book-author"
+                                       class="form-field form-field__input__small"
+                                       placeholder="Enter author's name">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="button-group">
+                        <button type="submit" class="button primary-button button-label button-label--primary">Save</button>
+                        <button type="button" class="button secondary-button button-label button-label--secondary" data-close>
+                            Cancel
+                        </button>
+                    </div>
+
                 </div>
             </form>
         </div>
@@ -695,7 +689,7 @@
                 <li><button type="button" class="genre-option">Crime</button></li>
                 <li><button type="button" class="genre-option">Historical fiction</button></li>
                 <li><button type="button" class="genre-option">Adventure</button></li>
-                <li><button type="button" class="genre-option">Graphic Novels</button></li>
+                <li><button type="button" class="genre-option">Graphic novels</button></li>
                 <li><button type="button" class="genre-option">Horror</button></li>
                 <li><button type="button" class="genre-option">Dystopia</button></li>
                 <li><button type="button" class="genre-option">Satire</button></li>
@@ -1633,7 +1627,8 @@
                             <button type="button" class="icon-button icon-edit green-icon-button large-icon-button"
                                     aria-label="Edit shelf"></button>
                             <button type="button" class="icon-button icon-add green-icon-button large-icon-button"
-                                    aria-label="Add book"></button>
+                                    aria-label="Add book"
+                                    data-add-book></button>
                         </div>
                     </div>
 
@@ -1929,13 +1924,15 @@
         </button>
     </div>
 
-    <div class="book-context-menu hidden"
+    <div class="shelves-context-menu book-context-menu hidden"
          role="menu"
          aria-label="Book actions">
         <button type="button" role="menuitem" data-action="open">Open</button>
         <hr class="shelf-context-menu__separator">
         <button type="button" role="menuitem" data-action="edit">Edit</button>
-        <button type="button" role="menuitem" data-action="delete">Delete</button>
+        <button type="button" role="menuitem" data-action="delete">
+            <span>Delete</span>
+        </button>
     </div>
 
     <div class="context-submenu hidden"

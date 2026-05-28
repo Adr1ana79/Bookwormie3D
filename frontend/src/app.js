@@ -4,7 +4,7 @@ import { initLogin } from "./pages/auth/login.js";
 import { initSignup } from "./pages/auth/signup.js";
 import { initSignupAdditional } from "./pages/auth/signupAdditional.js";
 
-import {initAppFlow } from "./pages/app/appFlow.js";
+import { initAppFlow } from "./pages/app/appFlow.js";
 import { initShelves } from "./pages/app/shelves.js";
 import { initShelf } from "./pages/app/shelf.js";
 import { initProfile } from "./pages/app/profile.js";

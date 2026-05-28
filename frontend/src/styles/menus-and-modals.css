@@ -283,6 +283,23 @@
     box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
 }
 
+#add-edit-book-modal .modal__content {
+    display: flex;
+    flex-direction: column;
+
+    width: auto;
+    height: auto;
+
+    padding: 2.5rem 2.8rem 2.5rem 2.5rem;
+
+    gap: 1.9rem;
+
+    border-radius: 0.75rem;
+    background: var(--white-300);
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+}
+
+
 
 
 #add-shelf-modal .modal-content {

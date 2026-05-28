@@ -1,7 +1,5 @@
 import { initThreeViewer } from "../../threeD/ThreeViewer.js";
-
-import { renderBooks } from "../../threeD/bookManager.js";
-import { testBooks } from "./book.js";
+import { initBookForm } from "../../ui-elements/bookForm.js";
 
 export function initShelf() {
     const shelfView = document.getElementById('view-shelf');
@@ -55,6 +53,7 @@ export function initShelf() {
 
         const viewer = initThreeViewer(threeContainer, modelPath, design, size);
 
+        initBookForm();
         initThreeViewer(threeContainer, modelPath, design, size);
     });
 }

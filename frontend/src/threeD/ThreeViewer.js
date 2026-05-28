@@ -4,7 +4,10 @@ import { GLTFLoader } from "https://unpkg.com/three@0.160.0/examples/jsm/loaders
 import { designConfig } from "./designConfig.js";
 import { renderBooks, setBookLabelsVisible } from "./bookManager.js";
 import { testBooks, openBookContentModal, getBookStars } from "../pages/app/book.js";
+import { openEditBookFormModal } from "../ui-elements/bookForm.js";
 import { getShelfLayout } from "./shelfLayout.js";
+import { openConfirmModal } from "../ui-elements/confirmModal.js";
+
 
 export function initThreeViewer(container, modelPath, design, size) {
 
@@ -73,6 +76,7 @@ export function initThreeViewer(container, modelPath, design, size) {
     let hoveredBook = null;
     let hoverTimeout = null;
     let hoveredBookOriginalZ = null;
+    let isContextMenuOpen = false;
 
     // lights
     const ambient = new THREE.AmbientLight(0xfff1d6, 0.8);
@@ -283,6 +287,11 @@ export function initThreeViewer(container, modelPath, design, size) {
             return;
         }
 
+        if (isContextMenuOpen) {
+            hideTooltip();
+            return;
+        }
+
         if (hoveredBook === bookMesh) {
             return;
         }
@@ -305,6 +314,72 @@ export function initThreeViewer(container, modelPath, design, size) {
             );
         }, 700);
 
+    });
+
+
+    function openBookContextMenu(book, x, y) {
+        const menu = document.querySelector(".book-context-menu");
+
+        if (!menu) return;
+
+        isContextMenuOpen = true;
+
+        menu.style.left = `${x}px`;
+        menu.style.top = `${y}px`;
+
+        menu.classList.remove("hidden");
+
+        menu.querySelector('[data-action="open"]').onclick = () => {
+            menu.classList.add("hidden");
+            openBookContentModal(book);
+        };
+
+        menu.querySelector('[data-action="edit"]').onclick = () => {
+            menu.classList.add("hidden");
+            openEditBookFormModal(book);
+        };
+
+        menu.querySelector('[data-action="delete"]').onclick = () => {
+            menu.classList.add("hidden");
+
+            openConfirmModal({
+                title: "Delete book?",
+                description: "This book will be permanently deleted.",
+                confirmText: "Delete",
+                onConfirm: () => {
+                    console.log("Delete book:", book.id);
+                }
+            });
+        };
+    }
+
+    container.addEventListener("contextmenu", (event) => {
+        const bookMesh = getIntersectedBook(event);
+
+        if (!bookMesh) {
+            return;
+        }
+
+        event.preventDefault();
+
+        clearTimeout(hoverTimeout);
+        hideTooltip();
+
+        openBookContextMenu(
+            bookMesh.userData.book,
+            event.clientX,
+            event.clientY
+        );
+    });
+
+    document.addEventListener("click", () => {
+        const menu = document.querySelector(".book-context-menu");
+
+        if (menu) {
+            menu.classList.add("hidden");
+        }
+
+        isContextMenuOpen = false;
     });
 
     container.addEventListener("click", (event) => {

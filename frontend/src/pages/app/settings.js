@@ -1,6 +1,5 @@
 import { openConfirmModal } from "../../ui-elements/confirmModal.js";
 import { goToAuth } from "./appFlow.js";
-import { getToken } from "../../api/auth.js";
 
 
 export function initSettings() {
@@ -60,26 +59,27 @@ export function initSettings() {
                 confirmText: "Delete",
 
                 onConfirm: async () => {
+                    const deletedBookId = book.id;
 
-                    try {
+                    let books = deleteBookAndReflow(
+                        books,
+                        deletedBookId,
+                        size,
+                        design
+                    );
 
-                        const token = getToken();
+                    console.table(
+                        books
+                            .filter((currentBook) => currentBook.row === book.row)
+                            .map((currentBook) => ({
+                                id: currentBook.id,
+                                title: currentBook.title,
+                                row: currentBook.row,
+                                index: currentBook.index
+                            }))
+                    );
 
-                        await fetch("http://127.0.0.1:8000/me", {
-                            method: "DELETE",
-                            headers: {
-                                "Authorization": `Bearer ${token}`
-                            }
-                        });
-
-                        localStorage.removeItem("access_token");
-
-                        goToAuth();
-
-                    } catch (error) {
-                        console.error("Delete failed:", error);
-                        alert("Failed to delete profile");
-                    }
+                    await refreshBooks();
                 }
             });
         }

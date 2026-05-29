@@ -379,14 +379,6 @@ function isBookModalInEditMode(modal) {
     return modal.dataset.mode === "edit";
 }
 
-function disableBookEditing(modal) {
-    const reviewField = modal.querySelector(".book-details--review");
-
-    if (reviewField) {
-        reviewField.disabled = true;
-    }
-}
-
 function clampNumber(value, min, max) {
     const number = Number(value);
 
@@ -477,10 +469,6 @@ function fillBookEditFields(modal, book) {
 
     const reviewField = modal.querySelector(".book-details--review");
     reviewField.disabled = false;
-}
-
-function removeBookFromShelf(book) {
-    console.log("Delete:", book);
 }
 
 
@@ -678,7 +666,7 @@ export function openBookContentModal(book) {
         cancelBtn.onclick = () => {
 
             if (isBookModalInEditMode(modal)) {
-                return;
+                setBookModalMode(modal, "view");
             }
 
             modal.hidden = true;
@@ -689,7 +677,7 @@ export function openBookContentModal(book) {
         overlay.onclick = () => {
 
             if (isBookModalInEditMode(modal)) {
-                return;
+                setBookModalMode(modal, "view");
             }
 
             modal.hidden = true;

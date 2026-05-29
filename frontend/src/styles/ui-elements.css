@@ -898,6 +898,10 @@ button[data-view="settings"] .sidebar__icon {
     -webkit-mask-image: url("../../assets/images/icons/menu-icon.svg");
 }
 
+#view-shelf.is-searching-books [data-add-book],
+#view-shelf.is-searching-books [data-edit-shelf] {
+    display: none !important;
+}
 
 /* --- FORM --- */
 

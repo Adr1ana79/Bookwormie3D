@@ -789,6 +789,10 @@ input[type="number"]::-webkit-inner-spin-button {
     gap: 1rem;
 }
 
+.status-tags[hidden] {
+    display: none !important;
+}
+
 .status-tags__label {
     display: flex;
     flex-direction: row;

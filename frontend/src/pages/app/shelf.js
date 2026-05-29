@@ -1,45 +1,36 @@
 import { initThreeViewer } from "../../threeD/ThreeViewer.js";
 import { initBookForm } from "../../ui-elements/bookForm.js";
 
+let currentViewer = null;
+
 export function initShelf() {
-    const shelfView = document.getElementById('view-shelf');
+    const shelfView = document.getElementById("view-shelf");
     if (!shelfView) return;
 
     const threeContainer = shelfView.querySelector("#three-container");
-
-    const backButton =
-        document.querySelector(".back-button");
+    const backButton = shelfView.querySelector(".back-button");
 
     backButton.onclick = (e) => {
-
         e.preventDefault();
 
-        sessionStorage.setItem(
-            "restoreShelvesScroll",
-            "true"
-        );
+        if (currentViewer?.clearBookSearch) {
+            currentViewer.clearBookSearch();
+        }
+
+        sessionStorage.setItem("restoreShelvesScroll", "true");
 
         document.dispatchEvent(
-            new CustomEvent('app:navigate', {
-                detail: 'shelves'
+            new CustomEvent("app:navigate", {
+                detail: "shelves"
             })
         );
     };
 
     document.addEventListener("app:open-shelf", (event) => {
-        const backButton =
-            shelfView.querySelector(".back-button");
-
         const shelfTitle =
             shelfView.querySelector(".local_navigation strong");
 
-
-        const { design, size } = event.detail;
-        const {
-            shelfName,
-            sectionName
-        } = event.detail;
-
+        const { design, size, shelfName, sectionName } = event.detail;
 
         if (backButton && sectionName) {
             backButton.textContent = sectionName;
@@ -49,11 +40,13 @@ export function initShelf() {
             shelfTitle.textContent = shelfName;
         }
 
-        const modelPath = `assets/models/shelves/${design}/${design}-${size}.glb`;
+        const modelPath =
+            `assets/models/shelves/${design}/${design}-${size}.glb`;
 
-        const viewer = initThreeViewer(threeContainer, modelPath, design, size);
+        currentViewer =
+            initThreeViewer(threeContainer, modelPath, design, size);
 
         initBookForm();
-        initThreeViewer(threeContainer, modelPath, design, size);
     });
 }
+

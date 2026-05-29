@@ -782,10 +782,6 @@ input[type="number"]::-webkit-inner-spin-button {
 
 /*.........................*/
 
-.active-only {
-    display: none !important;
-}
-
 .status-tags {
     display: flex;
     flex-direction: row;
@@ -825,6 +821,11 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 
 
-
+#view-shelf.is-searching-books .icon-add,
+#view-shelf.is-searching-books .edit-control,
+#view-shelf.is-searching-books [data-shelf-edit],
+#view-shelf.is-searching-books [data-add-book] {
+    display: none !important;
+}
 
 

@@ -281,13 +281,11 @@ export function initThreeViewer(container, modelPath, design, size) {
 
         bookMesh.userData.isHovered = true;
         updateBookTargetZ(bookMesh);
-
-        bookMesh.userData.targetZ = bookMesh.userData.baseZ + 0.03;
     }
 
     function resetPulledBook() {
-        if (hoveredBook && hoveredBookOriginalZ !== null) {
-            hoveredBook.userData.targetZ = hoveredBook.userData.baseZ;
+        if (!hoveredBook) {
+            return;
         }
 
         hoveredBook.userData.isHovered = false;
@@ -298,6 +296,40 @@ export function initThreeViewer(container, modelPath, design, size) {
 
     function normalize(value) {
         return String(value || "").toLowerCase().trim();
+    }
+
+    function isSearchActive() {
+        return Boolean(searchInput?.value?.trim()) ||
+            Boolean(activeStatusFilter);
+    }
+
+    function clearBookSearch() {
+        if (searchInput) {
+            searchInput.value = "";
+        }
+
+        activeStatusFilter = null;
+
+        statusButtons.forEach((button) => {
+            button.classList.remove("is-active", "status-tags__label--active");
+
+            const icon = button.querySelector(".status-tags__active-icon");
+            if (icon) icon.hidden = true;
+        });
+
+        if (statusTags) {
+            statusTags.hidden = true;
+        }
+
+        applyBookSearch("", null);
+        updateShelfActionsState();
+    }
+
+    function updateShelfActionsState() {
+        const shelfView = document.querySelector("#view-shelf");
+        if (!shelfView) return;
+
+        shelfView.classList.toggle("is-searching-books", isSearchActive());
     }
 
     function applyBookSearch(query, statusFilter) {
@@ -344,16 +376,16 @@ export function initThreeViewer(container, modelPath, design, size) {
 
     if (searchInput && statusTags) {
         searchInput.addEventListener("input", () => {
-            statusTags.classList.toggle(
-                "active-only",
-                searchInput.value.trim() === "" && !activeStatusFilter
-            );
+            statusTags.hidden =
+                searchInput.value.trim() === "" &&
+                !activeStatusFilter;
 
             applyBookSearch(searchInput.value, activeStatusFilter);
+            updateShelfActionsState();
         });
 
         searchInput.addEventListener("focus", () => {
-            statusTags.classList.remove("active-only");
+            statusTags.hidden = false;
         });
 
         searchInput.addEventListener("blur", () => {
@@ -362,7 +394,7 @@ export function initThreeViewer(container, modelPath, design, size) {
                 const hasStatus = Boolean(activeStatusFilter);
 
                 if (!hasQuery && !hasStatus) {
-                    statusTags.classList.add("active-only");
+                    statusTags.hidden = true;
                 }
             }, 200);
         });
@@ -387,14 +419,30 @@ export function initThreeViewer(container, modelPath, design, size) {
             });
 
             if (statusTags && searchInput) {
-                statusTags.classList.toggle(
-                    "active-only",
-                    searchInput.value.trim() === "" && !activeStatusFilter
-                );
+                statusTags.hidden =
+                    searchInput.value.trim() === "" &&
+                    !activeStatusFilter;
 
                 applyBookSearch(searchInput.value, activeStatusFilter);
+                updateShelfActionsState();
             }
         });
+    });
+
+    document.addEventListener("click", (event) => {
+
+        const navigationTarget =
+            event.target.closest("[data-view], a[href^='#view-']");
+
+        if (!navigationTarget) return;
+
+        const targetView =
+            navigationTarget.dataset.view ||
+            navigationTarget.getAttribute("href")?.replace("#", "");
+
+        if (targetView !== "view-shelf") {
+            clearBookSearch();
+        }
     });
 
     container.addEventListener("mousemove", (event) => {
@@ -640,7 +688,7 @@ export function initThreeViewer(container, modelPath, design, size) {
     return {
         scene,
         camera,
-        renderer
-        // getModel: () => model
+        renderer,
+        clearBookSearch
     };
 }

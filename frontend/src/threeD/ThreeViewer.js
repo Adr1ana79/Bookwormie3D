@@ -101,6 +101,8 @@ export function initThreeViewer(container, modelPath, design, size) {
     const shelfGroup = new THREE.Group();
     scene.add(shelfGroup);
 
+    let activeStatusFilter = null;
+
     const shelfLevelConfig = {
 
         mini: [
@@ -196,6 +198,24 @@ export function initThreeViewer(container, modelPath, design, size) {
         return null;
     }
 
+    function getBookTargetZ(bookMesh) {
+        const baseZ = bookMesh.userData.baseZ || 0;
+
+        const searchOffset = bookMesh.userData.isSearchMatch
+            ? 0.08
+            : 0;
+
+        const hoverOffset = bookMesh.userData.isHovered
+            ? 0.05
+            : 0;
+
+        return baseZ + searchOffset + hoverOffset;
+    }
+
+    function updateBookTargetZ(bookMesh) {
+        bookMesh.userData.targetZ = getBookTargetZ(bookMesh);
+    }
+
     function positionTooltip(tooltip, mouseX, mouseY) {
         const offset = 18;
 
@@ -259,6 +279,9 @@ export function initThreeViewer(container, modelPath, design, size) {
             hoveredBookOriginalZ = bookMesh.position.z;
         }
 
+        bookMesh.userData.isHovered = true;
+        updateBookTargetZ(bookMesh);
+
         bookMesh.userData.targetZ = bookMesh.userData.baseZ + 0.03;
     }
 
@@ -267,8 +290,112 @@ export function initThreeViewer(container, modelPath, design, size) {
             hoveredBook.userData.targetZ = hoveredBook.userData.baseZ;
         }
 
+        hoveredBook.userData.isHovered = false;
+        updateBookTargetZ(hoveredBook);
+
         hoveredBookOriginalZ = null;
     }
+
+    function normalize(value) {
+        return String(value || "").toLowerCase().trim();
+    }
+
+    function applyBookSearch(query, statusFilter) {
+        const searchValue = normalize(query);
+        let hasSearch = Boolean(searchValue || statusFilter);
+
+        shelfGroup.traverse((child) => {
+            if (child.userData.type !== "book") return;
+
+            const book = child.userData.book;
+
+            const matchesText =
+                !searchValue ||
+                normalize(book.title).includes(searchValue) ||
+                normalize(book.author).includes(searchValue);
+
+            const matchesStatus =
+                !statusFilter ||
+                normalize(book.status || "Unread") === normalize(statusFilter);
+
+            const isMatch = matchesText && matchesStatus;
+
+            child.userData.isSearchMatch = isMatch && hasSearch;
+            updateBookTargetZ(child);
+
+            child.traverse((part) => {
+                if (!part.isMesh || part.userData.type === "book-label") return;
+
+                part.material.transparent = hasSearch && !isMatch;
+                part.material.opacity = hasSearch && !isMatch ? 0.25 : 1;
+            });
+
+            child.traverse((part) => {
+                if (part.userData.type === "book-label") {
+                    part.visible = isMatch && hasSearch;
+                }
+            });
+        });
+    }
+
+    const searchInput = document.querySelector(".search-bar__input");
+    const statusTags = document.querySelector(".status-tags");
+    const statusButtons = document.querySelectorAll(".status-tags__label");
+
+    if (searchInput && statusTags) {
+        searchInput.addEventListener("input", () => {
+            statusTags.classList.toggle(
+                "active-only",
+                searchInput.value.trim() === "" && !activeStatusFilter
+            );
+
+            applyBookSearch(searchInput.value, activeStatusFilter);
+        });
+
+        searchInput.addEventListener("focus", () => {
+            statusTags.classList.remove("active-only");
+        });
+
+        searchInput.addEventListener("blur", () => {
+            setTimeout(() => {
+                const hasQuery = searchInput.value.trim() !== "";
+                const hasStatus = Boolean(activeStatusFilter);
+
+                if (!hasQuery && !hasStatus) {
+                    statusTags.classList.add("active-only");
+                }
+            }, 200);
+        });
+    }
+
+    statusButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+            const selectedStatus = button.dataset.status;
+
+            activeStatusFilter =
+                activeStatusFilter === selectedStatus
+                    ? null
+                    : selectedStatus;
+
+            statusButtons.forEach((btn) => {
+                const isActive = btn.dataset.status === activeStatusFilter;
+
+                btn.classList.toggle("is-active", isActive);
+
+                const icon = btn.querySelector(".status-tags__active-icon");
+                if (icon) icon.hidden = !isActive;
+            });
+
+            if (statusTags && searchInput) {
+                statusTags.classList.toggle(
+                    "active-only",
+                    searchInput.value.trim() === "" && !activeStatusFilter
+                );
+
+                applyBookSearch(searchInput.value, activeStatusFilter);
+            }
+        });
+    });
 
     container.addEventListener("mousemove", (event) => {
 
@@ -313,6 +440,8 @@ export function initThreeViewer(container, modelPath, design, size) {
                 event.clientY
             );
         }, 700);
+
+
 
     });
 

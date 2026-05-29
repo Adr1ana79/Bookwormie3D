@@ -780,4 +780,51 @@ input[type="number"]::-webkit-inner-spin-button {
 
 
 
+/*.........................*/
+
+.active-only {
+    display: none !important;
+}
+
+.status-tags {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+}
+
+.status-tags__label {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.3rem;
+
+    font-family: inherit;
+
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: underline;
+
+    color: var(--green-400);
+    background: var(--mint-300);
+    border-radius: 999px;
+    border: none;
+
+    padding: 0.3rem 0.55rem;
+}
+
+.status-tags__label:hover {
+    transform: scale(1.02);
+}
+
+.status-tags__label.is-active {
+    text-decoration: none;
+    color: var(--white-100);
+    background: var(--green-200);
+    padding: 0.1rem 0.55rem;
+}
+
+
+
+
 

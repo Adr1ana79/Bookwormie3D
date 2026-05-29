@@ -21,8 +21,18 @@ async function loadBookModel() {
 
 export function setBookLabelsVisible(shelfGroup, isVisible) {
     shelfGroup.traverse((child) => {
+
+        const isSearchActive =
+            Boolean(searchInput?.value?.trim()) ||
+            Boolean(activeStatusFilter);
+
         if (child.userData.type === "book-label") {
-            child.visible = isVisible;
+
+            const bookMesh = child.parent;
+
+            child.visible = isSearchActive
+                ? bookMesh.userData.isSearchMatch
+                : isVisible;
         }
     });
 }

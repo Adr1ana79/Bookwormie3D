@@ -1,3 +1,5 @@
+/* --- SETTINGS page --- */
+
 .view--settings {
     top: 2rem;
     left: 0;
@@ -28,6 +30,9 @@
     /*overflow-y: hidden;*/
     gap: 2rem;
 }
+
+
+/* --- SETTINGS Section - Color modes --- */
 
 .color-modes {
 
@@ -114,6 +119,8 @@
 }
 
 
+/* --- SETTINGS Section - Profile --- */
+
 .profile-actions {
     display: flex;
     flex-direction: column;
@@ -128,6 +135,8 @@
     transform: translateX(-29%) translateY(-10%);
 }
 
+
+/* --- SETTINGS Section - Legal --- */
 
 .settings-section--legal {
     display: flex;

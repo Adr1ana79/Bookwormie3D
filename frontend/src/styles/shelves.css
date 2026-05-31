@@ -1,3 +1,5 @@
+/* --- SHELF page and modes --- */
+
 .view-shelves {
     flex: 1;
     display: flex;
@@ -49,7 +51,6 @@
     display: none;
 }
 
-
 .is-renaming .rename-only {
     display: flex;
 }
@@ -63,6 +64,8 @@
     left: auto !important;
 }
 
+
+/* --- SHELF CONTENT - Search and Buttons --- */
 
 .header-background {
     top: 0;
@@ -88,6 +91,9 @@
 .search-active .shelves-page-content {
     overflow-y: visible;
 }
+
+
+/* --- SHELF CONTENT - Sections and Shelf grid  --- */
 
 .shelves-section {
     display: flex;
@@ -164,7 +170,7 @@
 }
 
 
-/* --- EDIT STATE --- */
+/* --- SHELF CONTENT - ADD Section MODE --- */
 
 .is-adding-section .edit-only {
     display: none !important;
@@ -179,9 +185,21 @@
     display: block;
 }
 
+
 .is-adding-section .edit-controls {
     display: none;
 }
+
+.is-adding-section .icon-edit {
+    background-image: url("../../assets/images/icons/save-icon.svg");
+}
+
+.is-adding-section .icon-delete {
+    background-image: url("../../assets/images/icons/cancel-icon.svg");
+}
+
+
+/* --- SHELF CONTENT - EDIT MODE --- */
 
 .is-editing-sections .section-edit-controls {
     display: inline-flex;
@@ -191,6 +209,8 @@
     display: block;
 }
 
+
+/* --- Search bar in ADD and EDIT MODE --- */
 
 .is-editing-sections .search-bar,
 .is-adding-section .search-bar {
@@ -209,6 +229,8 @@
 }
 
 
+/* --- ... EDIT MODE --- */
+
 .section-header__edit {
     display: flex;
     flex-direction: row;
@@ -216,6 +238,7 @@
 
     gap: 3rem;
 }
+
 
 .add-shelf-button {
     border: none;
@@ -229,6 +252,7 @@
 .add-shelf-button:active {
     transform: scale(0.95);
 }
+
 
 .section__title-input {
     border: none;
@@ -248,7 +272,7 @@
     background-position: left center;
 }
 
- .section__title-placeholder {
+.section__title-placeholder {
     display: flex;
 
     padding-left:2rem;
@@ -257,7 +281,7 @@
     border: none;
     background: none;
 
-    color: var(--white-100);
+    color: var(--mint-500);
     font-family: "Sofia Sans";
     font-size: 1.25rem;
     font-style: normal;
@@ -277,14 +301,5 @@
 .section__title-placeholder:focus {
     outline: none;
     box-shadow: none;
-}
-
-
-.is-adding-section .icon-edit {
-    background-image: url("../../assets/images/icons/save-icon.svg");
-}
-
-.is-adding-section .icon-delete {
-    background-image: url("../../assets/images/icons/cancel-icon.svg");
 }
 

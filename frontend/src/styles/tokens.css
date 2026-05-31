@@ -52,27 +52,27 @@
 @font-face {
     font-family: "BookNormal";
     src: url("../../assets/fonts/book-normal/Manrope-Medium.ttf") format("truetype");
-}
+} /* Normal - Manrope Medium */
 @font-face {
     font-family: "BookElegant";
     src: url("../../assets/fonts/book-elegant/GentiumBookPlus-Regular.ttf") format("truetype");
-}
+} /* Elegant - GentiumBookPlus Regular */
 @font-face {
     font-family: "BookGothic";
     src: url("../../assets/fonts/book-gothic/KellySlab-Regular.ttf") format("truetype");
-}
+} /* Gothic - KellySlab Regular */
 @font-face {
     font-family: "BookCreepy";
     src: url("../../assets/fonts/book-creepy/Underdog-Regular.ttf") format("truetype");
-}
+} /* Creepy - Underdog Regular */
 @font-face {
     font-family: "BookManuscript";
     src: url("../../assets/fonts/book-manuscript/Lobster-Regular.ttf") format("truetype");
-}
+} /* Manuscript - Lobster Regular */
 @font-face {
     font-family: "BookTypewriter";
     src: url("../../assets/fonts/book-type-machine/Type Machine.ttf") format("truetype");
-}
+} /* Typewriter - Type Machine */
 
 
 body {
@@ -155,12 +155,8 @@ body {
     --section-title-size: 1.375rem;
 }
 
-/* ========================= */
-/*  MONO THEME */
-/* ========================= */
-
+/* --- MONO color MODE --- */
 [data-theme="mono"] {
-
     /* Text */
     --font-black: #111111;
     --font-lighter-black: #333333;
@@ -178,28 +174,28 @@ body {
     --beige-200: #E5E5E5;
     --beige-300: #DCDCDC;
 
-    /* Neutral surfaces */
+    /* Mint surfaces */
     --mint-100: #F0F0F0;
     --mint-200: #E8E8E8;
     --mint-300: #DDDDDD;
     --mint-500: #999999;
 
-    /* Aqua → неутрализирано */
+    /* Aqua - неутрализирано */
     --aqua-100: #000000;
     --aqua-200: #000000;
     --aqua-300: #000000;
     --aqua-400: #222222;
 
-    /* Greens → неутрализирано */
+    /* Greens - неутрализирано */
     --green-200: #444444;
     --green-300: #333333;
     --green-400: #000000;
 
-    /* Peach → неутрализирано */
+    /* Peach - неутрализирано */
     --peach-100: #FA7266;
     --peach-300: #FA7266;
 
-    /* Акценти остават */
+    /* Акценти  */
     --coral-100: #EE9488;
     --coral-200: #FA7266;
     --coral-300: #C23B30;
@@ -208,13 +204,10 @@ body {
     --red-200: #813532;
 
     --grey-100: #AAAAAA;
-
     --yellow-200:  #C3914F;
 
 
-
     body img:not(.mode-card img),
-     /*img:not(#section-header--default),*/
     body svg,
     body video,
     body canvas,
@@ -231,89 +224,3 @@ body {
         filter: grayscale(100%);
     }
 }
-
-
-/* ========================= */
-/*  DARK THEME */
-/* ========================= */
-/*[data-theme="dark"] {*/
-
-/*    !* Font colors *!*/
-/*    --font-black: #F5F7F6;*/
-/*    --font-lighter-black: #D0D6D4;*/
-/*    --font-brown: #E6D8D8;*/
-/*    --font-grey: #C6C6C6;*/
-/*    --font-red: #FF8A8A;*/
-/*    --font-yellow: #FFD27A;*/
-
-
-/*    !* Backgrounds *!*/
-/*    --white-100: #0F1412;*/
-/*    --white-200: #151B19;*/
-/*    --white-300: #1C2321;*/
-
-
-/*    --beige-100: #1C1F1D;*/
-/*    --beige-200: #242826;*/
-/*    --beige-300: #2D3330;*/
-
-
-/*    !* Soft surfaces *!*/
-/*    --mint-100: #40826e;*/
-/*    --mint-200: #23302C;*/
-/*    --mint-300: #2D3D38;*/
-/*    --mint-500: #0d402c;*/
-
-
-/*    !* Aqua (accent, леко изсветлен) *!*/
-/*    --aqua-100: #3AD0C6;*/
-/*    --aqua-200: #c5e0df;*/
-/*    --aqua-300: #0FA39A;*/
-/*    --aqua-400: #66D6CF;*/
-
-
-/*    !* Greens *!*/
-/*    --green-200: #7DAF98;*/
-/*    --green-300: #5D9D84;*/
-/*    --green-400: #9BD3B9;*/
-
-
-/*    !* Peach / Coral (по-меки в тъмно) *!*/
-/*    --peach-100: #B98E74;*/
-/*    --peach-300: #FFB48A;*/
-
-
-/*    --coral-100: #FFAAA0;*/
-/*    --coral-200: #FF867C;*/
-/*    --coral-300: #FF6B60;*/
-
-
-/*    !* Reds *!*/
-/*    --red-100: #C98280;*/
-/*    --red-200: #E06663;*/
-
-
-/*    --grey-100: #B0B0B0;*/
-
-
-/*    --yellow-200: #E0B469;*/
-
-
-/*    body img:not(.mode-card img),*/
-/*    body svg,*/
-/*    body video,*/
-/*    body canvas,*/
-/*    body [style*="background"],*/
-/*    body *::before,*/
-/*    body *::after {*/
-/*        filter: invert(1) hue-rotate(180deg);*/
-/*    }*/
-
-/*    body .sidebar__icon,*/
-/*    body .auth-main,*/
-/*    body .bg--login,*/
-/*    body .bg--signup {*/
-/*        filter: invert(1) hue-rotate(180deg);*/
-/*    }*/
-
-/*}*/

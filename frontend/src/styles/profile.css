@@ -1,3 +1,5 @@
+/* --- PROFILE page --- */
+
 .view--profile {
     position: relative;
     overflow: visible;
@@ -24,6 +26,8 @@
     right: 12rem;
 }
 
+
+/* --- PROFILE HEADER - picture, username, email --- */
 
 .profile-header {
     display: flex;
@@ -92,6 +96,9 @@
     letter-spacing: -0.01925rem;
 }
 
+
+/* --- PROFILE CONTENT - Socials and Genres --- */
+
 .profile-content-container {
     display: flex;
     flex-direction: row;
@@ -152,7 +159,6 @@
 .social-network__item img {
     width: 2.6rem;
     height: 2.6rem;
-    /*flex-shrink: 0;*/
 }
 
 .social-network__item span {
@@ -160,7 +166,7 @@
     font-size: 1.125rem;
     font-style: normal;
     font-weight: 500;
-    line-height: 150%; /* 1.6875rem */
+    line-height: 150%;
     letter-spacing: -0.01238rem;
 }
 
@@ -197,17 +203,19 @@
     box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.25);
 }
 
+
 .profile-content-container .icon-button {
     margin-left: 3rem;
 }
 
-/* По default */
+
+/* --- PROFILE - EDIT Mode --- */
+
 .profile-name-input,
 .edit-tertiary {
     display: none;
 }
 
-/* Когато name е в edit mode */
 .profile-name-container[data-name-mode="edit"] .profile-name {
     display: none;
 }

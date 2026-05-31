@@ -1,3 +1,5 @@
+/* --- Start LOGO and ANIMATION --- */
+
 #view-start {
     position: relative;
 }
@@ -5,6 +7,7 @@
 #view-loading {
     position: relative;
 }
+
 
 .start-screen__loader {
     position: absolute;
@@ -22,8 +25,6 @@
 
     padding-top: clamp(7.5rem, 20vh, 13.75rem);
     padding-bottom: clamp(2.5rem, 10vh, 7.5rem);
-
-    /*background: var(--white-100);*/
 }
 
 .start-screen img{
@@ -33,6 +34,7 @@
     width: var(--logo-size);
     height: auto;
 }
+
 
 .start-screen__title {
     color: var(--font-black);
@@ -45,14 +47,17 @@
     line-height: 120%;
 
 }
+
 .start-screen__title strong {
     font-weight: 800;
 }
+
 
 .start-screen__logo,
 .start-screen__title {
     transition: opacity 0.6s ease;
 }
+
 
 .fade-out {
     opacity: 0;
@@ -61,6 +66,7 @@
 .hidden {
     display: none;
 }
+
 
 .loader-img {
     filter: brightness(110%) contrast(110%);

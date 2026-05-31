@@ -1,3 +1,5 @@
+/* --- SHELF page --- */
+
 .view--shelf {
     position: relative;
     min-height: 100vh;
@@ -14,6 +16,8 @@
     z-index: 1;
 }
 
+
+/* --- SHELF HEADER - search, buttons, local navigation --- */
 
 .content-header__shelf {
     position: fixed;
@@ -49,7 +53,7 @@
     font-size: 1.25rem;
     font-style: normal;
     font-weight: 800;
-    line-height: 150%; /* 1.875rem */
+    line-height: 150%;
     letter-spacing: -0.01375rem;
 }
 
@@ -74,6 +78,8 @@
     color: var(--font-black);
 }
 
+
+/* --- SHELF STAGE --- */
 
 .shelf-frame {
     position: fixed;
@@ -107,4 +113,10 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+
+#view-shelf.is-searching-books [data-add-book],
+#view-shelf.is-searching-books [data-edit-shelf] {
+    display: none !important;
 }

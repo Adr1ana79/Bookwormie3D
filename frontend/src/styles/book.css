@@ -1,3 +1,5 @@
+/* --- TOOLTIP for book --- */
+
 .tooltip {
     position: fixed;
     z-index: 9999;
@@ -115,7 +117,8 @@
     color: var(--yellow-200);
 }
 
-/*=================================*/
+
+/* --- ADD and EDIT book modal --- */
 
 #add-edit-book-form .section-header--title{
     font-size: 1.12rem;
@@ -152,6 +155,7 @@
     padding: 0;
     margin: 0;
 }
+
 
 .book-picker__grid--height {
     margin-left: 0.6rem;
@@ -191,6 +195,18 @@
     transform: scale(0.95);
 }
 
+.book-option input[value="high"]:checked + .book-option__preview {
+    content: url("../../assets/images/book-personalisation/height-high-active.png");
+}
+
+.book-option input[value="medium"]:checked + .book-option__preview {
+    content: url("../../assets/images/book-personalisation/height-medium-active.png");
+}
+
+.book-option input[value="short"]:checked + .book-option__preview {
+    content: url("../../assets/images/book-personalisation/height-short-active.png");
+}
+
 
 #add-edit-book-form .book-color {
     width: 1.2rem;
@@ -206,6 +222,7 @@
 .book-color:active {
     transform: scale(0.95);
 }
+
 
 .book-color-row {
     margin-left: 0.6rem;
@@ -240,7 +257,6 @@
     background: var(--mint-200);
     border-radius: 10rem;
 }
-
 
 .book-picker__grid--font {
     display: grid;
@@ -283,13 +299,6 @@
     gap: 1.2rem;
 }
 
-#add-edit-book-form .button-group {
-    margin-top: 1.5rem;
-    align-self: flex-end;
-
-    gap: 2rem !important;
-}
-
 #add-edit-book-title {
     align-self: center;
 
@@ -303,10 +312,17 @@
 }
 
 
+#add-edit-book-form .button-group {
+    margin-top: 1.5rem;
+    align-self: flex-end;
+
+    gap: 2rem !important;
+}
+
+
 .book-picker__grid--font input[type="radio"]:checked + .book-option__preview-font {
     border: 2.7px solid var(--aqua-400);
 }
-
 
 .book-context-menu {
     position: fixed;
@@ -322,7 +338,7 @@
 }
 
 
-/*=================================*/
+/* --- BOOK CONTENT modal --- */
 
 #book-content-modal .section-header {
     padding-top: 0;
@@ -586,6 +602,7 @@ textarea::-webkit-scrollbar-thumb:hover {
 }
 
 
+/* --- BOOK CONTENT modal - EDIT MODE --- */
 
 #book-content-modal[data-mode="edit"] .book-content__info {
     gap: 1.6rem;
@@ -780,7 +797,7 @@ input[type="number"]::-webkit-inner-spin-button {
 
 
 
-/*.........................*/
+/* --- Book Search STATUS TAGS --- */
 
 .status-tags {
     display: flex;

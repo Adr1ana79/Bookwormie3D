@@ -1,66 +1,4 @@
-.sort-sections-menu {
-    display: inline-flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 0.375rem;
-
-    padding: 0.25rem 0.375rem;
-    border-radius: 0.6875rem;
-    background: var(--mint-300);
-}
-
-.sort-sections-menu img {
-    width: 1.75rem;
-
-    margin: 0.1rem 0.2rem;
-}
-
-.sort-sections-menu img:hover {
-    transform: scale(1.08);
-}
-
-.sort-sections-menu img:active {
-    transition:
-            transform 0.15s ease,
-            box-shadow 0.15s ease;
-    transform: scale(0.94);
-}
-
-.sort-sections-menu button {
-    width: 5.5rem;
-    padding: 0.25rem 1.1875rem;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    border-radius: 0.6875rem;
-    border: none;
-    background: var(--aqua-400);
-
-    color: var(--white-100);
-    text-align: center;
-    font-size: 1rem;
-    font-style: normal;
-    font-weight: 500;
-    line-height: 150%; /* 1.5rem */
-    letter-spacing: -0.011rem;
-}
-
-.sort-sections-menu button:hover {
-    transition:
-            transform 0.15s ease,
-            box-shadow 0.15s ease,
-            background-color 0.15s ease,
-            border-color 0.15s ease;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
-    transform: scale(1.02);
-}
-
-.sort-sections-menu button:active {
-    transform: scale(0.98);
-}
-
+/* --- SHELF CONTEXT MENU --- */
 
 .shelves-context-menu {
     position: absolute;
@@ -123,6 +61,8 @@
     border: none;
 }
 
+
+/* --- SHELF SUB/RELOCATION MENU --- */
 
 .context-submenu {
     position: absolute;
@@ -233,6 +173,7 @@
 }
 
 
+/* --- MODALS --- */
 
 .modal {
     position: fixed;
@@ -263,6 +204,7 @@
 }
 
 
+/* --- MODALS - books --- */
 
 #book-content-modal .modal__overlay {
     background: rgba(0, 0, 0, 0.6);
@@ -300,7 +242,7 @@
 }
 
 
-
+/* --- MODALS - shelves --- */
 
 #add-shelf-modal .modal-content {
     display: flex;
@@ -421,6 +363,7 @@
 }
 
 
+/* --- MODALS - confirmation --- */
 
 .modal--confirmation .modal__content {
     display: flex;
@@ -463,6 +406,8 @@
     letter-spacing: -0.011rem;
 }
 
+
+/* --- MODALS - add profile picture --- */
 
 .modal--edit-profile-picture .modal__content{
     display: flex;

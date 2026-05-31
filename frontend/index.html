@@ -32,18 +32,23 @@
 
         <div class="modal__overlay"></div>
 
+        <h2 id="add-shelf-title" hidden>
+            Add shelf
+        </h2>
+
         <div class="modal__content">
             <form class="add-shelf-form">
 
                 <!-- Shelf title -->
                 <div class="form-group">
-                    <label class="form-field__label__small">
+                    <label for="shelf-title" class="form-field__label__small">
                         Shelf title
                     </label>
 
                     <div class="form-field--small">
                         <div class="form-field__control">
                             <input type="text"
+                                   id="shelf-title"
                                    name="shelf-title"
                                    class="form-field form-field__input__small"
                                    placeholder="Enter shelf title"
@@ -54,12 +59,12 @@
 
                 <!-- Design -->
                 <fieldset class="form-group--shelf">
-                    <div class="section-header">
+                    <legend class="section-header">
                         <img class="section-header--ribbon"
                              src="assets/images/design-elements/section-label-add.svg"
-                             alt="">
+                             alt="" aria-hidden="true">
                         <span class="section-header--title">Design</span>
-                    </div>
+                    </legend>
 
                     <div class="form-group__options">
                         <label class="design-card">
@@ -96,12 +101,12 @@
 
                 <!-- Size -->
                 <fieldset class="form-group--shelf">
-                    <div class="section-header">
+                    <legend class="section-header">
                         <img class="section-header--ribbon"
                              src="assets/images/design-elements/section-label-add.svg"
-                             alt="">
+                             alt="" aria-hidden="true">
                         <span class="section-header--title">Size</span>
-                    </div>
+                    </legend>
 
                     <div class="form-group__options">
                         <label class="design-card">
@@ -129,6 +134,7 @@
                 </div>
             </form>
         </div>
+
     </section>
 
     <section id="edit-profile-picture-modal"
@@ -140,32 +146,36 @@
 
         <div class="modal__overlay"></div>
 
+        <h2 id="edit-profile-picture" hidden>
+            Edit profile picture
+        </h2>
+
         <div class="modal__content">
             <div class="avatar-selection">
                 <label class="avatar-option is-selected">
                     <input type="radio" name="avatar" value="preset-1" checked>
-                    <img src="assets/images/profile-personalisation/default-picture.svg" alt="Avatar 1">
+                    <img src="assets/images/profile-personalisation/default-picture.svg" alt="Default avatar">
                 </label>
 
                 <label class="avatar-option">
                     <input type="radio" name="avatar" value="preset-2">
-                    <img src="assets/images/profile-personalisation/coral-picture.svg" alt="Avatar 1">
+                    <img src="assets/images/profile-personalisation/coral-picture.svg" alt="Coral avatar">
                 </label>
 
                 <label class="avatar-option">
                     <input type="radio" name="avatar" value="preset-3">
-                    <img src="assets/images/profile-personalisation/aqua-picture.svg" alt="Avatar 2">
+                    <img src="assets/images/profile-personalisation/aqua-picture.svg" alt="Aqua avatar">
                 </label>
 
                 <label class="avatar-option">
                     <input type="radio" name="avatar" value="preset-4">
-                    <img src="assets/images/profile-personalisation/yellow-picture.svg" alt="Avatar 2">
+                    <img src="assets/images/profile-personalisation/yellow-picture.svg" alt="Yellow avatar">
 
                 </label>
 
                 <label class="avatar-option">
                     <input type="radio" name="avatar" value="preset-5">
-                    <img src="assets/images/profile-personalisation/green-picture.svg" alt="Avatar 2">
+                    <img src="assets/images/profile-personalisation/green-picture.svg" alt="Green avatar">
                 </label>
             </div>
 
@@ -179,9 +189,9 @@
                         <label for="file-upload" class="button-upload">
                             <i class="icon-upload"></i> Upload photo
                         </label>
-                        <input id="file-upload" type="file" accept="image/jpeg, image/png" hidden>
+                        <input id="file-upload" type="file" accept="image/jpeg, image/png" name="profile-picture" hidden>
 
-                        <button type="button" class="icon-button icon-delete small-icon-button red-icon-button"></button>
+                        <button type="button" class="icon-button icon-delete small-icon-button red-icon-button" aria-label="Remove uploaded photo"></button>
                     </div>
 
                     <p class="upload-hint">Supports: JPG, PNG, up to 2MB</p>
@@ -226,7 +236,7 @@
                         <legend class="section-header">
                             <img class="section-header--ribbon"
                                  src="assets/images/design-elements/section-label-book.svg"
-                                 alt="">
+                                 alt="" aria-hidden="true">
                             <span class="section-header--title">Height</span>
                         </legend>
 
@@ -260,73 +270,73 @@
                         <legend class="section-header">
                             <img class="section-header--ribbon"
                                  src="assets/images/design-elements/section-label-book-color.svg"
-                                 alt="">
+                                 alt="" aria-hidden="true">
                             <span class="section-header--title">Color</span>
                         </legend>
 
                         <div class="book-color-row">
                             <label class="color-option" style="--book-color: #41414D;">
-                                <input type="radio" name="color" value="black">
+                                <input type="radio" name="color" value="black" aria-label="Black">
                                 <div class="book-color" style="background: #41414D"></div>
                             </label>
 
                             <label class="color-option" style="--book-color: #4D698B;">
-                                <input type="radio" name="color" value="navy">
+                                <input type="radio" name="color" value="navy" aria-label="Navy">
                                 <div class="book-color" style="background: #4D698B"></div>
                             </label>
 
                             <label class="color-option" style="--book-color: #536B4E;">
-                                <input type="radio" name="color" value="green">
+                                <input type="radio" name="color" value="green" aria-label="Green">
                                 <div class="book-color" style="background: #536B4E"></div>
                             </label>
 
                             <label class="color-option" style="--book-color: #A97142;">
-                                <input type="radio" name="color" value="bronze">
+                                <input type="radio" name="color" value="bronze" aria-label="Bronze">
                                 <div class="book-color" style="background: #A97142"></div>
                             </label>
 
                             <label class="color-option" style="--book-color: #8C2238;">
-                                <input type="radio" name="color" value="red">
+                                <input type="radio" name="color" value="red" aria-label="Red">
                                 <div class="book-color" style="background: #8C2238"></div>
                             </label>
 
                             <label class="color-option" style="--book-color: #502323;">
-                                <input type="radio" name="color" value="brown">
+                                <input type="radio" name="color" value="brown" aria-label="Brown">
                                 <div class="book-color" style="background: #502323"></div>
                             </label>
 
                         </div>
 
-                        <hr class="book-modal--color__separator">
+                        <hr class="book-modal--color__separator" aria-hidden="true">
 
                         <div class="book-color-row">
                             <label class="color-option" style="--book-color: #0078C9;">
-                                <input type="radio" name="color" value="blue">
+                                <input type="radio" name="color" value="blue" aria-label="Blue">
                                 <div class="book-color" style="background: #0078C9"></div>
                             </label>
 
                             <label class="color-option" style="--book-color: #8196E5;">
-                                <input type="radio" name="color" value="violet">
+                                <input type="radio" name="color" value="violet" aria-label="Violet">
                                 <div class="book-color" style="background: #8196E5"></div>
                             </label>
 
                             <label class="color-option" style="--book-color: #1CC1BA;">
-                                <input type="radio" name="color" value="cyan">
+                                <input type="radio" name="color" value="cyan" aria-label="Cyan">
                                 <div class="book-color" style="background: #1CC1BA"></div>
                             </label>
 
                             <label class="color-option" style="--book-color: #FFC529;">
-                                <input type="radio" name="color" value="yellow" checked>
+                                <input type="radio" name="color" value="yellow" aria-label="Yellow" checked>
                                 <div class="book-color" style="background: #FFC529"></div>
                             </label>
 
                             <label class="color-option" style="--book-color: #FE9784;">
-                                <input type="radio" name="color" value="peach">
+                                <input type="radio" name="color" value="peach" aria-label="Peach">
                                 <div class="book-color" style="background: #FE9784"></div>
                             </label>
 
                             <label class="color-option" style="--book-color: #FF6F55;">
-                                <input type="radio" name="color" value="coral">
+                                <input type="radio" name="color" value="coral" aria-label="Coral">
                                 <div class="book-color" style="background: #FF6F55"></div>
                             </label>
 
@@ -340,7 +350,7 @@
                         <legend class="section-header">
                             <img class="section-header--ribbon"
                                  src="assets/images/design-elements/section-label-book.svg"
-                                 alt="">
+                                 alt="" aria-hidden="true">
                             <span class="section-header--title">Font</span>
                         </legend>
 
@@ -386,7 +396,11 @@
                     <div class="form-group view-only">
                         <div class="form-field--small">
                             <div class="form-field__control">
+                                <label for="book-title" hidden>
+                                    Book title
+                                </label>
                                 <input type="text"
+                                       id="book-title"
                                        name="book-title"
                                        class="form-field form-field__input__small"
                                        placeholder="Enter book title">
@@ -397,7 +411,11 @@
                     <div class="form-group view-only">
                         <div class="form-field--small">
                             <div class="form-field__control">
+                                <label for="book-author" hidden>
+                                    Book author
+                                </label>
                                 <input type="text"
+                                       id="book-author"
                                        name="book-author"
                                        class="form-field form-field__input__small"
                                        placeholder="Enter author's name">
@@ -427,6 +445,10 @@
 
         <div class="modal__overlay"></div>
 
+        <h2 id="book-content" hidden>
+            Book details
+        </h2>
+
         <div class="modal__content">
 
             <button type="button" class="button secondary-button button-label button-label--secondary view-only" data-close>
@@ -445,7 +467,7 @@
                     <div class="section-header">
                         <img class="section-header--ribbon"
                              src="assets/images/design-elements/section-label-book.svg"
-                             alt="">
+                             alt="" aria-hidden="true">
                         <span class="section-header--title">Height</span>
                     </div>
 
@@ -465,7 +487,7 @@
                     <div class="section-header">
                         <img class="section-header--ribbon"
                              src="assets/images/design-elements/section-label-book.svg"
-                             alt="">
+                             alt="" aria-hidden="true">
                         <span class="section-header--title">Font</span>
                     </div>
 
@@ -481,7 +503,7 @@
                     <div class="section-header">
                         <img class="section-header--ribbon"
                              src="assets/images/design-elements/section-label-book-color.svg"
-                             alt="">
+                             alt="" aria-hidden="true">
                         <span class="section-header--title">Color</span>
                     </div>
 
@@ -504,8 +526,12 @@
                             <div class="form-group edit-only">
                                 <div class="form-field--small">
                                     <div class="form-field__control">
+                                        <label for="book-content-title" hidden>
+                                            Book title
+                                        </label>
                                         <input type="text"
                                                name="book-title"
+                                               id="book-content-title"
                                                class="form-field form-field__input__small"
                                                placeholder="Enter book title"
                                                required>
@@ -516,8 +542,12 @@
                             <div class="form-group edit-only">
                                 <div class="form-field--small">
                                     <div class="form-field__control">
+                                        <label for="book-content-author" hidden>
+                                            Book author
+                                        </label>
                                         <input type="text"
                                                name="book-author"
+                                               id="book-content-author"
                                                class="form-field form-field__input__small"
                                                placeholder="Enter author's name"
                                                required>
@@ -535,8 +565,12 @@
 
                             <!-- (horizontal)-->
                             <div class="book-content__score--edit edit-only">
+                                <label for="book-content-rating" hidden>
+                                    Book rating
+                                </label>
                                 <input type="number"
                                        name="book-rating"
+                                       id="book-content-rating"
                                        class="form-field--rating"
                                        min="0" max="5" step="0.5"
                                        placeholder="Rate">
@@ -553,15 +587,17 @@
                                     data-book-edit></button>
 
                             <div class="icon-button-group--submenu-button edit-only">
-                                <img src="assets/images/icons/edit-icon.svg" alt="" class="submenu-icon">
+                                <img src="assets/images/icons/edit-icon.svg" alt="" class="submenu-icon" aria-hidden="true">
 
                                 <button type="button"
                                         class="icon-button icon-save dark-green-icon-button small-icon-button"
+                                        aria-label="Save book changes"
                                         data-book-save>
                                 </button>
 
                                 <button type="button"
                                         class="icon-button icon-cancel red-icon-button small-icon-button"
+                                        aria-label="Cancel book editing"
                                         data-book-cancel>
                                 </button>
                             </div>
@@ -609,10 +645,15 @@
                         <span class="book-details--option view-only">0</span>
 
                         <div class="book-content__pages--edit edit-only">
-                            <input type="number"
+                            <label for="book-content-pages" hidden>
+                                Page count
+                            </label>
+                            <input id="book-content-pages"
+                                   class="form-field form-field__input__small"
+                                   type="number"
                                    max="2000"
                                    name="page-count"
-                                   class="form-field form-field__input__small"
+                                   min="0"
                                    placeholder="Pages">
                         </div>
                     </div>
@@ -639,13 +680,17 @@
                     <div class="section-header">
                         <img class="section-header--ribbon"
                              src="assets/images/design-elements/section-label-profile.svg"
-                             alt="">
+                             alt="" aria-hidden="true">
                         <span id="review--ribbon-title" class="section-header--title">Review</span>
                     </div>
 
                     <div class="book-content--review">
                         <div class="book-content--review-background edit-only"></div>
+                        <label for="book-content-review" hidden>
+                            Book review
+                        </label>
                         <textarea class="book-details--review"
+                                  id="book-content-review"
                                   placeholder="Write your review..."
                                   maxlength="2000"
                                   disabled>
@@ -665,27 +710,26 @@
 
         <div class="modal__overlay"></div>
 
-
         <fieldset class="genres-field">
 
             <div class="icon-button-group genre-buttons">
                 <button type="button"
                         class="icon-button icon-save green-icon-button small-icon-button"
-                        data-genres-save>
+                        data-genres-save aria-label="Save genres">
                 </button>
 
                 <button type="button"
                         class="icon-button icon-cancel red-icon-button small-icon-button"
-                        data-genres-cancel>
+                        data-genres-cancel aria-label="Cancel genre editing">
                 </button>
             </div>
 
             <ul class="genres-grid">
                 <li><button type="button" class="genre-option">Science fiction</button></li>
                 <li><button type="button" class="genre-option">Fantasy</button></li>
-                <li><button type="button" class="genre-option">Romance </button></li>
-                <li><button type="button" class="genre-option">Thriller </button></li>
-                <li><button type="button" class="genre-option">Mystery </button></li>
+                <li><button type="button" class="genre-option">Romance</button></li>
+                <li><button type="button" class="genre-option">Thriller</button></li>
+                <li><button type="button" class="genre-option">Mystery</button></li>
                 <li><button type="button" class="genre-option">Crime</button></li>
                 <li><button type="button" class="genre-option">Historical fiction</button></li>
                 <li><button type="button" class="genre-option">Adventure</button></li>
@@ -707,12 +751,7 @@
                 <li><button type="button" class="genre-option">Art and culture</button></li>
                 <li><button type="button" class="genre-option">Religion and spirituality</button></li>
             </ul>
-
-
         </fieldset>
-
-
-
     </section>
 
     <section id="book-info-tooltip"
@@ -1143,7 +1182,7 @@
                                 <img class="social-networks__item-icon"
                                      src="assets/images/icons/social-networks/instagram.svg"
                                      alt="Instagram">
-                                <label class="social-networks__item-label">Instagram</label>
+                                <label for="signup-instagram" class="social-networks__item-label">Instagram</label>
                             </div>
 
                             <div class="form-field form-field--default form-field--large">
@@ -1151,7 +1190,7 @@
                                        name="instagram"
                                        maxlength="50"
                                        placeholder="Enter Instagram username"
-                                       class="form-field__input">
+                                       class="form-field__input" id="signup-instagram">
                             </div>
                         </div>
 
@@ -1160,7 +1199,7 @@
                                 <img class="social-networks__item-icon"
                                      src="assets/images/icons/social-networks/goodreads.svg"
                                      alt="Goodreads">
-                                <label class="social-networks__item-label">Goodreads</label>
+                                <label for="signup-goodreads" class="social-networks__item-label">Goodreads</label>
                             </div>
 
                             <div class="form-field form-field--default form-field--large">
@@ -1168,7 +1207,7 @@
                                        name="Goodreads"
                                        maxlength="50"
                                        placeholder="Enter Goodreads username"
-                                       class="form-field__input">
+                                       class="form-field__input" id="signup-goodreads">
                             </div>
                         </div>
 
@@ -1177,7 +1216,7 @@
                                 <img class="social-networks__item-icon"
                                      src="assets/images/icons/social-networks/facebook.svg"
                                      alt="Facebook">
-                                <label class="social-networks__item-label">Facebook</label>
+                                <label for="signup-facebook" class="social-networks__item-label">Facebook</label>
                             </div>
 
                             <div class="form-field form-field--default form-field--large">
@@ -1185,7 +1224,7 @@
                                        name="Facebook"
                                        maxlength="50"
                                        placeholder="Enter Facebook username"
-                                       class="form-field__input">
+                                       class="form-field__input" id="signup-facebook">
                             </div>
                         </div>
 
@@ -1194,15 +1233,15 @@
                                 <img class="social-networks__item-icon"
                                      src="assets/images/icons/social-networks/linkedin.svg"
                                      alt="LinkedIn">
-                                <label class="social-networks__item-label">LinkedIn</label>
+                                <label for="signup-linkedin" class="social-networks__item-label">LinkedIn</label>
                             </div>
 
                             <div class="form-field form-field--default form-field--large">
                                 <input type="text"
                                        name="LinkedIn"
                                        maxlength="50"
-                                       placeholder="Enter Facebook username"
-                                       class="form-field__input">
+                                       placeholder="Enter LinkedIn username"
+                                       class="form-field__input" id="signup-linkedin">
                             </div>
                         </div>
 
@@ -1211,7 +1250,7 @@
                                 <img class="social-networks__item-icon"
                                      src="assets/images/icons/social-networks/pinterest.svg"
                                      alt="Pinterest">
-                                <label class="social-networks__item-label">Pinterest</label>
+                                <label for="signup-pinterest" class="social-networks__item-label">Pinterest</label>
                             </div>
 
                             <div class="form-field form-field--default form-field--large">
@@ -1219,7 +1258,7 @@
                                        name="Pinterest"
                                        maxlength="50"
                                        placeholder="Enter Pinterest username"
-                                       class="form-field__input">
+                                       class="form-field__input" id="signup-pinterest">
                             </div>
                         </div>
                     </fieldset>
@@ -1350,7 +1389,8 @@
                 <header class="content-header">
                     <div class="search-bar">
                         <img src="assets/images/icons/search-icon.svg" alt="">
-                        <input type="search" placeholder="Search by title" class="search-bar__input">
+                        <label for="search-input" hidden>Search</label>
+                        <input type="search" placeholder="Search by title" class="search-bar__input" id="search-input">
                     </div>
 
                     <div class="icon-button-group">
@@ -1455,7 +1495,6 @@
                             </div>
                         </div>
                     </section>
-
 
                     <!-- EDITABLE SECTION -->
                     <section class="shelves-section shelves-section--editable">
@@ -1624,17 +1663,17 @@
                             <div class="status-tags" hidden>
                                 <button type="button" class="status-tags__label" data-status="Unread">
                                     <img class="status-tags__active-icon" src="assets/images/icons/cancel-icon.svg"
-                                         style="width: 0.6rem; height: 0.6rem;" hidden>
+                                         style="width: 0.6rem; height: 0.6rem;" alt="" hidden>
                                     Unread
                                 </button>
                                 <button type="button" class="status-tags__label" data-status="Reading">
                                     <img class="status-tags__active-icon" src="assets/images/icons/cancel-icon.svg"
-                                         style="width: 0.6rem; height: 0.6rem;" hidden>
+                                         style="width: 0.6rem; height: 0.6rem;" alt="" hidden>
                                     Reading
                                 </button>
                                 <button type="button" class="status-tags__label" data-status="Read">
                                     <img class="status-tags__active-icon" src="assets/images/icons/cancel-icon.svg"
-                                         style="width: 0.6rem; height: 0.6rem;" hidden>
+                                         style="width: 0.6rem; height: 0.6rem;" alt="" hidden>
                                     Read
                                 </button>
                             </div>
@@ -1922,10 +1961,10 @@
         <button type="button" role="menuitem" data-action="open">Open</button>
         <hr class="shelf-context-menu__separator">
         <button type="button" role="menuitem" data-action="edit">Edit</button>
-        <button type="button" role="menuitem" data-action="relocate" aria-haspopup="true">
+        <button type="button" role="menuitem" data-action="relocate" aria-haspopup="menu">
             Relocate
         </button>
-        <hr class="shelf-context-menu__separator">
+        <hr class="shelf-context-menu__separator" aria-hidden="true">
         <button type="button" role="menuitem" data-action="delete">
             <span>Delete</span>
         </button>
@@ -1935,7 +1974,7 @@
          role="menu"
          aria-label="Book actions">
         <button type="button" role="menuitem" data-action="open">Open</button>
-        <hr class="shelf-context-menu__separator">
+        <hr class="shelf-context-menu__separator" aria-hidden="true">
         <button type="button" role="menuitem" data-action="edit">Edit</button>
         <button type="button" role="menuitem" data-action="delete">
             <span>Delete</span>
@@ -1946,12 +1985,12 @@
          role="menu"
          aria-label="Relocate to">
 
-        <button type="button" role="menuitem"><label>My bookshelves</label></button>
-        <hr class="shelf-context-menu__separator">
-        <button class="active-option" type="button" role="menuitem"><label>Section</label></button>
+        <button type="button" role="menuitem"><span>My bookshelves</span></button>
+        <hr class="shelf-context-menu__separator" aria-hidden="true">
+        <button class="active-option" type="button" role="menuitem"><span>Section</span></button>
         <button type="button" role="menuitem"><label>Section</label></button>
-        <hr class="shelf-context-menu__separator">
-        <button class="add-option" type="button" role="menuitem"><label>New section</label></button>
+        <hr class="shelf-context-menu__separator" aria-hidden="true">
+        <button class="add-option" type="button" role="menuitem"><span>New section</span></button>
     </div>
 
     <!-- JS -->

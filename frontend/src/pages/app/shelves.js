@@ -75,7 +75,10 @@ export function initShelves() {
 
         if (card && !card.classList.contains("add-shelf-placeholder")) {
 
-            if (shelvesView.dataset.mode !== "view") return;
+            const currentMode = shelvesView.dataset.mode || "view";
+
+            if (!["view", "search"].includes(currentMode)) return;
+
 
             const scrollContainer =
                 shelvesView.querySelector(".shelves-page-content");
@@ -95,6 +98,7 @@ export function initShelves() {
                 card.closest(".shelves-section");
 
             const sectionName =
+                card.dataset.sectionName ||
                 section?.querySelector(".section-header--title")
                     ?.textContent.trim();
 
@@ -638,8 +642,6 @@ export function initShelves() {
 
 
     function performSearch(query) {
-
-        // създаваме временен DOM от оригиналното shelves
         const temp = document.createElement("div");
         temp.innerHTML = originalState;
 
@@ -648,8 +650,6 @@ export function initShelves() {
         );
 
         const matches = allShelves.filter(card => {
-
-            // игнорираме placeholder-а
             if (card.classList.contains("add-shelf-placeholder")) {
                 return false;
             }
@@ -665,25 +665,36 @@ export function initShelves() {
 
         if (matches.length === 0) {
             container.innerHTML = `
-        <section class="search-results empty">
-            <h2>No results found</h2>
-            <p>Try a different title or author.</p>
-        </section>
-    `;
-        } else {
-            container.innerHTML = `
-        <section class="search-results">
-            <h2>Results (${matches.length})</h2>
-            <ul class="shelves-grid"></ul>
-        </section>
-    `;
+            <section class="search-results empty">
+                <h2>No results found</h2>
+                <p>Try a different title or author.</p>
+            </section>
+        `;
+
+            setMode("search");
+            return;
         }
 
+        container.innerHTML = `
+            <section class="search-results">
+                <h2>Results (${matches.length})</h2>
+                <ul class="shelves-grid"></ul>
+            </section>
+        `;
 
         const grid = container.querySelector(".shelves-grid");
 
         matches.forEach(card => {
-            grid.appendChild(card.cloneNode(true));
+            const clonedCard = card.cloneNode(true);
+
+            const originalSection = card.closest(".shelves-section");
+            const sectionName = originalSection
+                ?.querySelector(".section-header--title")
+                ?.textContent.trim();
+
+            clonedCard.dataset.sectionName = sectionName || "";
+
+            grid.appendChild(clonedCard);
         });
 
         setMode("search");
@@ -700,5 +711,8 @@ export function initShelves() {
 
         isDirty = true;
     }
+
+
+    setMode("view");
 
 }

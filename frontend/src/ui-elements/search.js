@@ -118,7 +118,6 @@ export function initSearch({ onSearch }) {
     }
 
     async function fetchSuggestions(query) {
-        // TODO: replace with real DB call
         const allShelves = document.querySelectorAll(".shelf-card p");
 
         return Array.from(allShelves)

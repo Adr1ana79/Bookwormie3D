@@ -8,7 +8,7 @@ Users can create profiles and design virtual bookshelves by adding books with cu
 
 ## Features
 - User profile registration and management
-- Creation and customization of 3D shelves
+- Creation and customization of 3D shelves and books
 - Data backup and recovery
 - Management of visual modes of the interface
 

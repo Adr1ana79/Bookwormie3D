@@ -4,34 +4,47 @@ import { initShelfContextMenu } from "../../ui-elements/shelfContextMenu.js";
 import { initSearch } from "../../ui-elements/search.js";
 
 export function initShelves() {
-
+    // Намира основния shelves view
     const shelvesView = document.getElementById("view-shelves");
     if (!shelvesView) return;
 
+    // Контейнерът, в който се намират всички секции с етажерки
     const container = shelvesView.querySelector(".shelves-page-content");
 
     const editBtn = shelvesView.querySelector(".icon-edit.large-icon-button");
     const addBtn = shelvesView.querySelector(".icon-add.large-icon-button");
+
+    // Подменюто със save/cancel бутоните при edit mode
     const submenu = shelvesView.querySelector(".icon-button-group--submenu-button");
 
+    // Следи дали има незапазени промени
     let isDirty = false;
 
+    // Запазва оригиналното HTML състояние, за да може да се възстанови при Cancel
     let originalState =  container.innerHTML;
 
+    // Секцията, в която в момента се добавя нова етажерка
     let activeSection = null;
 
+
+    // Инициализира формата за създаване и редактиране на етажерки
     const shelfForm = initShelfForm({
         onCreate: (shelfData) => {
             if (!activeSection) return;
+
+            // Създава нов shelf card в активната секция
             createShelfCard(activeSection, shelfData);
         },
+        // Обновява съществуваща етажерка при edit
         onUpdate: updateShelfCard
     });
 
     const searchBar = document.querySelector(".search-bar");
     const searchInput = document.querySelector(".search-bar__input");
 
+
     function setMode(mode) {
+        // Записва текущия режим директно върху shelves view
         shelvesView.dataset.mode = mode;
 
         const isView = mode === "view";
@@ -39,7 +52,8 @@ export function initShelves() {
         const isAdd = mode === "add";
         const isSearch = mode === "search";
 
-        // SEARCH BAR disable logic (само за edit/add)
+        // При edit/add режим търсачката се деактивира,
+        // за да не се смесват действията по редакция и търсене
         if (searchBar && searchInput) {
             if (isEdit || isAdd) {
                 searchBar.classList.add("is-disabled");
@@ -50,24 +64,76 @@ export function initShelves() {
             }
         }
 
-        // EDIT / ADD buttons
+        // Edit бутонът не е активен при добавяне или търсене
         editBtn.disabled = isAdd || isSearch;
+        // Add бутонът е активен само в нормален view режим
         addBtn.disabled = !isView;
 
-        // NAVIGATION disable при search
+        // При search режим ограничава навигацията чрез CSS клас върху body
         document.body.classList.toggle("search-active", isSearch);
     }
 
-
     function clearRenaming() {
+        // Премахва режима за преименуване от всички секции
         container.querySelectorAll(".is-renaming")
             .forEach(section => section.classList.remove("is-renaming"));
     }
 
-    /* ------------------------------------
-       CLICK DELEGATION
-    ------------------------------------ */
 
+    initShelfContextMenu({
+        onOpen: (element) => {
+
+            const card = element.closest(".shelf-card");
+            if (!card) return;
+
+            const img = card.querySelector("img");
+            if (!img) return;
+
+            const fileName = img.src.split("/").pop().replace(".png", "");
+            const [design, size] = fileName.split("-");
+
+            if (!design || !size) {
+                console.warn("Could not extract design/size from image:", img.src);
+                return;
+            }
+
+            document.dispatchEvent(
+                new CustomEvent("app:open-shelf", {
+                    detail: { design, size }
+                })
+            );
+        },
+
+
+        onEdit: (shelf) => {
+            shelfForm.openEdit(shelf);
+        },
+
+        onRelocate: (shelf, position) => {
+            openRelocateMenu(shelf, position);
+        },
+
+        onDelete: (shelf) => {
+
+            openConfirmModal({
+                title: "Delete shelf?",
+                description: "This shelf will be permanently deleted.",
+                confirmText: "Delete",
+                onConfirm: () => {
+                    shelf.remove();
+                }
+            });
+        }
+    });
+
+    initSearch({
+        onSearch: (query) => {
+            performSearch(query);
+        }
+    });
+
+
+    /* CLICK DELEGATION */
     shelvesView.addEventListener("click", (e) => {
 
         /* OPEN SHELF */
@@ -131,9 +197,7 @@ export function initShelves() {
             return;
         }
 
-        /* -----------------------------
-           START RENAME
-        ----------------------------- */
+        /* START RENAME */
         if (e.target.closest(".section-edit-controls.edit-only .icon-edit")) {
 
             const section = e.target.closest(".shelves-section");
@@ -183,9 +247,7 @@ export function initShelves() {
         }
 
 
-        /* -----------------------------
-           DELETE SECTION
-        ----------------------------- */
+        /* DELETE SECTION  */
         if (e.target.closest(".section-edit-controls .icon-delete")) {
 
             const section = e.target.closest(".shelves-section");
@@ -226,19 +288,14 @@ export function initShelves() {
             return;
         }
 
-        /* -----------------------------
-           ADD SHELF
-         ----------------------------- */
-
+        /* ADD SHELF */
         if (e.target.closest(".add-shelf-button")) {
             activeSection = e.target.closest(".shelves-section");
             shelfForm.openCreate();
             return;
         }
 
-        /* -----------------------------
-           SAVE NEW SECTION (ADD MODE)
-        ----------------------------- */
+        /* SAVE NEW SECTION (ADD MODE) */
         if (e.target.closest(".shelves-section.add-only .icon-save")) {
 
             const addSection = shelvesView.querySelector(".shelves-section.add-only");
@@ -264,57 +321,6 @@ export function initShelves() {
         }
     });
 
-    initShelfContextMenu({
-        onOpen: (element) => {
-
-            const card = element.closest(".shelf-card");
-            if (!card) return;
-
-            const img = card.querySelector("img");
-            if (!img) return;
-
-            const fileName = img.src.split("/").pop().replace(".png", "");
-            const [design, size] = fileName.split("-");
-
-            if (!design || !size) {
-                console.warn("Could not extract design/size from image:", img.src);
-                return;
-            }
-
-            document.dispatchEvent(
-                new CustomEvent("app:open-shelf", {
-                    detail: { design, size }
-                })
-            );
-        },
-
-
-        onEdit: (shelf) => {
-            shelfForm.openEdit(shelf);
-        },
-
-            onRelocate: (shelf, position) => {
-                openRelocateMenu(shelf, position);
-        },
-
-        onDelete: (shelf) => {
-
-            openConfirmModal({
-                title: "Delete shelf?",
-                description: "This shelf will be permanently deleted.",
-                confirmText: "Delete",
-                onConfirm: () => {
-                    shelf.remove();
-                }
-            });
-        }
-    });
-
-    initSearch({
-        onSearch: (query) => {
-            performSearch(query);
-        }
-    });
 
     searchInput.addEventListener("input", () => {
 
@@ -325,7 +331,6 @@ export function initShelves() {
             setMode("view");
         }
     });
-
 
     shelvesView.addEventListener("keydown", (e) => {
 
@@ -342,10 +347,7 @@ export function initShelves() {
     });
 
 
-    /* ------------------------------------
-       KEYBOARD (RENAME)
-    ------------------------------------ */
-
+    /* KEYBOARD (RENAME) */
     shelvesView.addEventListener("keydown", (e) => {
 
         if (!e.target.matches(".rename-only input")) return;
@@ -361,10 +363,8 @@ export function initShelves() {
         }
     });
 
-    /* ------------------------------------
-       GLOBAL EDIT BUTTON
-    ------------------------------------ */
 
+    /* GLOBAL EDIT BUTTON*/
     editBtn.addEventListener("click", () => {
         if (shelvesView.dataset.mode !== "view") return;
 
@@ -374,10 +374,8 @@ export function initShelves() {
         submenu.classList.remove("hidden");
     });
 
-    /* ------------------------------------
-       ADD MODE
-    ------------------------------------ */
 
+    /* ADD MODE */
     addBtn.addEventListener("click", () => {
 
         if (isDirty) return;
@@ -396,9 +394,6 @@ export function initShelves() {
         input.select();
     });
 
-    /* ------------------------------------
-       CREATE NEW SECTION
-    ------------------------------------ */
 
     function createNewSection(title) {
 
@@ -476,7 +471,6 @@ export function initShelves() {
         <p>${uniqueTitle}</p>
         `;
 
-        // добавяме преди placeholder-а
         const placeholder = grid.querySelector(".add-shelf-placeholder");
 
         grid.insertBefore(li, placeholder);
@@ -526,7 +520,7 @@ export function initShelves() {
             e.stopPropagation();
         });
 
-        // изчистваме старите dynamic бутони
+        // изчиства старите dynamic бутони
         submenu.innerHTML = "";
 
         sections.forEach(section => {

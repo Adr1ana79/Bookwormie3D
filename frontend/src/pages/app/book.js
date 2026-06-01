@@ -370,18 +370,21 @@ export const testBooks = [
 
 ];
 
-
+// Задава текущия режим на book modal-а (view/edit)
 function setBookModalMode(modal, mode) {
     modal.dataset.mode = mode;
 }
 
+// Проверява дали modal-ът е в edit режим
 function isBookModalInEditMode(modal) {
     return modal.dataset.mode === "edit";
 }
 
+// Ограничaва числова стойност в зададен диапазон
 function clampNumber(value, min, max) {
     const number = Number(value);
 
+    // При невалидна стойност връща минималната
     if (Number.isNaN(number)) {
         return min;
     }
@@ -389,6 +392,8 @@ function clampNumber(value, min, max) {
     return Math.min(Math.max(number, min), max);
 }
 
+
+// Свързва бутона за редакция на жанрове
 function bindGenreEdit(modal, book) {
     const editGenresBtn = modal.querySelector("[data-edit-genres]");
 
@@ -399,6 +404,7 @@ function bindGenreEdit(modal, book) {
     };
 }
 
+// Отваря modal за избор на жанрове
 function openBookGenresModal(book, bookModal) {
     const genresModal = document.querySelector("#book-genres-modal");
     if (!genresModal) return;
@@ -407,11 +413,14 @@ function openBookGenresModal(book, bookModal) {
     const saveBtn = genresModal.querySelector("[data-genres-save]");
     const cancelBtn = genresModal.querySelector("[data-genres-cancel]");
 
+    // Копие на текущите жанрове,
+    // за да не се променят директно преди Save
     let selectedGenres = [...(book.genres || [])];
 
     options.forEach((option) => {
         const genre = option.textContent.trim();
 
+        // Маркира вече избраните жанрове
         option.classList.toggle(
             "genre-option--selected",
             selectedGenres.includes(genre)
@@ -420,10 +429,12 @@ function openBookGenresModal(book, bookModal) {
         option.onclick = () => {
             const isSelected = selectedGenres.includes(genre);
 
+            // Премахва жанра при повторен избор
             if (isSelected) {
                 selectedGenres = selectedGenres.filter(item => item !== genre);
                 option.classList.remove("genre-option--selected");
             } else {
+                // Добавя нов жанр към временния списък
                 selectedGenres.push(genre);
                 option.classList.add("genre-option--selected");
             }
@@ -431,8 +442,10 @@ function openBookGenresModal(book, bookModal) {
     });
 
     saveBtn.onclick = () => {
+        // Записва избраните жанрове към книгата
         book.genres = selectedGenres;
 
+        // Обновява визуализацията в основния book modal
         renderBookGenres(bookModal, book.genres);
 
         genresModal.hidden = true;
@@ -442,9 +455,12 @@ function openBookGenresModal(book, bookModal) {
         genresModal.hidden = true;
     };
 
+    // Показва genres modal-а
     genresModal.hidden = false;
 }
 
+
+// Попълва полетата за редакция с текущите данни на книгата
 function fillBookEditFields(modal, book) {
     modal.querySelector('input[name="book-title"]').value =
         book.title || "";
@@ -458,6 +474,7 @@ function fillBookEditFields(modal, book) {
     modal.querySelector('input[name="page-count"]').value =
         book.pages ?? "";
 
+    // Избира текущия reading status
     const status = book.status || "unread";
     const statusInput = modal.querySelector(
         `input[name="book-status"][value="${status.toLowerCase()}"]`
@@ -467,11 +484,12 @@ function fillBookEditFields(modal, book) {
         statusInput.checked = true;
     }
 
+    // Позволява редакция на review полето
     const reviewField = modal.querySelector(".book-details--review");
     reviewField.disabled = false;
 }
 
-
+// Управлява бутоните за edit/save/cancel/delete
 function bindBookModalEditControls(modal, book) {
     const editBtn = modal.querySelector("[data-book-edit]");
     const saveBtn = modal.querySelector("[data-book-save]");
@@ -481,6 +499,7 @@ function bindBookModalEditControls(modal, book) {
     if (editBtn) {
         editBtn.onclick = () => {
             setBookModalMode(modal, "edit");
+            // Зарежда текущите стойности в полетата
             fillBookEditFields(modal, book);
         };
     }
@@ -489,7 +508,9 @@ function bindBookModalEditControls(modal, book) {
         cancelBtn.onclick = () => {
             const reviewField = modal.querySelector(".book-details--review");
 
+            // Заключва review полето отново
             reviewField.disabled = true;
+            // Възстановява оригиналните данни
             fillBookViewFields(modal, book);
             setBookModalMode(modal, "view");
         };
@@ -497,6 +518,7 @@ function bindBookModalEditControls(modal, book) {
 
     if (saveBtn) {
         saveBtn.onclick = () => {
+            // Взима всички полета от формата
             const titleInput = modal.querySelector('input[name="book-title"]');
             const authorInput = modal.querySelector('input[name="book-author"]');
             const ratingInput = modal.querySelector('input[name="book-rating"]');
@@ -504,15 +526,21 @@ function bindBookModalEditControls(modal, book) {
             const statusInput = modal.querySelector('input[name="book-status"]:checked');
             const reviewField = modal.querySelector(".book-details--review");
 
+            // Записва новите стойности към book обекта
             book.title = titleInput.value.trim() || "Untitled";
             book.author = authorInput.value.trim() || "Unknown author";
+
+            // Ограничение за rating между 0 и 5
             book.rating = clampNumber(ratingInput.value, 0, 5);
+            // Ограничение за брой страници
             book.pages = clampNumber(pagesInput.value, 0, 2000);
+
             book.status = statusInput ? statusInput.value : "Unread";
             book.review = reviewField.value.trim();
 
             reviewField.disabled = true;
 
+            // Обновява view режима с новите данни
             fillBookViewFields(modal, book);
             setBookModalMode(modal, "view");
         };
@@ -528,6 +556,7 @@ function bindBookModalEditControls(modal, book) {
                 onConfirm: () => {
                     console.log("Delete book:", book.id);
 
+                    // Скрива modal-а след изтриване
                     modal.hidden = true;
                 }
             });
@@ -536,8 +565,11 @@ function bindBookModalEditControls(modal, book) {
 }
 
 
+// Връща визуализация на оценката като звезди
 export function getBookStars(rating) {
     const numericRating = Number(rating) || 0;
+
+    // Закръгля оценката до най-близката половин звезда
     const roundedRating = Math.round(numericRating * 2) / 2;
 
     let stars = "";
@@ -555,11 +587,13 @@ export function getBookStars(rating) {
     return stars;
 }
 
+// Рендерира жанровете на книгата в modal-а
 function renderBookGenres(modal, genres) {
     const genresList = modal.querySelector("#book-content__info--genres .favourite-genres");
 
     genresList.innerHTML = "";
 
+    // Ако книгата няма жанрове, показва placeholder стойност
     if (!genres.length) {
         const emptyGenre = document.createElement("li");
         emptyGenre.className = "favourite-genres__item";
@@ -568,6 +602,7 @@ function renderBookGenres(modal, genres) {
         return;
     }
 
+    // Създава отделен елемент за всеки жанр
     genres.forEach((genre) => {
         const item = document.createElement("li");
         item.className = "favourite-genres__item";
@@ -576,7 +611,10 @@ function renderBookGenres(modal, genres) {
     });
 }
 
+// Рендерира визуалните настройки на книгата
 function renderBookVisuals(modal, book) {
+    // Задава стойности по подразбиране,
+    // ако книгата няма записани визуални настройки
     const heightName = book.height || "medium";
     const fontName = book.font || "normal";
     const colorName = book.color || "yellow";
@@ -587,21 +625,28 @@ function renderBookVisuals(modal, book) {
     const fontPreview = modal.querySelector("#font");
     const heightImage = modal.querySelector("#height");
 
+    // Обновява текстовите стойности
     heightText.textContent = capitalize(heightName);
     fontText.textContent = capitalize(fontName);
+
+    // Обновява preview-то на избрания шрифт
     fontPreview.textContent = "Abc 123";
     fontPreview.dataset.font = fontName;
 
+    // Обновява изображението за височината на книгата
     heightImage.src = `assets/images/book-personalisation/height-${heightName}-active.png`;
 
+    // Обновява preview-то на избрания цвят
     colorPreview.dataset.color = colorName;
     colorPreview.style.backgroundColor = getBookColor(colorName);
 }
 
+// Прави първата буква главна
 function capitalize(value) {
     return value.charAt(0).toUpperCase() + value.slice(1);
 }
 
+// Връща HEX стойността за избрания цвят на книгата
 function getBookColor(color) {
     const colors = {
         black: "#41414D",
@@ -618,10 +663,12 @@ function getBookColor(color) {
         coral: "#FF6F55"
     };
 
+    // Ако цветът липсва или е невалиден, използва yellow
     return colors[color] || colors.yellow;
 }
 
 
+// Попълва book modal-а в режим за преглед
 function fillBookViewFields(modal, book) {
     modal.querySelector(".book-content__title").textContent =
         book.title || "Untitled";
@@ -644,18 +691,24 @@ function fillBookViewFields(modal, book) {
     modal.querySelector(".book-details--review").value =
         book.review || "";
 
+    // Обновява жанровете и визуалните настройки
     renderBookGenres(modal, book.genres || []);
     renderBookVisuals(modal, book);
 }
 
+// Отваря modal-а с информация за избраната книга
 export function openBookContentModal(book) {
     const modal = document.querySelector("#book-content-modal");
 
     if (!modal) return;
 
+    // Зарежда данните на книгата в modal-а
     fillBookViewFields(modal, book);
+    // Modal-ът винаги се отваря първо в режим за преглед
     setBookModalMode(modal, "view");
+    // Свързва бутоните за edit/save/cancel/delete
     bindBookModalEditControls(modal, book);
+    // Свързва бутона за редакция на жанрове
     bindGenreEdit(modal, book);
 
     const cancelBtn = modal.querySelector("[data-close]");
@@ -665,6 +718,8 @@ export function openBookContentModal(book) {
     if (cancelBtn) {
         cancelBtn.onclick = () => {
 
+            // Ако modal-ът е бил в edit режим,
+            // го връща към view режим преди затваряне
             if (isBookModalInEditMode(modal)) {
                 setBookModalMode(modal, "view");
             }
@@ -676,6 +731,7 @@ export function openBookContentModal(book) {
     if (overlay) {
         overlay.onclick = () => {
 
+            // Затваря modal-а при клик върху overlay
             if (isBookModalInEditMode(modal)) {
                 setBookModalMode(modal, "view");
             }
@@ -684,5 +740,6 @@ export function openBookContentModal(book) {
         };
     }
 
+    // Показва modal-а
     modal.hidden = false;
 }

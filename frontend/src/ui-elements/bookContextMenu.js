@@ -50,3 +50,11 @@ export function openBookContextMenu(book, x, y, {
     };
 }
 
+export function closeBookContextMenu() {
+    const menu = document.querySelector(".book-context-menu");
+
+    if (!menu) return;
+
+    menu.classList.add("hidden");
+}
+

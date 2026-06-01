@@ -1,6 +1,7 @@
 from sqlalchemy import Column, Integer, String
 from app.database import Base
 
+# Описва таблицата със социални мрежи
 class SocialNetwork(Base):
     __tablename__ = "social_networks"
 

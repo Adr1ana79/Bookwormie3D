@@ -1,6 +1,6 @@
 import { openBookContentModal } from "../pages/app/book.js";
 import { showBookTooltip, hideBookTooltip } from "../ui-elements/bookTooltip.js";
-import { openBookContextMenu } from "../ui-elements/bookContextMenu.js";
+import { openBookContextMenu, closeBookContextMenu } from "../ui-elements/bookContextMenu.js";
 
 
 export function initBookInteractions({
@@ -175,7 +175,13 @@ export function initBookInteractions({
     });
 
     setTimeout(() => {
-        document.addEventListener("click", () => {
+        document.addEventListener("click", (event) => {
+            const menu = document.querySelector(".book-context-menu");
+
+            if (menu && menu.contains(event.target)) {
+                return;
+            }
+
             closeBookContextMenu();
             isContextMenuOpen = false;
         });

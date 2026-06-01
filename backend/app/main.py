@@ -8,9 +8,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from sqlalchemy.orm import Session
 from jose import JWTError, jwt
-from datetime import datetime, timedelta
 from sqlalchemy import or_
-from sqlalchemy.sql.functions import user
 
 from app.database import engine
 from app.models.profile import Profile
@@ -22,11 +20,10 @@ from app.core.security import hash_password
 from app.core.security import verify_password, create_access_token, create_refresh_token
 from app.core.security import SECRET_KEY, ALGORITHM
 
-from app.models.genre import Genre
-from app.schemas.profile import GenresUpdate
 
-
+# Създава FastAPI приложението
 app = FastAPI()
+# Настройва CORS, за да позволи заявки от frontend приложението
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -35,14 +32,16 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# Дефинира начина, по който FastAPI извлича bearer token от заявките
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/login")
 
-
+# Извлича текущия потребител чрез подадения JWT access token
 def get_current_user(
     token: str = Depends(oauth2_scheme),
     db: Session = Depends(get_db)
 ):
     try:
+        # Декодира token-а и извлича email адреса на потребителя
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
         email: str = payload.get("sub")
 
@@ -52,16 +51,16 @@ def get_current_user(
     except JWTError:
         raise HTTPException(status_code=401, detail="Invalid token")
 
+    # Търси потребителя в базата данни по email адреса от token-а
     user = db.query(Profile).filter(Profile.email == email).first()
 
     if user is None:
         raise HTTPException(status_code=401, detail="User not found")
 
-    print("TOKEN PAYLOAD:", payload)
-    print("LOOKING FOR EMAIL:", email)
 
     return user
 
+# Проверява дали текущият потребител има администраторски права
 def require_admin(current_user: Profile = Depends(get_current_user)):
     if current_user.role != "admin":
         raise HTTPException(
@@ -71,11 +70,13 @@ def require_admin(current_user: Profile = Depends(get_current_user)):
     return current_user
 
 
+# Проверява дали backend приложението работи
 @app.get("/")
 def root():
     return {"message": "Bookwormie3D backend is running"}
 
 
+# Проверява дали връзката с базата данни е успешна
 @app.get("/db-test")
 def test_db():
     try:
@@ -85,9 +86,11 @@ def test_db():
         return {"error": str(e)}
 
 
+# Създава нов потребителски профил
 @app.post("/profiles")
 def create_profile(profile: ProfileCreate, db: Session = Depends(get_db)):
 
+    # Проверява дали вече съществува потребител със същото име или email
     existing_user = db.query(Profile).filter(
         (Profile.username == profile.username) |
         (Profile.email == profile.email)
@@ -96,16 +99,19 @@ def create_profile(profile: ProfileCreate, db: Session = Depends(get_db)):
     if existing_user:
         raise HTTPException(status_code=400, detail="Username or email already exists")
 
+    # Създава нов профил с хеширана парола
     new_profile = Profile(
         username=profile.username,
         email=profile.email,
         password_hash=hash_password(profile.password)
     )
 
+    # Записва новия профил в базата данни
     db.add(new_profile)
     db.commit()
     db.refresh(new_profile)
 
+    # Създава access token за новорегистрирания потребител
     access_token = create_access_token(
         data={
             "sub": new_profile.email,
@@ -113,6 +119,7 @@ def create_profile(profile: ProfileCreate, db: Session = Depends(get_db)):
         }
     )
 
+    # Създава refresh token за новорегистрирания потребител
     refresh_token = create_refresh_token(
         data={
             "sub": new_profile.email,
@@ -132,11 +139,11 @@ def create_profile(profile: ProfileCreate, db: Session = Depends(get_db)):
     }
 
 
+# Обработва вход в системата чрез username/email и парола
 @app.post("/login", response_model=TokenResponse)
 def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
 
-    print("LOGIN ROUTE HIT")
-
+    # Търси потребител по потребителско име или email адрес
     user = db.query(Profile).filter(
         or_(
             Profile.username == form_data.username,
@@ -144,6 +151,7 @@ def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depend
         )
     ).first()
 
+    # Проверява дали въведената парола съвпада със записания хеш
     if not user:
         raise HTTPException(status_code=401, detail="Invalid credentials")
 
@@ -163,6 +171,7 @@ def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depend
     }
 
 
+# Връща информация за текущо вписания потребител
 @app.get("/me")
 def read_current_user(current_user: Profile = Depends(get_current_user)):
 
@@ -177,6 +186,7 @@ def read_current_user(current_user: Profile = Depends(get_current_user)):
         ]
     }
 
+# Изтрива текущо вписания потребителски профил
 @app.delete("/me")
 def delete_current_user(
     current_user: Profile = Depends(get_current_user),
@@ -188,6 +198,7 @@ def delete_current_user(
     return {"message": "Profile deleted successfully"}
 
 
+# Връща списък с всички профили за удостоверен потребител
 @app.get("/profiles", response_model=list[ProfileResponse])
 def get_profiles(
     current_user: Profile = Depends(get_current_user),
@@ -195,6 +206,8 @@ def get_profiles(
 ):
     return db.query(Profile).all()
 
+
+# Връща списък с всички профили само за администратор
 @app.get("/admin/profiles")
 def get_all_profiles(
     db: Session = Depends(get_db),
@@ -202,29 +215,10 @@ def get_all_profiles(
 ):
     return db.query(Profile).all()
 
+
+# Създава нов access token чрез подаден refresh token
 @app.post("/refresh")
 def refresh_token(refresh_token: str):
     payload = jwt.decode(refresh_token, SECRET_KEY, algorithms=[ALGORITHM])
     new_access_token = create_access_token(data={"sub": payload["sub"]})
     return {"access_token": new_access_token}
-
-
-
-# @app.patch("/me/genres")
-# def update_genres(
-#     data: GenresUpdate,
-#     current_user: Profile = Depends(get_current_user),
-#     db: Session = Depends(get_db)
-# ):
-#
-#     current_user.genres = []
-#
-#     new_genres = db.query(Genre).filter(
-#         Genre.id.in_(data.genres)
-#     ).all()
-#
-#     current_user.genres = new_genres
-#
-#     db.commit()
-#
-#     return {"message": "Genres updated successfully"}

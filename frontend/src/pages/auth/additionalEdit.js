@@ -14,6 +14,7 @@ export async function initAdditionalEditMode() {
 
     const genreButtons = section.querySelectorAll(".genre-option");
 
+    // Променя избраното състояние на жанра при натискане
     genreButtons.forEach(btn => {
         btn.addEventListener("click", () => {
             btn.classList.toggle("genre-option--selected");
@@ -23,6 +24,7 @@ export async function initAdditionalEditMode() {
 
     let originalData = {};
 
+    // Събира текущите стойности от формата
     function collectFormData() {
         const formData = new FormData(form);
         const data = {};
@@ -34,6 +36,7 @@ export async function initAdditionalEditMode() {
         return data;
     }
 
+    // Възстановява стойностите във формата към подадените данни
     function restoreFormData(data) {
         Object.keys(data).forEach(key => {
             const input = form.querySelector(`[name="${key}"]`);
@@ -41,14 +44,14 @@ export async function initAdditionalEditMode() {
         });
     }
 
-    // Enter edit mode
+    // Активира edit режим за допълнителната профилна информация
     section.addEventListener("enter-edit-mode", () => {
 
         originalData = collectFormData();
         section.dataset.mode = "edit";
     });
 
-    // Save
+    // Обработва запазването на избраните жанрове
     saveBtn.addEventListener("click", async () => {
 
         const selectedGenres = section.querySelectorAll(
@@ -59,13 +62,14 @@ export async function initAdditionalEditMode() {
             .map(btn => Number(btn.dataset.id));
 
         try {
+            // Изпраща избраните жанрове към backend-а при активен endpoint
 //            await saveGenres(selectedIds);
         } catch (err) {
             console.error(err);
         }
     });
 
-    // Cancel
+    // Отказва редакцията и връща потребителя към профилния изглед
     cancelBtn.addEventListener("click", () => {
 
         restoreFormData(originalData);
@@ -77,7 +81,7 @@ export async function initAdditionalEditMode() {
         switchView(additionalView, profileView);
     });
 
-    // Clean
+    // Изчиства всички полета във формата
     cleanBtn.addEventListener("click", () => {
 
         form.reset();
@@ -99,10 +103,6 @@ async function saveGenres(selectedIds) {
             genres: selectedIds
         })
     });
-
-    console.log("AUTH HEADER:", `Bearer ${token}`);
-    console.log("TOKEN:", localStorage.getItem("access_token"));
-
 
     if (!response.ok) {
         throw new Error("Failed to update genres");

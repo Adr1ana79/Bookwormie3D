@@ -10,10 +10,14 @@ export function initStart() {
 
     if (!startView || !loadingView || !authView) return;
 
+    // Изчаква началната интро секция да бъде показана за зададеното време
     setTimeout(() => {
+        // Превключва от началния екран към loading екрана
         switchView(startView, loadingView);
 
+        // Изчаква loading екранът(анимацията) да бъде показан за зададеното време
         setTimeout(() => {
+            // Превключва от loading екрана към екрана за избор между вход и регистрация
             switchView(loadingView, authView);
         }, LOADING_DURATION);
 

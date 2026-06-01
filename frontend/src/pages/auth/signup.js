@@ -1,6 +1,8 @@
 import { switchView } from '../viewManager.js';
 import { showFieldError, clearFieldError } from './login.js';
 
+// Съхранява временно основните данни от регистрацията,
+// докато потребителят премине към следващата стъпка
 export const signupData = {};
 
 export function initSignup() {
@@ -15,13 +17,15 @@ export function initSignup() {
     const signupAdditionalView =
         document.getElementById('view-signup-additional');
 
-    // Взимаме input-ите
+    // Взима input полетата от формата за регистрация
+    // querySelector - връща първия елемент в документа, който съответства на зададения CSS селектор
     const emailInput = signupView.querySelector('input[name="email"]');
     const passwordInput = signupView.querySelector('input[name="password"]');
     const usernameInput = signupView.querySelector('input[name="username"]');
     const confirmPasswordInput = signupView.querySelector('input[name="confirm-password"]');
     const termsCheckbox = signupView.querySelector('#accept-terms');
 
+    // Изчиства съобщението за грешка при промяна на стойността в полето
     [usernameInput, emailInput, passwordInput, confirmPasswordInput]
         .forEach(input => {
             input.addEventListener("input", () => {
@@ -29,13 +33,14 @@ export function initSignup() {
             });
         });
 
-    // secondary → login
+    // Пренасочва потребителя към екрана за вход
     loginButton.addEventListener('click', () => {
         if (!loginView) return;
         switchView(signupView, loginView);
     });
 
 
+    // Премахва визуалната грешка при маркиране на checkbox-а
     if (termsCheckbox) {
         termsCheckbox.addEventListener("change", () => {
             const checkboxGroup = termsCheckbox.closest(".checkbox-group");
@@ -43,9 +48,10 @@ export function initSignup() {
         });
     }
 
-    // primary → signup + backend
+    // Валидира формата за регистрация и преминава към допълнителната стъпка
     continueButton.addEventListener("click", (e) => {
         e.preventDefault();
+        //Спира стандартното действие на браузъра, за да можете да изпълни следващия JS код вместо това
 
         const isUsernameValid = validateUsername(usernameInput);
         const isEmailValid = validateEmail(emailInput);
@@ -53,8 +59,7 @@ export function initSignup() {
         const isConfirmValid = validateConfirmPassword(passwordInput, confirmPasswordInput);
         const isCheckboxValid = validateCheckbox(termsCheckbox);
 
-        if (
-            !isUsernameValid ||
+        if (!isUsernameValid ||
             !isEmailValid ||
             !isPasswordValid ||
             !isConfirmValid ||
@@ -72,6 +77,7 @@ export function initSignup() {
 
 }
 
+// Проверява дали потребителското име е попълнено и съдържа позволени символи
 function validateUsername(input) {
     const value = input.value.trim();
     const allowed = /^[\p{L}0-9'-]+$/u;
@@ -95,6 +101,7 @@ function validateUsername(input) {
     return true;
 }
 
+// Проверява дали email адресът е попълнен и има валиден формат
 function validateEmail(input) {
     const value = input.value.trim();
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -114,6 +121,7 @@ function validateEmail(input) {
     return true;
 }
 
+// Проверява дали паролата е попълнена и покрива минималната дължина
 function validatePassword(input) {
     const value = input.value.trim();
 
@@ -136,6 +144,7 @@ function validatePassword(input) {
     return true;
 }
 
+// Проверява дали повторената парола съвпада с основната парола
 function validateConfirmPassword(passwordInput, confirmInput) {
 
     clearFieldError(confirmInput);
@@ -159,9 +168,11 @@ function validateConfirmPassword(passwordInput, confirmInput) {
     return true;
 }
 
+// Проверява дали потребителят е приел условията за ползване
 function validateCheckbox(checkbox) {
-
     const group = checkbox.closest(".checkbox-group");
+
+    if (!checkbox) return false;
 
     if (!checkbox.checked) {
         group.classList.add("checkbox-group-error");
@@ -173,7 +184,7 @@ function validateCheckbox(checkbox) {
 }
 
 
-
+// Показва предупредително съобщение към поле от формата
 function showFieldWarning(input, message) {
     const formField = input.closest(".form-field");
     const errorId = input.getAttribute("aria-describedby");

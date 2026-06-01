@@ -11,8 +11,10 @@ export function initAuth() {
     function setMode(mode) {
         if (currentMode === mode) return;
 
+        // Запазва текущо избрания режим
         currentMode = mode;
 
+        // Променя визуалното състояние на екрана според избрания режим
         authView.classList.toggle(
             'auth-screen--login',
             mode === 'login'
@@ -22,6 +24,7 @@ export function initAuth() {
             mode === 'signup'
         );
 
+        // Обновява активното състояние и достъпността на бутоните
         options.forEach(button => {
             const isActive = button.dataset.mode === mode;
             button.classList.toggle('is-active', isActive);
@@ -32,16 +35,17 @@ export function initAuth() {
     options.forEach(button => {
         const mode = button.dataset.mode;
 
-        // hover / focus → preview
+        // Променя режима при посочване с мишката
         button.addEventListener('mouseenter', () => {
             setMode(mode);
         });
 
+        // Променя режима при фокусиране с клавиатура
         button.addEventListener('focus', () => {
             setMode(mode);
         });
 
-        // click → избор + навигация
+        // Избира режима и отваря съответния изглед
         button.addEventListener('click', () => {
             setMode(mode);
 
@@ -55,6 +59,6 @@ export function initAuth() {
         });
     });
 
-    // initial state
+    // Задава началното състояние на auth екрана
     setMode(currentMode);
 }

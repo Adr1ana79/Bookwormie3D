@@ -5,6 +5,8 @@ from sqlalchemy.orm import relationship
 from app.models.genre import Genre
 from app.models.social_network import SocialNetwork
 
+
+# Описва междинната таблица между профили и социални мрежи
 profile_social_networks = Table(
     "profile_social_networks",
     Base.metadata,
@@ -13,6 +15,8 @@ profile_social_networks = Table(
     Column("profile_name", String(100))
 )
 
+
+# Описва междинната таблица между профили и жанрове
 profile_genres = Table(
     "profile_genres",
     Base.metadata,
@@ -20,6 +24,8 @@ profile_genres = Table(
     Column("genre_id", Integer, ForeignKey("genres.id"))
 )
 
+
+# Описва таблицата с потребителски профили
 class Profile(Base):
     __tablename__ = "profiles"
 
@@ -30,12 +36,14 @@ class Profile(Base):
     role = Column(String(20), default="user")
     created_at = Column(TIMESTAMP, server_default=text("CURRENT_TIMESTAMP"))
 
+    # Създава many-to-many връзка между профили и жанрове
     genres = relationship(
         Genre,
         secondary=profile_genres,
         backref="profiles"
     )
 
+    # Създава many-to-many връзка между профили и социални мрежи
     social_networks = relationship(
         SocialNetwork,
         secondary=profile_social_networks,

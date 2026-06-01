@@ -172,9 +172,13 @@ function createBookTitleTexture(book) {
     return texture;
 }
 
+// Създава 3D label със заглавието на книгата
 function createBookLabel(book) {
+
+    // Генерира canvas texture със заглавието
     const texture = createBookTitleTexture(book);
 
+    // Размер на label-а според височината на книгата
     const labelSizeMap = {
         short: { width: 0.28, height: 0.40 },
         medium: { width: 0.28, height: 0.40 },
@@ -195,15 +199,22 @@ function createBookLabel(book) {
     );
 
     const label = new THREE.Mesh(geometry, material);
+
+    // Metadata за разпознаване на label-а
     label.userData.type = "book-label";
     label.userData.bookId = book.id;
+
+    // Позиционира label-а леко пред книгата
     label.position.set(0, 0, 0.18);
+
+    // Изключва raycast върху label-а,
+    // за да не пречи на кликовете върху самата книга
     label.raycast = () => {};
 
     return label;
 }
 
-
+// Подравнява книгата така, че долната й част да стъпи върху дадената Y позиция на реда
 function alignBookToBaseY(mesh, baseY) {
     const box = new THREE.Box3().setFromObject(mesh);
     const bottomY = box.min.y;
@@ -211,34 +222,45 @@ function alignBookToBaseY(mesh, baseY) {
     mesh.position.y += baseY - bottomY;
 }
 
+// Позиционира книга върху конкретен ред и слот от етажерката
 export function positionBook(mesh, book, shelfSize, shelfDesign) {
+
+    // Взима layout настройките за текущата етажерка
     const layout = getShelfLayout(shelfSize, shelfDesign);
 
+    // Изчислява Y позицията на реда
     const baseY =
         layout.startY +
         layout.baseRows[book.row];
 
+    // Изчислява X позицията според индекса на книгата
     const x =
         layout.startX +
         book.index * layout.slotWidth;
 
+    // Поставя книгата на правилното място в сцената
     mesh.position.set(
         x,
         0,
         layout.z
     );
 
+    // Запазва базовата Z позиция за hover/search анимации
     mesh.userData.baseZ = layout.z;
     mesh.userData.targetZ = layout.z;
 
+    // Подравнява книгата към основата на реда
     alignBookToBaseY(mesh, baseY);
 }
 
+// Управлява видимостта на labels върху книгите
 export function setBookLabelsVisible(shelfGroup, isVisible, isSearchActive = false) {
     shelfGroup.traverse((child) => {
         if (child.userData.type === "book-label") {
             const bookMesh = child.parent;
 
+            // При активно търсене показва label само за намерените книги
+            // Иначе използва общата видимост
             child.visible = isSearchActive
                 ? bookMesh.userData.isSearchMatch
                 : isVisible;
